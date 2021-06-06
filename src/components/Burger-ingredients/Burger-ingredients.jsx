@@ -6,7 +6,7 @@ import BurgetTypeTable from './Burger-ingredients-table';
 
 import s from './Burger-ingredients.module.sass';
 
-const BurgerIngredients = ({ data }) => {
+const BurgerIngredients = ({ data, openModal }) => {
 
     return (
         <section className={`${s.section_container} pt-10`}>
@@ -23,9 +23,9 @@ const BurgerIngredients = ({ data }) => {
                 </Tab>
             </div>
             <div className={`${s.ingredients_wrapper} pl-4 pb-10`}>
-                <BurgetTypeTable title='Булки' ingredients={data} type="bun" />
-                <BurgetTypeTable title='Соусы' ingredients={data} type="sauce" />
-                <BurgetTypeTable title='Начинки' ingredients={data} type="main" />
+                <BurgetTypeTable openModal={(_id) => openModal(_id)} title='Булки' ingredients={data} type="bun" />
+                <BurgetTypeTable openModal={(_id) => openModal(_id)} title='Соусы' ingredients={data} type="sauce" />
+                <BurgetTypeTable openModal={(_id) => openModal(_id)} title='Начинки' ingredients={data} type="main" />
             </div>
         </section>
     )

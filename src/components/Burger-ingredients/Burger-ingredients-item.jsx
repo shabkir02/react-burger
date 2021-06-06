@@ -5,12 +5,12 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import s from './Burger-ingredients.module.sass';
 
 
-const BurgerIngredientsItem = ({ item, count }) => {
+const BurgerIngredientsItem = ({ item, count, openModal }) => {
 
-    const { name, _id, price, image } = item;
+    const { name, price, image, _id } = item;
 
     return (
-        <div key={_id} className={`${s.ingredient_item}`}>
+        <div onClick={() => openModal(_id)} className={`${s.ingredient_item}`}>
             <div className={`${s.header_item} pl-4 pb-1 pr-4`}>
                 {count && (
                     <div className={s.ingredient_counter}>

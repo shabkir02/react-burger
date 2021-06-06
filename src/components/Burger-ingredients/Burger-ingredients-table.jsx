@@ -5,7 +5,7 @@ import BurgerIngredientsItem from './Burger-ingredients-item';
 
 import s from './Burger-ingredients.module.sass';
 
-const BurgetTypeTable = ({ title, ingredients, type }) => {
+const BurgetTypeTable = ({ title, ingredients, type, openModal }) => {
     return (
         <div className={`${s.type_wrapper} pt-10`}>
             <h3 className="text text_type_main-medium mb-6">{title}</h3>
@@ -16,7 +16,8 @@ const BurgetTypeTable = ({ title, ingredients, type }) => {
                             <BurgerIngredientsItem 
                                 key={item._id} 
                                 item={item} 
-                                count={item._id === ingredients[0]._id ? 1 : false} 
+                                count={item._id === ingredients[0]._id ? 1 : false}
+                                openModal={(_id) => openModal(_id)}
                             />
                         )
                     }
