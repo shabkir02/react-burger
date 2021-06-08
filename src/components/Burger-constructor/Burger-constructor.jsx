@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { CurrencyIcon, ConstructorElement, DragIcon, Button  } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import s from './Burger-constructor.module.sass';
+import s from './burger-constructor.module.sass';
 
-const BurgerConstructor = ({ data }) => {
+const BurgerConstructor = ({ data, handleOrderClick }) => {
     return (
         <section className={`${s.section_container} pt-25`}>
            <div className={`pt-4 pr-4`}>
@@ -49,12 +50,32 @@ const BurgerConstructor = ({ data }) => {
                     <span className="text text_type_digits-medium">610</span>
                     <CurrencyIcon />
                 </div>
-                <Button type="primary" size="medium">
-                    Оформить заказ
-                </Button>
+                <div onClick={handleOrderClick}>
+                    <Button type="primary" size="medium">
+                        Оформить заказ
+                    </Button>
+                </div>
            </div>
         </section>
     )
+}
+
+BurgerConstructor.propTypes = {
+    data: PropTypes.arrayOf(PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+       name: PropTypes.string.isRequired,
+       type: PropTypes.string.isRequired,
+       proteins: PropTypes.number,
+       fat: PropTypes.number,
+       carbohydrates: PropTypes.number,
+       calories: PropTypes.number,
+       price: PropTypes.number,
+       image: PropTypes.string.isRequired,
+       image_mobile: PropTypes.string.isRequired,
+       image_large: PropTypes.string.isRequired,
+       __v: PropTypes.number
+    })),
+    handleOrderClick: PropTypes.func.isRequired
 }
 
 export default BurgerConstructor;

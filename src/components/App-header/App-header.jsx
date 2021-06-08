@@ -1,7 +1,7 @@
 import React from "react";
 import { Logo, ListIcon, BurgerIcon, ProfileIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import s from './App-header.module.sass';
+import s from './app-header.module.sass';
 
 const AppHeader = () => {
     return (

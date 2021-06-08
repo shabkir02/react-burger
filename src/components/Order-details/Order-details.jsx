@@ -1,6 +1,6 @@
 import React from 'react';
 
-import s from './Order-details.module.sass';
+import s from './order-details.module.sass';
 
 import background from '../../images/order-detail.svg';
 import accept from '../../images/stroke.svg';

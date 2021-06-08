@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import s from './Modal-overlay.module.sass';
+import s from './modal-overlay.module.sass';
 
 const ModalOverlay = ({ closeModal }) => {
     return (
@@ -9,6 +10,10 @@ const ModalOverlay = ({ closeModal }) => {
             className={s.modal_overlay}
         ></div>
     )
+}
+
+ModalOverlay.propTypes = {
+    closeModal: PropTypes.func.isRequired
 }
 
 export default ModalOverlay;

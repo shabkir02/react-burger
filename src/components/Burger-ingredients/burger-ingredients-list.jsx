@@ -1,33 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import BurgerIngredientsItem from './Burger-ingredients-item';
+import BurgerIngredientsItem from './burger-ingredients-item';
 
-import s from './Burger-ingredients.module.sass';
+import s from './burger-ingredients.module.sass';
 
-const BurgetTypeTable = ({ title, ingredients, type, openModal }) => {
+const BurgerIngredientsList = ({ title, ingredients, type, onIngredientClick }) => {
+
+    const ingredientsArr = ingredients.map(item => {
+        if (item.type === type) {
+            return (
+                <BurgerIngredientsItem 
+                    key={item._id} 
+                    item={item} 
+                    count={item._id === ingredients[0]._id ? 1 : false}
+                    onIngredientClick={onIngredientClick}
+                />
+            )
+        }
+    })
+
     return (
         <div className={`${s.type_wrapper} pt-10`}>
             <h3 className="text text_type_main-medium mb-6">{title}</h3>
             <div className={s.ingredients_type_wrapper}>
-                {ingredients.map(item => {
-                    if (item.type === type) {
-                        return (
-                            <BurgerIngredientsItem 
-                                key={item._id} 
-                                item={item} 
-                                count={item._id === ingredients[0]._id ? 1 : false}
-                                openModal={(_id) => openModal(_id)}
-                            />
-                        )
-                    }
-                })}
+                {ingredientsArr}
             </div>
         </div>
     )
 }
 
-BurgetTypeTable.propTypes = {
+BurgerIngredientsList.propTypes = {
     title: PropTypes.oneOf(['Булки', 'Соусы', 'Начинки']),
     ingredients: PropTypes.arrayOf(PropTypes.shape({
         _id: PropTypes.string.isRequired,
@@ -46,4 +49,4 @@ BurgetTypeTable.propTypes = {
     type: PropTypes.oneOf(['bun', 'sauce', 'main'])
 }
 
-export default BurgetTypeTable;
+export default BurgerIngredientsList;

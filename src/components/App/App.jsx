@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
-import AppHeader from '../App-header/App-header';
-import BurgerIngredients from '../Burger-ingredients/Burger-ingredients';
-import BurgerConstructor from '../Burger-constructor/Burger-constructor';
-import Modal from '../Modal/Modal';
-import IngredientDetails from '../Ingredient-details/Ingredient-details';
-import OrderDetails from '../Order-details/Order-details';
+import AppHeader from '../app-header/app-header';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
+import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import OrderDetails from '../order-details/order-details';
 
-import s from './App.module.sass';
+import s from './app.module.sass';
 
 const App = () => {
 
@@ -16,39 +16,51 @@ const App = () => {
   const [data, setData] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [currentIng, setCurrentIng] = useState(null);
+  const [modalInner, setModalInner] = useState(null)
 
   useEffect(() => {
     fetch(`${_apiUrl}/ingredients `)
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          return Promise.reject(response)
+        } 
+        return response.json()
+      })
       .then(response => setData(response.data))
       .catch(err => {
-        throw new Error('Somthing goes wrong')
+        throw new Error(`Something goes wrong`)
       });
 
-    document.addEventListener('keydown', (e) => {
-      if (e.keyCode === 27) {
+    const closeModalOnKey = (e) => {
+      if (e.key === "Escape") {
         closeModal(e);
       }
-    })
+    }
+
+    document.addEventListener('keydown', closeModalOnKey)
 
     return () => {
-      document.removeEventListener('keydown', (e) => {
-        if (e.keyCode === 27) {
-          closeModal(e);
-        }
-      })
+      document.removeEventListener('keydown', closeModalOnKey)
     }
+    
   }, [])
 
-  const openModal = (_id) => {
-    const item = data.find(item => item._id === _id);
+  const handleIngredientClick = (item) => {
     setCurrentIng(item);
+    setModalInner('ingredientDetail')
+    setModalOpen(true)
+  }
+
+  const handleOrderClick = () => {
+    setModalInner('orderDetail');
     setModalOpen(true)
   }
 
   const closeModal = () => {
     setModalOpen(false);
   }
+
+  const modalTitle = modalInner === 'ingredientDetail' ? 'Детали ингредиента' : false
 
   return (
     <main className={s.app}>
@@ -58,12 +70,13 @@ const App = () => {
       {data && (
         <>
           <section className={s.table_wrapper}>
-            <BurgerIngredients data={data} openModal={(_id) => openModal(_id)} />
-            <BurgerConstructor data={data} />
+            <BurgerIngredients data={data} handleIngredientClick={handleIngredientClick} />
+            <BurgerConstructor data={data} handleOrderClick={handleOrderClick} />
           </section>
           {modalOpen && (
-            <Modal closeModal={closeModal}>
-              <IngredientDetails currentIng={currentIng}/>
+            <Modal title={modalTitle} closeModal={closeModal}>
+              {modalInner === 'ingredientDetail' && <IngredientDetails currentIng={currentIng}/>}
+              {modalInner === 'orderDetail' && <OrderDetails/>}
             </Modal>
           )}
         </>

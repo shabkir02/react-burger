@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import BurgetTypeTable from './Burger-ingredients-table';
+import BurgerIngredientsList from './burger-ingredients-list';
 
-import s from './Burger-ingredients.module.sass';
+import s from './burger-ingredients.module.sass';
 
-const BurgerIngredients = ({ data, openModal }) => {
+const BurgerIngredients = ({ data, handleIngredientClick }) => {
 
     return (
         <section className={`${s.section_container} pt-10`}>
@@ -23,9 +23,9 @@ const BurgerIngredients = ({ data, openModal }) => {
                 </Tab>
             </div>
             <div className={`${s.ingredients_wrapper} pl-4 pb-10`}>
-                <BurgetTypeTable openModal={(_id) => openModal(_id)} title='Булки' ingredients={data} type="bun" />
-                <BurgetTypeTable openModal={(_id) => openModal(_id)} title='Соусы' ingredients={data} type="sauce" />
-                <BurgetTypeTable openModal={(_id) => openModal(_id)} title='Начинки' ingredients={data} type="main" />
+                <BurgerIngredientsList onIngredientClick={handleIngredientClick} title='Булки' ingredients={data} type="bun" />
+                <BurgerIngredientsList onIngredientClick={handleIngredientClick} title='Соусы' ingredients={data} type="sauce" />
+                <BurgerIngredientsList onIngredientClick={handleIngredientClick} title='Начинки' ingredients={data} type="main" />
             </div>
         </section>
     )
