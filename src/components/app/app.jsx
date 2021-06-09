@@ -13,8 +13,11 @@ const App = () => {
 
   const _apiUrl = 'https://norma.nomoreparties.space/api';
 
+  const ingredientDetails = 'ingredientDetails',
+        orderDetails = 'orderDetails';
+
   const [data, setData] = useState(null);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentIng, setCurrentIng] = useState(null);
   const [modalInner, setModalInner] = useState(null)
 
@@ -28,12 +31,12 @@ const App = () => {
       })
       .then(response => setData(response.data))
       .catch(err => {
-        throw new Error(`Something goes wrong`)
+        console.log(err);
       });
 
     const closeModalOnKey = (e) => {
       if (e.key === "Escape") {
-        closeModal(e);
+        closeModal();
       }
     }
 
@@ -47,36 +50,45 @@ const App = () => {
 
   const handleIngredientClick = (item) => {
     setCurrentIng(item);
-    setModalInner('ingredientDetail')
-    setModalOpen(true)
+    setModalInner(ingredientDetails)
+    setIsModalOpen(true)
   }
 
   const handleOrderClick = () => {
-    setModalInner('orderDetail');
-    setModalOpen(true)
+    setModalInner(orderDetails);
+    setIsModalOpen(true)
   }
 
   const closeModal = () => {
-    setModalOpen(false);
+    setIsModalOpen(false);
   }
 
-  const modalTitle = modalInner === 'ingredientDetail' ? 'Детали ингредиента' : false
+  const defineModalTitle = () => {
+    switch(modalInner) {
+      case ingredientDetails:
+        return 'Детали ингредиента'
+      case orderDetails:
+        return ''
+      default:
+        return '';
+    }
+  }
+
+  const modalTitle = defineModalTitle();
 
   return (
     <main className={s.app}>
-      <header>
-        <AppHeader/>
-      </header>
+      <AppHeader/>
       {data && (
         <>
           <section className={s.table_wrapper}>
             <BurgerIngredients data={data} handleIngredientClick={handleIngredientClick} />
             <BurgerConstructor data={data} handleOrderClick={handleOrderClick} />
           </section>
-          {modalOpen && (
+          {isModalOpen && (
             <Modal title={modalTitle} closeModal={closeModal}>
-              {modalInner === 'ingredientDetail' && <IngredientDetails currentIng={currentIng}/>}
-              {modalInner === 'orderDetail' && <OrderDetails/>}
+              {modalInner === ingredientDetails && <IngredientDetails currentIng={currentIng}/>}
+              {modalInner === orderDetails && <OrderDetails/>}
             </Modal>
           )}
         </>

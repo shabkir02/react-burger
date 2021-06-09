@@ -13,7 +13,7 @@ const BurgerIngredientsList = ({ title, ingredients, type, onIngredientClick }) 
                 <BurgerIngredientsItem 
                     key={item._id} 
                     item={item} 
-                    count={item._id === ingredients[0]._id ? 1 : false}
+                    count={item._id === ingredients[0]._id ? 1 : null}
                     onIngredientClick={onIngredientClick}
                 />
             )

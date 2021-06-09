@@ -8,7 +8,7 @@ const IngredientDetails = ({ currentIng }) => {
         <div>
             <img className={`${s.image} mb-4`} src={currentIng.image} alt={currentIng.name} />
             <p className={`text text_type_main-medium ${s.subtitle} mb-8`}>
-                Биокотлета из марсианской Магнолии
+                {currentIng.name}
             </p>
             <div className={s.footer}>
                 <div className={s.footer_item}>

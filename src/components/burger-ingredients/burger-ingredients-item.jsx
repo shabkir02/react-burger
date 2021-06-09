@@ -45,8 +45,9 @@ BurgerIngredientsItem.propTypes = {
     }),
     count: PropTypes.oneOfType([
         PropTypes.number,
-        PropTypes.bool
-      ])
+        PropTypes.oneOf([null]).isRequired
+    ]),
+    onIngredientClick: PropTypes.func.isRequired
 }
 
 export default BurgerIngredientsItem;

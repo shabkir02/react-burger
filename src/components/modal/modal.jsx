@@ -42,8 +42,5 @@ Modal.propTypes = {
         PropTypes.arrayOf(PropTypes.node),
         PropTypes.node
     ]).isRequired,
-    title: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.bool
-    ]).isRequired
+    title: PropTypes.string.isRequired
 }
