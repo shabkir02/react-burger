@@ -1,0 +1,48 @@
+.section_container
+    max-width: 600px
+
+.tab_wrapper
+    display: flex
+    justify-content: space-between
+
+.ingredients_wrapper
+    height: calc( 100vh - 287px)
+    overflow: auto
+    &::-webkit-scrollbar 
+        width: 8px
+        height: 90%
+        padding-top: 40px
+    &::-webkit-scrollbar-track 
+        background: #2F2F37
+        border-radius: 6px
+    &::-webkit-scrollbar-thumb 
+        background: #8585AD
+        border-radius: 6px
+
+
+.ingredients_type_wrapper
+    display: flex
+    flex-wrap: wrap
+    column-gap: 24px
+    row-gap: 32px
+
+.ingredient_item
+    width: 272px
+    height: 208px
+    position: relative
+    
+.ingredient_counter
+    position: absolute
+    right: 0
+    top: 0
+    
+.price_wrapper
+    display: flex
+    height: 24px
+    justify-content: center
+    column-gap: 6px
+    align-items: center
+    margin: 0 auto
+
+.ingredient_name
+    text-align: center
