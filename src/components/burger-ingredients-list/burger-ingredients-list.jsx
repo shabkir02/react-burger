@@ -41,7 +41,7 @@ const BurgerIngredientsList = ({ title, type, onIngredientClick }) => {
     })
 
     return (
-        <div id={type} className={`${s.type_wrapper} pt-10`}>
+        <div data-scroll-id={type} className={`${s.type_wrapper} pt-10`}>
             <h3 className="text text_type_main-medium mb-6">{title}</h3>
             <div className={s.ingredients_type_wrapper}>
                 {ingredientsArr}
