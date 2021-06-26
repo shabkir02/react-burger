@@ -1,58 +1,46 @@
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
-import { IngredientsContext } from '../../services/ingredientsContext';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
+import { 
+  getIngredients, 
+  makeOrder, 
+  ORDER_RESET, 
+  SET_CURRENT_INGREDIENT, 
+  SET_MODAL_INNER_INGREDIENT_DETAILS,
+  SET_MODAL_INNER_ORDER_DETAILS,
+  SET_MODAL_OPEN,
+  SET_MODAL_CLOSE
+} from '../../services/actions'
 
 import s from './app.module.sass';
 
-const orderInitialState = { order: null };
-
-function reducer(state, action) {
-  switch (action.type) {
-    case "set":
-      return { order: action.payload };
-    case "reset":
-      return orderInitialState;
-    default:
-      throw new Error(`Wrong type of action: ${action.type}`);
-  }
-}
-
 const App = () => {
 
-  const _apiUrl = 'https://norma.nomoreparties.space/api';
+  const dispatch = useDispatch();
+
+  const { ingredients, order, modalInner, isModalOpen } = useSelector(store => ({
+    ingredients: store.ingredients.ingredients,
+    order: store.order.order,
+    modalInner: store.modal.modalInner,
+    isModalOpen: store.modal.isModalOpen
+  }));
 
   const modalInnerDetails = {
     ingredientDetails: 'ingredientDetails',
     orderDetails: 'orderDetails'
   }
 
-  const [ingredients, setIngredients] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentIng, setCurrentIng] = useState(null);
-  const [modalInner, setModalInner] = useState(null); 
-
-  const [orderState, orderDispatcher] = useReducer(reducer, orderInitialState, undefined);
-
-  console.log(orderState);
-
   useEffect(() => {
-    fetch(`${_apiUrl}/ingredients `)
-      .then(response => {
-        if (!response.ok) {
-          return Promise.reject(response)
-        } 
-        return response.json()
-      })
-      .then(response => setIngredients(response.data))
-      .catch(err => {
-        console.log(err);
-      });
+
+    dispatch(getIngredients())
 
     const closeModalByEscape = (e) => {
       if (e.key === "Escape") {
@@ -66,78 +54,45 @@ const App = () => {
       document.removeEventListener('keydown', closeModalByEscape)
     }
     
-  }, [])
+  }, [dispatch])
 
   const handleIngredientClick = (item) => {
-    setCurrentIng(item);
-    setModalInner(modalInnerDetails.ingredientDetails)
-    setIsModalOpen(true)
+    dispatch({ type: SET_CURRENT_INGREDIENT, payload: item });
+    dispatch({ type: SET_MODAL_INNER_INGREDIENT_DETAILS })
+    dispatch({ type: SET_MODAL_OPEN })
   }
 
   const handleOrderClick = (finalIngredients) => {
-    setModalInner(modalInnerDetails.orderDetails);
-    setIsModalOpen(true)
+    dispatch({ type: SET_MODAL_INNER_ORDER_DETAILS })
+    dispatch({ type: SET_MODAL_OPEN })
 
-    const ingredientsIdArr = finalIngredients.map(ingredient => ingredient._id);
-
-    fetch(`${_apiUrl}/orders`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-      },
-      body: JSON.stringify({
-        "ingredients": ingredientsIdArr
-      })
-    })
-      .then(response => {
-        if (!response.ok) {
-          return Promise.reject(response)
-        } 
-        return response.json()
-      })
-      .then(response => orderDispatcher({ type: 'set', payload: response }))
-      .catch(err => {
-        console.log(err);
-      })
+    dispatch(makeOrder(finalIngredients))
   }
 
   const closeModal = () => {
-    setIsModalOpen(false);
-    orderDispatcher({ type: 'reset' });
+    dispatch({ type: SET_MODAL_CLOSE });
+    dispatch({ type: ORDER_RESET });
   }
-
-  const defineModalTitle = () => {
-    switch(modalInner) {
-      case modalInnerDetails.ingredientDetails:
-        return 'Детали ингредиента'
-      case modalInnerDetails.orderDetails:
-        return ''
-      default:
-        return '';
-    }
-  }
-
-  const modalTitle = defineModalTitle();
 
   return (
     <main className={s.app}>
-      <IngredientsContext.Provider value={{ingredients, setIngredients}}>
         <AppHeader/>
         {ingredients && (
           <>
-            <section className={s.table_wrapper}>
-              <BurgerIngredients handleIngredientClick={handleIngredientClick} />
-              <BurgerConstructor handleOrderClick={handleOrderClick} />
-            </section>
+            <DndProvider backend={HTML5Backend}>
+              <section className={s.table_wrapper}>
+                  <BurgerIngredients handleIngredientClick={handleIngredientClick} />
+                  <BurgerConstructor handleOrderClick={handleOrderClick} />
+              </section>
+            </DndProvider>
             {isModalOpen && (
-              <Modal title={modalTitle} closeModal={closeModal}>
-                {modalInner === modalInnerDetails.ingredientDetails && <IngredientDetails currentIng={currentIng}/>}
-                {modalInner === modalInnerDetails.orderDetails && orderState.order && <OrderDetails orderState={orderState} />}
+              <Modal closeModal={closeModal}>
+                {modalInner.type === modalInnerDetails.ingredientDetails && <IngredientDetails/>}
+                {modalInner.type === modalInnerDetails.orderDetails && order && <OrderDetails/>}
               </Modal>
             )}
           </>
         )}
-      </IngredientsContext.Provider>
     </main>
   );
 }

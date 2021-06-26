@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDrag } from 'react-dnd';
 
 import s from './burger-ingredients-item.module.sass';
 
@@ -9,8 +10,21 @@ const BurgerIngredientsItem = ({ ingredient, count, onIngredientClick }) => {
 
     const { name, price, image } = ingredient;
 
+    const [{isDrag}, ingredientRef] = useDrag({
+        type: 'constructor',
+        item: ingredient,
+        collect: monitor => ({
+            isDrag: monitor.isDragging()
+        })
+    })
+
+
     return (
-        <div onClick={() => onIngredientClick(ingredient)} className={`${s.ingredient_item}`}>
+        <div 
+            onClick={() => onIngredientClick(ingredient)} 
+            className={`${s.ingredient_item}`}
+            ref={ingredientRef}
+        >
             <div className={`${s.header_item} pl-4 pb-1 pr-4`}>
                 {count && (
                     <div className={s.ingredient_counter}>

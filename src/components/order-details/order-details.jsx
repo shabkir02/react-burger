@@ -1,14 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import s from './order-details.module.sass';
 
 import background from '../../images/order-detail.svg';
 import accept from '../../images/stroke.svg';
 
-const OrderDetails = ({ orderState }) => {
+const OrderDetails = () => {
 
-    const { order: { number } } = orderState.order;
+    const order = useSelector(store => store.order.order);
+
+    const { order: { number } } = order;
 
     return (
         <div className={`pt-20 pb-20`}>
@@ -22,21 +24,6 @@ const OrderDetails = ({ orderState }) => {
             <p className={`${s.footer_descr} text text_type_main-default`}>Дождитесь готовности на орбитальной станции</p>
         </div>
     )
-}
-
-OrderDetails.propTypes = {
-    orderState: PropTypes.oneOfType([
-        PropTypes.shape({
-            order: PropTypes.shape({
-                name: PropTypes.string,
-                order: PropTypes.shape({
-                    number: PropTypes.number.isRequired
-                }),
-                success: PropTypes.string
-            })
-        }),
-        PropTypes.oneOf([null]).isRequired
-    ])
 }
 
 export default OrderDetails;

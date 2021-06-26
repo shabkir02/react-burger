@@ -1,14 +1,31 @@
-import React, { useContext } from 'react';
+import React, { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { IngredientsContext } from '../../services/ingredientsContext';
 import BurgerIngredientsItem from '../burger-ingredients-item/burger-ingredients-item';
 
 import s from './burger-ingredients-list.module.sass';
 
 const BurgerIngredientsList = ({ title, type, onIngredientClick }) => {
 
-    const { ingredients } = useContext(IngredientsContext)
+    const { ingredients, constructorIngredients, constructorBun } = useSelector(store => ({
+        ingredients: store.ingredients.ingredients,
+        constructorIngredients: store.ingredients.constructorIngredients,
+        constructorBun: store.ingredients.constructorBun
+    }));
+
+    const counters = useMemo(() => {
+		const counter = {};
+
+		constructorIngredients.map((ingredient) => {
+			if (!counter[ingredient._id]) counter[ingredient._id] = 0;
+			counter[ingredient._id]++;
+		});
+
+		if (constructorBun) counter[constructorBun._id] = 2;
+
+		return counter;
+	}, [constructorIngredients, constructorBun]);
 
     const ingredientsArr = ingredients.map(ingredient => {
         if (ingredient.type === type) {
@@ -16,7 +33,7 @@ const BurgerIngredientsList = ({ title, type, onIngredientClick }) => {
                 <BurgerIngredientsItem 
                     key={ingredient._id} 
                     ingredient={ingredient} 
-                    count={ingredient._id === ingredients[0]._id ? 1 : null}
+                    count={counters[ingredient._id]}
                     onIngredientClick={onIngredientClick}
                 />
             )
@@ -24,7 +41,7 @@ const BurgerIngredientsList = ({ title, type, onIngredientClick }) => {
     })
 
     return (
-        <div className={`${s.type_wrapper} pt-10`}>
+        <div id={type} className={`${s.type_wrapper} pt-10`}>
             <h3 className="text text_type_main-medium mb-6">{title}</h3>
             <div className={s.ingredients_type_wrapper}>
                 {ingredientsArr}
