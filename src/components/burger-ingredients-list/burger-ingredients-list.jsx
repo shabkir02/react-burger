@@ -51,8 +51,8 @@ const BurgerIngredientsList = ({ title, type, onIngredientClick }) => {
 }
 
 BurgerIngredientsList.propTypes = {
-    title: PropTypes.oneOf(['Булки', 'Соусы', 'Начинки']),
-    type: PropTypes.oneOf(['bun', 'sauce', 'main']),
+    title: PropTypes.oneOf(['Булки', 'Соусы', 'Начинки']).isRequired,
+    type: PropTypes.oneOf(['bun', 'sauce', 'main']).isRequired,
     onIngredientClick: PropTypes.func.isRequired
 }
 

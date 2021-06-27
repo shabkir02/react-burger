@@ -26,6 +26,8 @@ export function getIngredients() {
                 type: GET_INGREDIENTS_SUCCESS,
                 payload: response.data
             })
+        }).catch(err => {
+            console.log(err);
         })
     }
 }

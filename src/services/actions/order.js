@@ -33,6 +33,8 @@ export function makeOrder(ingredientsIdArr) {
                     type: GET_ORDER_SUCCESS,
                     payload: response
                 })
+            }).catch(err => {
+              console.log(err);
             })
     }
 }
