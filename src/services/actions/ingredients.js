@@ -8,6 +8,7 @@ export const MOVE_INGREDIENT_IN_CONSTRUCTOR = "MOVE_INGREDIENT_IN_CONSTRUCTOR";
 
 const _apiUrl = 'https://norma.nomoreparties.space/api';
 
+console.log(true);
 export function getIngredients() {
     return function(dispatch) {
         dispatch({
