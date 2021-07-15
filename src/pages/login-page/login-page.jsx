@@ -1,27 +1,43 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Logo, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from 'react-router-dom';
-
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { userLogin, SET_EMAIL, SET_PASSWORD } from '../../services/actions'
+import { userLogin, SET_EMAIL, SET_PASSWORD, RESET_EMAIL, RESET_PASSWORD, SET_USER } from '../../services/actions'
+import { setCookie } from '../../utils/cookies';
 
 import s from './login-page.module.sass';
 
 const LoginPage = () => {
 
     const dispatch = useDispatch();
+    const history = useHistory();
 
-    const { email, password } = useSelector(store => ({
+    const { email, password, userLoginSuccess } = useSelector(store => ({
         email: store.user.email,
-        password: store.user.password
+        password: store.user.password,
+        userLoginSuccess: store.user.userLoginSuccess
     }))
 
     const onFormSubmit = (e) => {
         e.preventDefault();
-
         dispatch(userLogin(email, password))
+        dispatch({ type: RESET_EMAIL })
+        dispatch({ type: RESET_PASSWORD })
     }
+
+    useEffect(() => {
+        if (userLoginSuccess && userLoginSuccess.success) {
+            const accessToken = userLoginSuccess.accessToken.split('Bearer ')[1];
+            const refreshToken = userLoginSuccess.refreshToken;
+
+            setCookie('accessToken', accessToken);
+            localStorage.setItem('refreshToken', refreshToken)
+            dispatch({ type: SET_USER })
+
+            history.replace({ pathname: '/' })
+        }
+    }, [userLoginSuccess, dispatch, history])
 
     console.log(email, password);
 

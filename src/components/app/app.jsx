@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import { useDispatch } from 'react-redux';
 
 import WithAppHeader from '../../layouts/with-app-header';
 import ConstructorPage from '../../pages/constructor-page/constructor-page';
@@ -10,7 +12,19 @@ import ResetPasswordPage from '../../pages/reset-password-page/reset-password-pa
 import ProfilePage from '../../pages/profile-page/profile-page';
 import FeedPage from '../../pages/feed-page/feed-page';
 
+import { SET_USER } from '../../services/actions';
+
 const App = () => {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (localStorage.getItem('refreshToken')) {
+      dispatch({
+        type: SET_USER
+      })
+    }
+  }, [dispatch])
 
   return (
     <Router>

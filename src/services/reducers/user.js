@@ -14,6 +14,8 @@ import {
     RESET_PASSWORD,
     SET_NAME,
     RESET_NAME,
+    SET_USER,
+    REMOVE_USER
 } from '../actions';
 
 const initialState = {
@@ -31,7 +33,8 @@ const initialState = {
 
     name: '',
     email: '',
-    password: ''
+    password: '',
+    user: false
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -116,6 +119,16 @@ export const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 name: ''
+            }
+        case SET_USER:
+            return {
+                ...state,
+                user: true
+            }
+        case REMOVE_USER:
+            return {
+                ...state,
+                user: false
             }
         default: 
             return state

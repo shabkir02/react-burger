@@ -3,7 +3,7 @@ import { Logo, EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/re
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { SET_EMAIL, SET_NAME, SET_PASSWORD, userRegister, RESET_EMAIL, RESET_PASSWORD, RESET_NAME } from '../../services/actions';
+import { SET_EMAIL, SET_NAME, SET_PASSWORD, userRegister, RESET_EMAIL, RESET_PASSWORD, RESET_NAME, SET_USER } from '../../services/actions';
 import { setCookie, getCookie } from '../../utils/cookies';
 
 import s from './register-page.module.sass';
@@ -35,10 +35,11 @@ const RegisterPage = () => {
 
             setCookie('accessToken', accessToken);
             localStorage.setItem('refreshToken', refreshToken)
+            dispatch({ type: SET_USER })
 
             history.replace({ pathname: '/' })
         }
-    }, [userRegisterSuccess, history])
+    }, [userRegisterSuccess, history, dispatch])
 
     return (
         <div className={`${s.form_container} pt-30`} >

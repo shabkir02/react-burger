@@ -19,6 +19,9 @@ export const RESET_PASSWORD = "RESET_PASSWORD";
 export const SET_NAME = "SET_NAME";
 export const RESET_NAME = "RESET_NAME"
 
+export const SET_USER = "SET_USER";
+export const REMOVE_USER = "REMOVE_USER";
+
 const _apiUrl = 'https://norma.nomoreparties.space/api';
 
 export function userRegister(name, email, password) {

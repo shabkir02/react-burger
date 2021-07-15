@@ -1,6 +1,4 @@
 import React from 'react';
-import { Input, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from 'react-router-dom';
 
 import s from './feed-page.module.sass';
 

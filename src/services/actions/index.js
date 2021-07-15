@@ -55,7 +55,9 @@ import {
     RESET_NAME,
     userRegister,
     userLogin,
-    userLogout
+    userLogout,
+    SET_USER,
+    REMOVE_USER
 } from './user';
 
 export {
@@ -103,6 +105,8 @@ export {
     RESET_NAME,
     userRegister,
     userLogin,
-    userLogout
+    userLogout,
+    SET_USER,
+    REMOVE_USER
 }
 

@@ -11,16 +11,25 @@ import s from './reset-password-page.module.sass';
 const ResetPasswordPage = () => {
 
     const dispatch = useDispatch();
+    const history = useHistory()
 
-    const { password, emailCode } = useSelector(store => ({
+    const { password, emailCode, resetPasswordSuccess } = useSelector(store => ({
         password: store.user.password,
-        emailCode: store.resetPassword.emailCode
+        emailCode: store.resetPassword.emailCode,
+        resetPasswordSuccess: store.resetPassword.resetPasswordSuccess
     }))
 
     const onFormSubmit = (e) => {
-        e.preventDefault();
         dispatch(resetPassword(password, emailCode))
+        dispatch({ type: RESET_EMAILCODE })
+        dispatch({ type: RESET_PASSWORD })
     }
+
+    useEffect(() => {
+        if (resetPasswordSuccess && resetPasswordSuccess.success) {
+            history.replace({ pathname: '/login' })
+        }
+    }, [history, resetPasswordSuccess])
 
     return (
         <div className={`${s.form_container} pt-30`} >
