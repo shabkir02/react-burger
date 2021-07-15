@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import s from './order-details.module.sass';
 
@@ -6,9 +7,14 @@ import background from '../../images/order-detail.svg';
 import accept from '../../images/stroke.svg';
 
 const OrderDetails = () => {
+
+    const order = useSelector(store => store.order.order);
+
+    const { order: { number } } = order;
+
     return (
         <div className={`pt-20 pb-20`}>
-            <p className={`${s.count} text text_type_digits-large mb-8`}>034536</p>
+            <p className={`${s.count} text text_type_digits-large mb-8`}>{number}</p>
             <h4 className={`${s.count_descr} text text_type_main-medium mb-15`}>идентификатор заказа</h4>
             <div className={`${s.image_wrapper} mb-15`}>
                 <img className={s.accept} src={accept} alt="accept" /> 

@@ -1,56 +1,100 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { CurrencyIcon, ConstructorElement, DragIcon, Button  } from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyIcon, ConstructorElement, Button  } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector, useDispatch } from 'react-redux';
+import { useDrop } from 'react-dnd';
+import { v4 as uuidv4 } from 'uuid';
+
+import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
+import { ADD_INGREDIENT_TO_CONSTRUCTOR, ADD_BUN_TO_CONSTRUCTOR } from '../../services/actions';
 
 import s from './burger-constructor.module.sass';
 
-const BurgerConstructor = ({ data, handleOrderClick }) => {
+const BurgerConstructor = ({ handleOrderClick }) => {
+
+    const { constructorIngredients, constructorBun } = useSelector(store => ({
+        constructorIngredients: store.ingredients.constructorIngredients,
+        constructorBun: store.ingredients.constructorBun
+    }));
+
+    const dispatch = useDispatch();
+
+    const makeOrder = () => {
+        if (constructorBun && constructorIngredients.length > 0) {
+            const finalIngredients = constructorIngredients.map(ingredient => ingredient._id)
+            handleOrderClick([...finalIngredients, constructorBun._id, constructorBun._id])
+        }
+    }
+
+    const [, dropContainer] = useDrop({
+        accept: "constructor",
+        drop(item) {
+            if (item.type === 'bun') {
+                dispatch({ type: ADD_BUN_TO_CONSTRUCTOR, payload: item })
+                return
+            }
+            dispatch({ type: ADD_INGREDIENT_TO_CONSTRUCTOR, payload: {...item, drag_id: uuidv4() } })
+        }
+    })
+
+    const totalPrice = useMemo(() => {
+        if (constructorBun || constructorIngredients.length > 0) {
+            const totalPrice = constructorIngredients.reduce((acc, curr) => {
+                return acc + curr.price
+            }, 0)
+    
+            return (totalPrice + (constructorBun ? constructorBun.price : 0) * 2)
+        } else {
+            return 0
+        }
+    }, [constructorIngredients, constructorBun])
+
     return (
         <section className={`${s.section_container} pt-25`}>
-           <div className={`pt-4 pr-4`}>
-               <div className={`pl-8 mb-4`}>
-                   <ConstructorElement 
-                        type="top"
-                        isLocked={true}
-                        text="Краторная булка N-200i"
-                        price={1255}
-                        thumbnail="https://code.s3.yandex.net/react/code/bun-02.png"
-                   />
-               </div>
-               <div className={`${s.wrapper_inner} mb-4`}>
-                   {data.map(item => {
-                       if (item.type !== 'bun') {
-                           return (
-                                <div key={item._id} className={`${s.constructor_item}`}>
-                                    <div className={s.drag_icon}>
-                                        <DragIcon />
-                                    </div>
-                                    <ConstructorElement 
-                                        text={item.name}
-                                        price={item.price}
-                                        thumbnail={item.image}
+               <div 
+                    className={`pt-4 pr-4`}
+                    ref={dropContainer}
+                >
+                    {constructorBun && (
+                        <div className={`pl-8 mb-4`}>
+                            <ConstructorElement 
+                                    type="top"
+                                    isLocked={true}
+                                    text={constructorBun.name}
+                                    price={constructorBun.price}
+                                    thumbnail={constructorBun.image}
+                            />
+                        </div>
+                    )}
+                    {constructorIngredients && (
+                        <div className={`${s.wrapper_inner} mb-4`}>
+                            {constructorIngredients.map((ingredient, index) => (
+                                    <BurgerConstructorItem
+                                        index={index}
+                                        ingredient={ingredient}
+                                        key={ingredient.drag_id}
                                     />
-                                </div>
-                           )
-                       }
-                   })}
-               </div>
-               <div className={`pl-8 pr-4`}>
-                   <ConstructorElement 
-                        type="bottom"
-                        isLocked={true}
-                        text="Краторная булка N-200i"
-                        price={1255}
-                        thumbnail="https://code.s3.yandex.net/react/code/bun-02.png"
-                   />
-               </div>
-           </div>
+                            ))}
+                        </div>
+                    )}
+                    {constructorBun && (
+                        <div className={`pl-8 pr-4`}>
+                            <ConstructorElement 
+                                    type="bottom"
+                                    isLocked={true}
+                                    text={constructorBun.name}
+                                    price={constructorBun.price}
+                                    thumbnail={constructorBun.image}
+                            />
+                        </div>
+                    )}
+                </div>
            <div className={`${s.constructor_footer}`}>
                 <div className={`${s.total_wrapper} mr-10`}>
-                    <span className="text text_type_digits-medium">610</span>
+                    <span className="text text_type_digits-medium">{totalPrice}</span>
                     <CurrencyIcon />
                 </div>
-                <div onClick={handleOrderClick}>
+                <div onClick={makeOrder}>
                     <Button type="primary" size="medium">
                         Оформить заказ
                     </Button>
@@ -61,20 +105,6 @@ const BurgerConstructor = ({ data, handleOrderClick }) => {
 }
 
 BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-       name: PropTypes.string.isRequired,
-       type: PropTypes.string.isRequired,
-       proteins: PropTypes.number,
-       fat: PropTypes.number,
-       carbohydrates: PropTypes.number,
-       calories: PropTypes.number,
-       price: PropTypes.number,
-       image: PropTypes.string.isRequired,
-       image_mobile: PropTypes.string.isRequired,
-       image_large: PropTypes.string.isRequired,
-       __v: PropTypes.number
-    })),
     handleOrderClick: PropTypes.func.isRequired
 }
 
