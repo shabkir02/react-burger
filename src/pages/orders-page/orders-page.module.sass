@@ -2,13 +2,17 @@
     max-width: 1240px
     width: 100%
     margin: 0 auto
-.container_wrapper
     display: grid
-    grid-template-columns: 584px 1fr
-    gap: 56px
-.orders_wrapper
-    height: calc(100vh - 214px)
-    overflow: auto
+    grid-template-columns: 320px 1fr
+    gap: 60px
+    padding-top: 44px
+// .container_nav
+//     padding-top: 120px
+.container_orders
+    padding-top: 44px
+.container_orders_wrapper
+    height: calc(100vh - 149px)
+    overflow-y: auto
     &::-webkit-scrollbar 
         width: 8px
         height: 90%
@@ -19,7 +23,3 @@
     &::-webkit-scrollbar-thumb 
         background: #8585AD
         border-radius: 6px
-.details_column
-    display: grid
-    grid-template-columns: 1fr 1fr
-    gap: 32px

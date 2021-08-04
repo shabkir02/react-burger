@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { Logo, Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 
-import { resetPassword, SET_EMAILCODE, RESET_EMAILCODE, SET_PASSWORD, RESET_PASSWORD } from '../../services/actions'
+import { resetPassword, SET_EMAILCODE, SET_PASSWORD } from '../../services/actions'
 
 import s from './reset-password-page.module.sass';
 
@@ -13,16 +13,16 @@ const ResetPasswordPage = () => {
     const dispatch = useDispatch();
     const history = useHistory()
 
-    const { password, emailCode, resetPasswordSuccess } = useSelector(store => ({
+    const { password, emailCode, resetPasswordSuccess, user } = useSelector(store => ({
         password: store.user.password,
         emailCode: store.resetPassword.emailCode,
-        resetPasswordSuccess: store.resetPassword.resetPasswordSuccess
+        resetPasswordSuccess: store.resetPassword.resetPasswordSuccess,
+        user: store.user.user
     }))
 
     const onFormSubmit = (e) => {
+        e.preventDefault();
         dispatch(resetPassword(password, emailCode))
-        dispatch({ type: RESET_EMAILCODE })
-        dispatch({ type: RESET_PASSWORD })
     }
 
     useEffect(() => {
@@ -30,6 +30,10 @@ const ResetPasswordPage = () => {
             history.replace({ pathname: '/login' })
         }
     }, [history, resetPasswordSuccess])
+
+    if (user) {
+        return <Redirect to="/" />
+    }
 
     return (
         <div className={`${s.form_container} pt-30`} >

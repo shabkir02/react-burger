@@ -1,65 +1,56 @@
-import React, { useEffect } from 'react';
-import { Input, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useHistory } from 'react-router-dom';
+import React from 'react';
+import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { userLogout, REMOVE_USER } from '../../services/actions';
+import { SET_NAME, SET_EMAIL, SET_PASSWORD, updateUserInfo } from '../../services/actions';
 
 import s from './profile-page.module.sass';
 
 const ProfilePage = () => {
 
     const dispatch = useDispatch();
-    const history = useHistory();
-    const userLogoutSuccess = useSelector(store => store.user.userLogoutSuccess)
+    const { email, name, password } = useSelector(store => ({
+        email: store.user.email,
+        name: store.user.name,
+        password: store.user.password
+    }))
 
-    const logoutOfProfile = () => {
-        const refreshToken = localStorage.getItem('refreshToken')
-        dispatch(userLogout(refreshToken))
+    const updateUserInfoClick = () => {
+        dispatch(updateUserInfo({
+            name,
+            email,
+            password
+        }))
     }
 
-    useEffect(() => {
-        if (userLogoutSuccess && userLogoutSuccess.success) {
-            localStorage.removeItem('refreshToken');
-            dispatch({
-                type: REMOVE_USER
-            })
-            history.replace({ pathname: '/' })
-        }
-    }, [userLogoutSuccess, history, dispatch])
-
     return (
-        <div className={`${s.container} pt-30`} >
-            <div className={s.container_nav}>
-                <p className={`${s.container_nav_item} text text_type_main-medium`}>Профиль</p>
-                <p className={`${s.container_nav_item} text text_type_main-medium`}>История заказов</p>
-                <div 
-                    className={`${s.container_nav_item} text text_type_main-medium`}
-                    onClick={logoutOfProfile}
-                >Выход</div>
-
-                <p className={`${s.container_nav_descr} text text_type_main-default mt-20`}>В этом разделе вы можете изменить свои персональные данные</p>
-            </div>
-            <div className={s.container_form}>
+        <div className={`${s.container_form} pt-30`}>
+            <div className={s.form_wrapper}>
                 <div className="mb-6">
                     <Input 
                         type="text"
                         placeholder="Имя"
-                        // value={name}
-                        // onChange={e => dispatch({ type: SET_NAME, payload: e.target.value })}
+                        value={name}
+                        onChange={e => dispatch({ type: SET_NAME, payload: e.target.value })}
                     />
                 </div>
                 <div className="mb-6">
                     <EmailInput
-                        // value={email}
-                        // onChange={e => dispatch({ type: SET_EMAIL, payload: e.target.value })}
+                        value={email}
+                        onChange={e => dispatch({ type: SET_EMAIL, payload: e.target.value })}
                     />
                 </div>
                 <div className="mb-6">
                     <PasswordInput 
-                        // value={password}
-                        // onChange={e => dispatch({ type: SET_PASSWORD, payload: e.target.value })}
+                        value={password}
+                        onChange={e => dispatch({ type: SET_PASSWORD, payload: e.target.value })}
                     />
+                </div>
+                <div className={s.profile_btn_wrapper}>
+                    <div className={`${s.profile_btn_cancel} text text_type_main-default`}>Отмена</div>
+                    <Button onClick={updateUserInfoClick} type="primary" size="medium">
+                        Сохранить
+                    </Button>
                 </div>
             </div>
         </div>

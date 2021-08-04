@@ -1,14 +1,8 @@
-export const USER_REGISTER_REQUEST = "USER_REGISTER_REQUEST";
-export const USER_REGISTER_SUCCESS = "USER_REGISTER_SUCCESS";
-export const USER_REGISTER_FAILED = "USER_REGISTER_FAILED";
+import { setCookie, getCookie, deleteCookie } from "../../utils/cookies";
 
-export const USER_LOGIN_REQUEST = "USER_LOGIN_REQUEST";
-export const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
-export const USER_LOGIN_FAILED = "USER_LOGIN_FAILED";
-
-export const USER_LOGOUT_REQUEST = "USER_LOGOUT_REQUEST";
-export const USER_LOGOUT_SUCCESS = "USER_LOGOUT_SUCCESS";
-export const USER_LOGOUT_FAILED = "USER_LOGOUT_FAILED";
+export const SET_USER_REQUEST = "SET_USER_REQUEST";
+export const SET_USER_SUCCESS = "SET_USER_SUCCESS";
+export const SET_USER_FAILED = "SET_USER_FAILED";
 
 export const SET_EMAIL = "SET_EMAIL";
 export const RESET_EMAIL = "RESET_EMAIL";
@@ -19,15 +13,161 @@ export const RESET_PASSWORD = "RESET_PASSWORD";
 export const SET_NAME = "SET_NAME";
 export const RESET_NAME = "RESET_NAME"
 
-export const SET_USER = "SET_USER";
-export const REMOVE_USER = "REMOVE_USER";
+export const USER_INFO = "USER_INFO";
 
 const _apiUrl = 'https://norma.nomoreparties.space/api';
+
+function updateAccessToken() {
+    return fetch(`${_apiUrl}/auth/token`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({
+            token: localStorage.getItem('refreshToken')
+        })
+    }).then(response => {
+        return response.json();
+    })
+}
+
+function userInfoFetch() {
+    return fetch(`${_apiUrl}/auth/user`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+            'authorization': 'Bearer ' + getCookie('accessToken')
+        }
+    }).then(response => {
+        return response.json()
+    })
+}
+
+function updateUserInfoFetch(userObj) {
+    return fetch(`${_apiUrl}/auth/user`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+            'authorization': 'Bearer ' + getCookie('accessToken')
+        },
+        body: JSON.stringify(userObj)
+    }).then(response => {
+        return response.json()
+    })
+}
+
+export function getUserInfo() {
+    return function(dispatch) {
+        dispatch({ type: SET_USER_REQUEST});
+        userInfoFetch().then(response => {
+            if (response.success) {
+                dispatch({
+                    type: SET_USER_SUCCESS,
+                    payload: response.user
+                })
+                dispatch({
+                    type: SET_NAME,
+                    payload: response.user.name
+                })
+                dispatch({
+                    type: SET_EMAIL,
+                    payload: response.user.email
+                })
+            } else {
+                dispatch({ type: SET_USER_FAILED })
+                if (response.message === 'jwt expired') {
+                    updateAccessToken().then(data => {
+                        if (data.success) {
+                            const accessToken = data.accessToken.split('Bearer ')[1];
+                            const refreshToken = data.refreshToken;
+
+                            setCookie('accessToken', accessToken);
+                            localStorage.setItem('refreshToken', refreshToken)
+
+                            userInfoFetch().then(response => {
+                                dispatch({
+                                    type: SET_USER_SUCCESS,
+                                    payload: response.user
+                                })
+                                dispatch({
+                                    type: SET_NAME,
+                                    payload: response.user.name
+                                })
+                                dispatch({
+                                    type: SET_EMAIL,
+                                    payload: response.user.email
+                                })
+                            }).catch(err => {
+                                console.log(err);
+                            })
+                        }
+                    })
+                }
+            }
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+}
+
+export function updateUserInfo(userObj) {
+    return function(dispatch) {
+        dispatch({ type: SET_USER_REQUEST});
+        updateUserInfoFetch(userObj).then(response => {
+            if (response.success) {
+                dispatch({
+                    type: SET_USER_SUCCESS,
+                    payload: response.user
+                })
+                dispatch({
+                    type: SET_NAME,
+                    payload: response.user.name
+                })
+                dispatch({
+                    type: SET_EMAIL,
+                    payload: response.user.email
+                })
+            } else {
+                dispatch({ type: SET_USER_FAILED })
+                if (response.message === 'jwt expired') {
+                    updateAccessToken().then(data => {
+                        if (data.success) {
+                            const accessToken = data.accessToken.split('Bearer ')[1];
+                            const refreshToken = data.refreshToken;
+
+                            setCookie('accessToken', accessToken);
+                            localStorage.setItem('refreshToken', refreshToken)
+
+                            userInfoFetch().then(response => {
+                                dispatch({
+                                    type: SET_USER_SUCCESS,
+                                    payload: response.user
+                                })
+                                dispatch({
+                                    type: SET_NAME,
+                                    payload: response.user.name
+                                })
+                                dispatch({
+                                    type: SET_EMAIL,
+                                    payload: response.user.email
+                                })
+                            }).catch(err => {
+                                console.log(err);
+                            })
+                        }
+                    })
+                }
+            }
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+}
 
 export function userRegister(name, email, password) {
     return function(dispatch) {
         dispatch({
-            type: USER_REGISTER_REQUEST
+            type: SET_USER_REQUEST
         });
         fetch(`${_apiUrl}/auth/register`, {
             method: 'POST',
@@ -44,15 +184,29 @@ export function userRegister(name, email, password) {
                 return response.json()
             } else {
                 dispatch({
-                    type: USER_REGISTER_FAILED
+                    type: SET_USER_FAILED
                 })
             }
         }).then(response => {
-            console.log(response);
-            dispatch({
-                type: USER_REGISTER_SUCCESS,
-                payload: response
-            })
+            if (response.success) {
+                dispatch({
+                    type: SET_USER_SUCCESS,
+                    payload: response.user
+                })
+                dispatch({ type: RESET_EMAIL })
+                dispatch({ type: RESET_PASSWORD })
+                dispatch({ type: RESET_NAME })
+
+                const accessToken = response.accessToken.split('Bearer ')[1];
+                const refreshToken = response.refreshToken;
+
+                setCookie('accessToken', accessToken);
+                localStorage.setItem('refreshToken', refreshToken)
+            } else {
+                dispatch({
+                    type: SET_USER_FAILED
+                })
+            }
         }).catch(err => {
             console.log(err);
         })
@@ -62,7 +216,7 @@ export function userRegister(name, email, password) {
 export function userLogin(email, password) {
     return function(dispatch) {
         dispatch({
-            type: USER_LOGIN_REQUEST
+            type: SET_USER_REQUEST
         });
         fetch(`${_apiUrl}/auth/login`, {
             method: 'POST',
@@ -78,14 +232,28 @@ export function userLogin(email, password) {
                 return response.json()
             } else {
                 dispatch({
-                    type: USER_LOGIN_FAILED
+                    type: SET_USER_FAILED
                 })
             }
         }).then(response => {
-            dispatch({
-                type: USER_LOGIN_SUCCESS,
-                payload: response
-            })
+            if (response.success) {
+                dispatch({
+                    type: SET_USER_SUCCESS,
+                    payload: response.user
+                })
+                dispatch({ type: RESET_EMAIL })
+                dispatch({ type: RESET_PASSWORD })
+
+                const accessToken = response.accessToken.split('Bearer ')[1];
+                const refreshToken = response.refreshToken;
+
+                setCookie('accessToken', accessToken);
+                localStorage.setItem('refreshToken', refreshToken)
+            } else {
+                dispatch({
+                    type: SET_USER_FAILED
+                })
+            }
         }).catch(err => {
             console.log(err);
         })
@@ -95,7 +263,7 @@ export function userLogin(email, password) {
 export function userLogout(token) {
     return function(dispatch) {
         dispatch({
-            type: USER_LOGOUT_REQUEST
+            type: SET_USER_REQUEST
         });
         fetch(`${_apiUrl}/auth/logout`, {
             method: 'POST',
@@ -110,16 +278,25 @@ export function userLogout(token) {
                 return response.json()
             } else {
                 dispatch({
-                    type: USER_LOGOUT_FAILED
+                    type: SET_USER_FAILED
                 })
             }
         }).then(response => {
-            dispatch({
-                type: USER_LOGOUT_SUCCESS,
-                payload: response
-            })
+            if (response.success) {
+                dispatch({
+                    type: SET_USER_SUCCESS,
+                    payload: null
+                })
+                localStorage.removeItem('refreshToken')
+                deleteCookie('accessToken')
+            } else {
+                dispatch({
+                    type: SET_USER_FAILED
+                })
+            }
         }).catch(err => {
             console.log(err);
         })
     }
 }
+

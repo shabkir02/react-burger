@@ -2,25 +2,32 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag } from 'react-dnd';
+import { Link, useLocation } from 'react-router-dom';
 
 import s from './burger-ingredients-item.module.sass';
 
 
 const BurgerIngredientsItem = ({ ingredient, count, onIngredientClick }) => {
 
-    const { name, price, image } = ingredient;
+    const location = useLocation();
 
-    const [{isDrag}, ingredientRef] = useDrag({
+    const { name, price, image, _id } = ingredient;
+
+    const [, ingredientRef] = useDrag({
         type: 'constructor',
         item: ingredient,
-        collect: monitor => ({
-            isDrag: monitor.isDragging()
-        })
+        // collect: monitor => ({
+        //     isDrag: monitor.isDragging()
+        // })
     })
 
 
     return (
-        <div 
+        <Link 
+            to={{
+                pathname: `/ingredients/${_id}`,
+                state: { background: location }
+            }}
             onClick={() => onIngredientClick(ingredient)} 
             className={`${s.ingredient_item}`}
             ref={ingredientRef}
@@ -38,7 +45,7 @@ const BurgerIngredientsItem = ({ ingredient, count, onIngredientClick }) => {
                 </div>
             </div>
             <h3 className={`${s.ingredient_name} text text_type_main-default`}>{name}</h3>
-        </div>
+        </Link>
     )
 }
 

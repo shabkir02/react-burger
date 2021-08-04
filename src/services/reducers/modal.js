@@ -1,14 +1,17 @@
 import { 
     SET_MODAL_INNER_INGREDIENT_DETAILS,
     SET_MODAL_INNER_ORDER_DETAILS,
+    SET_MODAL_INNER_ORDER_INFO,
     SET_MODAL_OPEN,
     SET_MODAL_CLOSE,
-    SET_CURRENT_INGREDIENT
+    SET_CURRENT_INGREDIENT,
+    SET_CURRENT_ORDER_INFO
 } from '../actions';
 
 const initialState = {
     ingredientsConstructor: null,
     currentIngredient: null,
+    currentOrderInfo: null,
     isModalOpen: false,
     modalInner: null
 }
@@ -19,6 +22,11 @@ export const modalReducer = (state = initialState, action) => {
             return {
                 ...state,
                 currentIngredient: action.payload
+            }
+        case SET_CURRENT_ORDER_INFO:
+            return {
+                ...state,
+                currentOrderInfo: action.payload
             }
         case SET_MODAL_INNER_INGREDIENT_DETAILS:
             return {
@@ -34,6 +42,14 @@ export const modalReducer = (state = initialState, action) => {
                 modalInner: {
                     title: null,
                     type: 'orderDetails'
+                }
+            }
+        case SET_MODAL_INNER_ORDER_INFO:
+            return {
+                ...state,
+                modalInner: {
+                    title: action.payload,
+                    type: 'orderInfo'
                 }
             }
         case SET_MODAL_OPEN:

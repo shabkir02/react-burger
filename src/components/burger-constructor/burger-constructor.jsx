@@ -4,6 +4,7 @@ import { CurrencyIcon, ConstructorElement, Button  } from '@ya.praktikum/react-d
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
+import { useHistory } from 'react-router-dom';
 
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
 import { ADD_INGREDIENT_TO_CONSTRUCTOR, ADD_BUN_TO_CONSTRUCTOR } from '../../services/actions';
@@ -12,14 +13,22 @@ import s from './burger-constructor.module.sass';
 
 const BurgerConstructor = ({ handleOrderClick }) => {
 
-    const { constructorIngredients, constructorBun } = useSelector(store => ({
+    const history = useHistory();
+
+    const { constructorIngredients, constructorBun, user } = useSelector(store => ({
         constructorIngredients: store.ingredients.constructorIngredients,
-        constructorBun: store.ingredients.constructorBun
+        constructorBun: store.ingredients.constructorBun,
+        user: store.user.user
     }));
 
     const dispatch = useDispatch();
 
     const makeOrder = () => {
+        if (!user) {
+            history.push({ pathname: '/login' })
+            return
+        }
+
         if (constructorBun && constructorIngredients.length > 0) {
             const finalIngredients = constructorIngredients.map(ingredient => ingredient._id)
             handleOrderClick([...finalIngredients, constructorBun._id, constructorBun._id])

@@ -16,7 +16,7 @@ const BurgerConstructorItem = ({ ingredient, index }) => {
         dispatch({ type: DELETE_INGREDIENT_FROM_CONSTRUCTOR, payload: ingredient })
     }
 
-    const [{ isHover }, drop] = useDrop({
+    const [, drop] = useDrop({
         accept: 'ingredient',
         collect: monitor => ({
             isHover: monitor.isOver()

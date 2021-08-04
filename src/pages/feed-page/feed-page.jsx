@@ -1,30 +1,44 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
+import OrderItem from '../../components/order-item/order-item';
 
 import s from './feed-page.module.sass';
 
-const FeedPage = () => {
+const FeedPage = ({ handleOrderInfoClick }) => {
 
     return (
-        <div className={s.container} >
-            <div className={s.container_nav}>
-                <p className={`${s.container_nav_item} text text_type_main-medium`}>Профиль</p>
-                <p className={`${s.container_nav_item} text text_type_main-medium`}>История заказов</p>
-                <p className={`${s.container_nav_item} text text_type_main-medium`}>Выход</p>
-
-                <p className={`${s.container_nav_descr} text text_type_main-default mt-20`}>В этом разделе вы можете просмотреть свою историю заказов</p>
-            </div>
-            <div className={s.container_orders}> 
-                <div className={`${s.container_orders_item} mb-6 p-6`}>
-                    <div className={`${s.order_header} mb-6`}>
-                        <p className="text text_type_digits-default">#034535</p>
-                        <p className="text text_type_main-small">Сегодня, 16:20 i-GMT+3</p>
+        <div className={`${s.container} pt-10`} >
+            <h2 className="text text_type_main-large mb-10">Лента заказов</h2>
+            <div className={s.container_wrapper}>
+                <div className={s.orders_wrapper}>
+                    <OrderItem onOrderClick={handleOrderInfoClick} />
+                </div>
+                <div className={s.details_wrapper}>
+                    <div className={`${s.details_column} mb-15`}>
+                        <div>
+                            <h4 className="text text_type_main-medium mb-6">Готовы:</h4>
+                            <p className="text text_type_digits-default mb-2 blue">034533</p>
+                        </div>
+                        <div>
+                            <h4 className="text text_type_main-medium mb-6">В работе:</h4>
+                            <p className="text text_type_digits-default mb-2">034533</p>
+                            <p className="text text_type_digits-default mb-2">034533</p>
+                            <p className="text text_type_digits-default mb-2">034533</p>
+                        </div>
                     </div>
-                    <h4 className="text text_type_main-medium mb-2">Death Star Starship Main бургер</h4>
-                    <p className="text text_type_main-small">Создан</p>
+                    <h3 className="text text_type_main-medium">Выполнено за все время:</h3>
+                    <p className="text text_type_digits-large mb-15 text_shadow">28 752</p>
+                    <h3 className="text text_type_main-medium">Выполнено за сегодня:</h3>
+                    <p className="text text_type_digits-large text_shadow">138</p>
                 </div>
             </div>
         </div>
     )
+}
+
+FeedPage.propTypes = {
+    handleOrderInfoClick: PropTypes.func.isRequired
 }
 
 export default FeedPage;

@@ -1,3 +1,5 @@
+import { getCookie } from '../../utils/cookies';
+
 export const GET_ORDER_REQUEST = "GET_ORDER_REQUEST";
 export const GET_ORDER_SUCCESS = "GET_ORDER_SUCCESS";
 export const GET_ORDER_FAILED = "GET_ORDER_FAILED";
@@ -13,7 +15,8 @@ export function makeOrder(ingredientsIdArr) {
         fetch(`${_apiUrl}/orders`, {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json;charset=utf-8'
+              'Content-Type': 'application/json;charset=utf-8',
+              'Authorization': 'Bearer ' + getCookie('accessToken')
             },
             body: JSON.stringify({
               "ingredients": ingredientsIdArr
