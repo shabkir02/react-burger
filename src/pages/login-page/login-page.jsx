@@ -22,8 +22,6 @@ const LoginPage = () => {
         dispatch(userLogin(email, password))
     }
 
-    console.log(user);
-
     if (user) {
         return <Redirect to="/" />
     }

@@ -18,8 +18,6 @@ export function ProtectedRoute({ children, ...rest }) {
         init();
     }, []);
 
-    console.log(isUserLoaded);
-
     if (!isUserLoaded) {
         return null;
     }
