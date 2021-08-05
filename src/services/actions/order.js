@@ -1,4 +1,5 @@
 import { getCookie } from '../../utils/cookies';
+import { RESET_CONSTRUCTOR } from '../actions';
 
 export const GET_ORDER_REQUEST = "GET_ORDER_REQUEST";
 export const GET_ORDER_SUCCESS = "GET_ORDER_SUCCESS";
@@ -36,6 +37,7 @@ export function makeOrder(ingredientsIdArr) {
                     type: GET_ORDER_SUCCESS,
                     payload: response
                 })
+                dispatch({ type: RESET_CONSTRUCTOR })
             }).catch(err => {
               console.log(err);
             })

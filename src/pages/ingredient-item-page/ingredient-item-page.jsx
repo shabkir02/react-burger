@@ -18,17 +18,11 @@ const IngredientItemPage = () => {
     }));
 
     useEffect(() => {
-        dispatch(getIngredients())
-    }, [dispatch])
-
-    useEffect(() => {
         if (ingredients) {
             const ingredient = ingredients.find(item => item._id === id)
             dispatch({ type: SET_CURRENT_INGREDIENT, payload: ingredient });
         }
     }, [ingredients, id, dispatch])
-
-    console.log(currentIngredient);
 
     return (
         <div className={s.ingredient_wrapper}>

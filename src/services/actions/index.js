@@ -6,7 +6,8 @@ import {
     ADD_INGREDIENT_TO_CONSTRUCTOR,
     ADD_BUN_TO_CONSTRUCTOR,
     MOVE_INGREDIENT_IN_CONSTRUCTOR,
-    getIngredients
+    getIngredients,
+    RESET_CONSTRUCTOR
 } from './ingredients';
 
 import {
@@ -99,6 +100,7 @@ export {
     SET_USER_FAILED,
     SET_USER_SUCCESS,
     getUserInfo,
-    updateUserInfo
+    updateUserInfo,
+    RESET_CONSTRUCTOR
 }
 

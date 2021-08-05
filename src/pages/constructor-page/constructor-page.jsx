@@ -19,10 +19,6 @@ const ConstructorPage = ({ handleIngredientClick, handleOrderClick }) => {
         ingredients: store.ingredients.ingredients,
     }));
 
-    useEffect(() => {
-        dispatch(getIngredients())
-    }, [dispatch])
-
     return ingredients ? (
         <>
             <DndProvider backend={HTML5Backend}>

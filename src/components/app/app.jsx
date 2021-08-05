@@ -31,7 +31,8 @@ import {
   SET_MODAL_CLOSE,
   SET_MODAL_INNER_ORDER_INFO,
   SET_CURRENT_ORDER_INFO,
-  getUserInfo
+  getUserInfo,
+  getIngredients
 } from '../../services/actions';
 
 const App = () => {
@@ -44,11 +45,10 @@ const App = () => {
     let background = 
       history.action === "PUSH" && location.state && location.state.background;
 
-    const { order, modalInner, isModalOpen, ingredients } = useSelector(store => ({
+    const { order, modalInner, isModalOpen } = useSelector(store => ({
       order: store.order.order,
       modalInner: store.modal.modalInner,
       isModalOpen: store.modal.isModalOpen,
-      ingredients: store.ingredients.ingredients,
     }));
 
     const modalInnerDetails = {
@@ -86,6 +86,8 @@ const App = () => {
     }, [dispatch])
 
     useEffect(() => {
+      dispatch(getIngredients())
+
       if (localStorage.getItem('refreshToken')) {
         dispatch(getUserInfo());
       }
@@ -96,6 +98,7 @@ const App = () => {
       const closeModalByEscape = (e) => {
           if (e.key === "Escape") {
               closeModal();
+              closeIngredientModal()
           }
       }
 
@@ -135,7 +138,7 @@ const App = () => {
 
               <Route path="/ingredients/:id" >
                 <WithAppHeader>
-                  <IngredientItemPage ingredients={ingredients} />
+                  <IngredientItemPage />
                 </WithAppHeader>
               </Route>
 

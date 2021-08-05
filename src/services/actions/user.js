@@ -36,7 +36,7 @@ function userInfoFetch() {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json;charset=utf-8',
-            'authorization': 'Bearer ' + getCookie('accessToken')
+             Authorization: 'Bearer ' + getCookie('accessToken')
         }
     }).then(response => {
         return response.json()
@@ -48,7 +48,7 @@ function updateUserInfoFetch(userObj) {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json;charset=utf-8',
-            'authorization': 'Bearer ' + getCookie('accessToken')
+            Authorization: 'Bearer ' + getCookie('accessToken')
         },
         body: JSON.stringify(userObj)
     }).then(response => {
@@ -243,6 +243,15 @@ export function userLogin(email, password) {
                 })
                 dispatch({ type: RESET_EMAIL })
                 dispatch({ type: RESET_PASSWORD })
+
+                dispatch({
+                    type: SET_NAME,
+                    payload: response.user.name
+                })
+                dispatch({
+                    type: SET_EMAIL,
+                    payload: response.user.email
+                })
 
                 const accessToken = response.accessToken.split('Bearer ')[1];
                 const refreshToken = response.refreshToken;

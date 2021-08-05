@@ -15,7 +15,8 @@ const ProfilePage = () => {
         password: store.user.password
     }))
 
-    const updateUserInfoClick = () => {
+    const updateUserInfoClick = (e) => {
+        e.preventDefault();
         dispatch(updateUserInfo({
             name,
             email,
@@ -25,7 +26,7 @@ const ProfilePage = () => {
 
     return (
         <div className={`${s.container_form} pt-30`}>
-            <div className={s.form_wrapper}>
+            <form  onSubmit={updateUserInfoClick} className={s.form_wrapper}>
                 <div className="mb-6">
                     <Input 
                         type="text"
@@ -48,11 +49,11 @@ const ProfilePage = () => {
                 </div>
                 <div className={s.profile_btn_wrapper}>
                     <div className={`${s.profile_btn_cancel} text text_type_main-default`}>Отмена</div>
-                    <Button onClick={updateUserInfoClick} type="primary" size="medium">
+                    <Button type="primary" size="medium">
                         Сохранить
                     </Button>
                 </div>
-            </div>
+            </form>
         </div>
     )
 }
