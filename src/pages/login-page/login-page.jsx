@@ -1,6 +1,6 @@
 import React from 'react';
 import { Logo, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { userLogin, SET_EMAIL, SET_PASSWORD } from '../../services/actions'
@@ -10,6 +10,7 @@ import s from './login-page.module.sass';
 const LoginPage = () => {
 
     const dispatch = useDispatch();
+    const { state } = useLocation()
 
     const { email, password, user } = useSelector(store => ({
         email: store.user.email,
@@ -23,7 +24,7 @@ const LoginPage = () => {
     }
 
     if (user) {
-        return <Redirect to="/" />
+        return <Redirect to={ state?.from || '/' } />
     }
 
     return (
@@ -49,10 +50,10 @@ const LoginPage = () => {
                     <Button>Войти</Button>
                 </form>
                 <p className={`${s.form_descr} text text_type_main-default mb-4`}>
-                    Вы - новый пользователь? <Link to="/register" className={s.form_link}>Зарегестрироваться</Link>
+                    Вы - новый пользователь? <Link to={{ pathname: "/register", state: 'fromLogin' }} className={s.form_link}>Зарегестрироваться</Link>
                 </p>
                 <p className={`${s.form_descr} text text_type_main-default`}>
-                    Забыли пароль? <Link to="/forgot-password" className={s.form_link}>Восстановить пароль</Link>
+                    Забыли пароль? <Link to={{ pathname: "/forgot-password", state: 'fromLogin' }} className={s.form_link}>Восстановить пароль</Link>
                 </p>
             </div>
         </div>

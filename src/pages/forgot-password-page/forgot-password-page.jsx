@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Logo, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, Redirect } from 'react-router-dom';
+import { useHistory, Redirect, useLocation } from 'react-router-dom';
 
 import { SET_EMAIL, sendEmailForResetPass } from '../../services/actions';
 
@@ -12,6 +12,7 @@ const ForgotPasswordPage = () => {
 
     const dispatch = useDispatch();
     const history = useHistory();
+    const location = useLocation();
 
     const { email, sendEmailSuccess, user } = useSelector(store => ({
         email: store.user.email,
@@ -26,12 +27,16 @@ const ForgotPasswordPage = () => {
 
     useEffect(() => {
         if (sendEmailSuccess && sendEmailSuccess.success) {
-            history.replace({ pathname: '/reset-password' });
+            history.replace({ pathname: '/reset-password', state: 'fromForgotPassword' });
         }
     }, [sendEmailSuccess, history, dispatch])
 
     if (user) {
         return <Redirect to="/" />
+    }
+
+    if (location.state !== 'fromLogin') {
+        return <Redirect to="/login" />
     }
 
     return (

@@ -138,7 +138,7 @@ export function updateUserInfo(userObj) {
                             setCookie('accessToken', accessToken);
                             localStorage.setItem('refreshToken', refreshToken)
 
-                            userInfoFetch().then(response => {
+                            updateUserInfoFetch(userObj).then(response => {
                                 dispatch({
                                     type: SET_USER_SUCCESS,
                                     payload: response.user

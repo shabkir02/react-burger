@@ -1,6 +1,6 @@
 import React from "react";
 import { Logo, ListIcon, BurgerIcon, ProfileIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavLink, useRouteMatch, useLocation, useParams } from 'react-router-dom';
+import { NavLink, useRouteMatch, Link } from 'react-router-dom';
 import { useSelector } from "react-redux";
 
 import s from './app-header.module.sass';
@@ -38,9 +38,9 @@ const AppHeader = () => {
                             <span className="text text_type_main-default">Лента заказа</span>
                         </NavLink>
                     </ul>
-                    <div className={s.header_logo}>
+                    <Link to="/" className={s.header_logo}>
                         <Logo/>
-                    </div>
+                    </Link>
                     {!user && (
                         <NavLink 
                             to="/login" 

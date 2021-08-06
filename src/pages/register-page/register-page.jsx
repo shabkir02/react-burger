@@ -1,6 +1,6 @@
 import React from 'react';
 import { Logo, EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { SET_EMAIL, SET_NAME, SET_PASSWORD, userRegister } from '../../services/actions';
@@ -9,7 +9,8 @@ import s from './register-page.module.sass';
 
 const RegisterPage = () => {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const location = useLocation();
 
     const { name, email, password, user } = useSelector(store => ({
         email: store.user.email,
@@ -25,6 +26,12 @@ const RegisterPage = () => {
 
     if (user) {
         return <Redirect to="/" />
+    }
+
+    console.log(location);
+
+    if (location.state !== 'fromLogin') {
+        return <Redirect to="/login" />
     }
 
     return (
