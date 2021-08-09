@@ -18,7 +18,12 @@ const Modal = ({ closeModal, children }) => {
         (
             <div className={s.modal_wrapper}>
                 <div className={`${s.modal} pt-10 pl-10 pr-10 pb-15`} >
-                    {modalInner.title && <h3 className={`text text_type_main-large ${s.modal_title}`}>{modalInner.title}</h3>}
+                    {modalInner.title && modalInner.type === 'ingredientDetails' && (
+                        <h3 className={`text text_type_main-large ${s.modal_title}`}>{modalInner.title}</h3>
+                    )}
+                    {modalInner.title && modalInner.type === 'orderInfo' && (
+                        <h3 className={`text text_type_digits-default ${s.modal_title}`}>{modalInner.title}</h3>
+                    )}
                     <div 
                         className={s.modal_close}
                         onClick={closeModal}

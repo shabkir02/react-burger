@@ -1,44 +1,38 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Logo, EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { SET_EMAIL, SET_NAME, SET_PASSWORD, userRegister, RESET_EMAIL, RESET_PASSWORD, RESET_NAME } from '../../services/actions';
-import { setCookie, getCookie } from '../../utils/cookies';
+import { SET_EMAIL, SET_NAME, SET_PASSWORD, userRegister } from '../../services/actions';
 
 import s from './register-page.module.sass';
 
 const RegisterPage = () => {
 
     const dispatch = useDispatch();
-    const history = useHistory();
+    const location = useLocation();
 
-    const { name, email, password, userRegisterSuccess } = useSelector(store => ({
+    const { name, email, password, user } = useSelector(store => ({
         email: store.user.email,
         password: store.user.password,
         name: store.user.name,
-        userRegisterSuccess: store.user.userRegisterSuccess
+        user: store.user.user
     }))
 
     const onFormSubmit = (e) => {
         e.preventDefault();
         dispatch(userRegister(name, email, password))
-        dispatch({ type: RESET_EMAIL })
-        dispatch({ type: RESET_PASSWORD })
-        dispatch({ type: RESET_NAME })
     }
 
-    useEffect(() => {
-        if (userRegisterSuccess && userRegisterSuccess.success) {
-            const accessToken = userRegisterSuccess.accessToken.split('Bearer ')[1];
-            const refreshToken = userRegisterSuccess.refreshToken;
+    if (user) {
+        return <Redirect to="/" />
+    }
 
-            setCookie('accessToken', accessToken);
-            localStorage.setItem('refreshToken', refreshToken)
+    console.log(location);
 
-            history.replace({ pathname: '/' })
-        }
-    }, [userRegisterSuccess, history])
+    if (location.state !== 'fromLogin') {
+        return <Redirect to="/login" />
+    }
 
     return (
         <div className={`${s.form_container} pt-30`} >

@@ -5,7 +5,8 @@ import {
     ADD_INGREDIENT_TO_CONSTRUCTOR,
     DELETE_INGREDIENT_FROM_CONSTRUCTOR,
     ADD_BUN_TO_CONSTRUCTOR,
-    MOVE_INGREDIENT_IN_CONSTRUCTOR
+    MOVE_INGREDIENT_IN_CONSTRUCTOR,
+    RESET_CONSTRUCTOR
 } from '../actions';
 
 const initialState = {
@@ -62,6 +63,12 @@ export const ingredientsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 constructorIngredients: arr
+            }
+        case RESET_CONSTRUCTOR:
+            return {
+                ...state,
+                constructorIngredients: [],
+                constructorBun: null
             }
         default: {
             return state

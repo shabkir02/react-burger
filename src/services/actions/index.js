@@ -6,7 +6,8 @@ import {
     ADD_INGREDIENT_TO_CONSTRUCTOR,
     ADD_BUN_TO_CONSTRUCTOR,
     MOVE_INGREDIENT_IN_CONSTRUCTOR,
-    getIngredients
+    getIngredients,
+    RESET_CONSTRUCTOR
 } from './ingredients';
 
 import {
@@ -21,7 +22,9 @@ import {
     SET_MODAL_INNER_INGREDIENT_DETAILS, 
     SET_MODAL_INNER_ORDER_DETAILS,
     SET_MODAL_OPEN, 
-    SET_MODAL_CLOSE, SET_CURRENT_INGREDIENT
+    SET_MODAL_CLOSE, SET_CURRENT_INGREDIENT,
+    SET_MODAL_INNER_ORDER_INFO,
+    SET_CURRENT_ORDER_INFO
 } from './modal';
 
 import {
@@ -38,15 +41,6 @@ import {
 } from './reset-password';
 
 import {
-    USER_REGISTER_REQUEST,
-    USER_REGISTER_SUCCESS, 
-    USER_REGISTER_FAILED,
-    USER_LOGIN_REQUEST,
-    USER_LOGIN_SUCCESS,
-    USER_LOGIN_FAILED,
-    USER_LOGOUT_REQUEST, 
-    USER_LOGOUT_SUCCESS, 
-    USER_LOGOUT_FAILED,
     SET_PASSWORD,
     RESET_PASSWORD,
     SET_EMAIL,
@@ -55,7 +49,12 @@ import {
     RESET_NAME,
     userRegister,
     userLogin,
-    userLogout
+    userLogout,
+    SET_USER_REQUEST,
+    SET_USER_FAILED,
+    SET_USER_SUCCESS,
+    getUserInfo,
+    updateUserInfo
 } from './user';
 
 export {
@@ -70,8 +69,10 @@ export {
     makeOrder,
     SET_MODAL_INNER_INGREDIENT_DETAILS, 
     SET_MODAL_INNER_ORDER_DETAILS,
+    SET_MODAL_INNER_ORDER_INFO,
     SET_MODAL_OPEN, 
     SET_MODAL_CLOSE, SET_CURRENT_INGREDIENT,
+    SET_CURRENT_ORDER_INFO,
     DELETE_INGREDIENT_FROM_CONSTRUCTOR,
     ADD_INGREDIENT_TO_CONSTRUCTOR,
     ADD_BUN_TO_CONSTRUCTOR,
@@ -90,19 +91,16 @@ export {
     RESET_PASSWORD_REQUEST,
     RESET_PASSWORD_SUCCESS,
     resetPassword,
-    USER_REGISTER_REQUEST,
-    USER_REGISTER_SUCCESS, 
-    USER_REGISTER_FAILED,
-    USER_LOGIN_REQUEST,
-    USER_LOGIN_SUCCESS,
-    USER_LOGIN_FAILED,
-    USER_LOGOUT_REQUEST, 
-    USER_LOGOUT_SUCCESS, 
-    USER_LOGOUT_FAILED,
     SET_NAME,
     RESET_NAME,
     userRegister,
     userLogin,
-    userLogout
+    userLogout,
+    SET_USER_REQUEST,
+    SET_USER_FAILED,
+    SET_USER_SUCCESS,
+    getUserInfo,
+    updateUserInfo,
+    RESET_CONSTRUCTOR
 }
 

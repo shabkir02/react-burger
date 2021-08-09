@@ -2,24 +2,42 @@ import React, { useEffect } from 'react';
 import { Logo, Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect, useLocation } from 'react-router-dom';
 
-import { resetPassword, SET_EMAILCODE, RESET_EMAILCODE, SET_PASSWORD, RESET_PASSWORD } from '../../services/actions'
+import { resetPassword, SET_EMAILCODE, SET_PASSWORD } from '../../services/actions'
 
 import s from './reset-password-page.module.sass';
 
 const ResetPasswordPage = () => {
 
     const dispatch = useDispatch();
+    const history = useHistory()
+    const location = useLocation();
 
-    const { password, emailCode } = useSelector(store => ({
+    const { password, emailCode, resetPasswordSuccess, user } = useSelector(store => ({
         password: store.user.password,
-        emailCode: store.resetPassword.emailCode
+        emailCode: store.resetPassword.emailCode,
+        resetPasswordSuccess: store.resetPassword.resetPasswordSuccess,
+        user: store.user.user
     }))
 
     const onFormSubmit = (e) => {
         e.preventDefault();
         dispatch(resetPassword(password, emailCode))
+    }
+
+    useEffect(() => {
+        if (resetPasswordSuccess && resetPasswordSuccess.success) {
+            history.replace({ pathname: '/login' })
+        }
+    }, [history, resetPasswordSuccess])
+
+    if (user) {
+        return <Redirect to="/" />
+    }
+
+    if (location.state !== 'fromForgotPassword') {
+        return <Redirect to="/login" />
     }
 
     return (

@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { Logo, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect, useLocation } from 'react-router-dom';
 
-import { SET_EMAIL, RESET_EMAIL, sendEmailForResetPass } from '../../services/actions';
+import { SET_EMAIL, sendEmailForResetPass } from '../../services/actions';
 
 import s from './forgot-password-page.module.sass';
 
@@ -12,10 +12,12 @@ const ForgotPasswordPage = () => {
 
     const dispatch = useDispatch();
     const history = useHistory();
+    const location = useLocation();
 
-    const { email, sendEmailSuccess } = useSelector(store => ({
+    const { email, sendEmailSuccess, user } = useSelector(store => ({
         email: store.user.email,
-        sendEmailSuccess: store.resetPassword.sendEmailSuccess
+        sendEmailSuccess: store.resetPassword.sendEmailSuccess,
+        user: store.user.user
     }))
 
     const onFormSubmit = (e) => {
@@ -25,14 +27,17 @@ const ForgotPasswordPage = () => {
 
     useEffect(() => {
         if (sendEmailSuccess && sendEmailSuccess.success) {
-            dispatch({
-                type: RESET_EMAIL
-            })
-            history.replace({ pathname: '/reset-password' });
+            history.replace({ pathname: '/reset-password', state: 'fromForgotPassword' });
         }
     }, [sendEmailSuccess, history, dispatch])
 
-    console.log(history);
+    if (user) {
+        return <Redirect to="/" />
+    }
+
+    if (location.state !== 'fromLogin') {
+        return <Redirect to="/login" />
+    }
 
     return (
         <div className={`${s.form_container} pt-30`} >

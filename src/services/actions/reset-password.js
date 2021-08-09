@@ -1,3 +1,5 @@
+import { RESET_PASSWORD, RESET_EMAIL } from './index';
+
 export const SEND_EMAIL_REQUEST = "SEND_EMAIL_REQUEST";
 export const SEND_EMAIL_SUCCESS = "SEND_EMAIL_SUCCESS";
 export const SEND_EMAIL_FAILED = "SEND_EMAIL_FAILED";
@@ -33,11 +35,15 @@ export function sendEmailForResetPass(email) {
                 })
             }
         }).then(response => {
-            dispatch({
-                type: SEND_EMAIL_SUCCESS,
-                payload: response
-            })
-            return response
+            if (response.success) {
+                dispatch({
+                    type: SEND_EMAIL_SUCCESS,
+                    payload: response
+                })
+                dispatch({
+                    type: RESET_EMAIL
+                })
+            }
         }).catch(err => {
             console.log(err);
         })
@@ -67,11 +73,14 @@ export function resetPassword(newPassword, emailCode) {
                 })
             }
         }).then(response => {
-            dispatch({
-                type: RESET_PASSWORD_SUCCESS,
-                payload: response
-            })
-            return response
+            if (response.success) {
+                dispatch({
+                    type: RESET_PASSWORD_SUCCESS,
+                    payload: response
+                })
+                dispatch({ type: RESET_EMAILCODE })
+                dispatch({ type: RESET_PASSWORD })
+            }
         }).catch(err => {
             console.log(err);
         })
