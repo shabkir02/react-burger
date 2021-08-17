@@ -15,6 +15,9 @@ export const RESET_NAME = "RESET_NAME"
 
 export const USER_INFO = "USER_INFO";
 
+export const GET_USER_ORDERS_SUCCESS = "GET_ALL_ORDERS_SUCCESS";
+export const GET_USER_ORDERS_FAILED = "GET_ALL_ORDERS_FAILED";
+
 const _apiUrl = 'https://norma.nomoreparties.space/api';
 
 function updateAccessToken() {

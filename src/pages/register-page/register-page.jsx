@@ -28,8 +28,6 @@ const RegisterPage = () => {
         return <Redirect to="/" />
     }
 
-    console.log(location);
-
     if (location.state !== 'fromLogin') {
         return <Redirect to="/login" />
     }

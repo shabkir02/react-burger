@@ -7,7 +7,9 @@ import {
     SET_PASSWORD,
     RESET_PASSWORD,
     SET_NAME,
-    RESET_NAME
+    RESET_NAME,
+    GET_USER_ORDERS_SUCCESS,
+    GET_USER_ORDERS_FAILED 
 } from '../actions';
 
 const initialState = {
@@ -17,11 +19,26 @@ const initialState = {
 
     name: '',
     email: '',
-    password: ''
+    password: '',
+
+    userOrders: null,
+    userOrdersFailed: false
 }
 
 export const userReducer = (state = initialState, action) => {
     switch(action.type) {
+        case GET_USER_ORDERS_SUCCESS: 
+            return {
+                ...state,
+                userOrders: action.payload,
+                userOrdersFailed: false
+            }
+        case GET_USER_ORDERS_FAILED: 
+            return {
+                ...state,
+                userOrders: action.payload,
+                userOrdersFailed: true
+            }
         case SET_USER_REQUEST:
             return {
                 ...state,

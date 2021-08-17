@@ -3,12 +3,19 @@ import {
     GET_ORDER_SUCCESS,
     GET_ORDER_FAILED,
     ORDER_RESET,
+    GET_ALL_ORDERS_FAILED,
+    GET_ALL_ORDERS_SUCCESS,
 } from '../actions';
 
 const initialState = {
     order: null,
     orderRequest: false,
     orderFiled: false,
+
+    allOrders: null,
+    allOrdersFailed: false,
+
+    orderInfo: null
 }
 
 export const orderReducer = (state = initialState, action) => {
@@ -34,6 +41,17 @@ export const orderReducer = (state = initialState, action) => {
             return {
                 ...state,
                 order: null
+            }
+        case GET_ALL_ORDERS_SUCCESS: 
+            return {
+                ...state,
+                allOrdersFailed: false,
+                allOrders: action.payload
+            }
+        case GET_ALL_ORDERS_FAILED: 
+            return {
+                ...state,
+                allOrdersFailed: true
             }
         default: {
             return state

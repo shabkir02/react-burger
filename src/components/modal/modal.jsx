@@ -17,7 +17,7 @@ const Modal = ({ closeModal, children }) => {
     return ReactDOM.createPortal(
         (
             <div className={s.modal_wrapper}>
-                <div className={`${s.modal} pt-10 pl-10 pr-10 pb-15`} >
+                <div className={`${s.modal} pt-10 pl-10 pr-10 pb-10`} >
                     {modalInner.title && modalInner.type === 'ingredientDetails' && (
                         <h3 className={`text text_type_main-large ${s.modal_title}`}>{modalInner.title}</h3>
                     )}

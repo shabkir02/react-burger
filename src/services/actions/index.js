@@ -15,7 +15,9 @@ import {
     GET_ORDER_SUCCESS, 
     GET_ORDER_FAILED, 
     ORDER_RESET,
-    makeOrder
+    makeOrder,
+    GET_ALL_ORDERS_FAILED,
+    GET_ALL_ORDERS_SUCCESS,
 } from './order';
 
 import {
@@ -54,7 +56,9 @@ import {
     SET_USER_FAILED,
     SET_USER_SUCCESS,
     getUserInfo,
-    updateUserInfo
+    updateUserInfo,
+    GET_USER_ORDERS_SUCCESS,
+    GET_USER_ORDERS_FAILED 
 } from './user';
 
 export {
@@ -101,6 +105,10 @@ export {
     SET_USER_SUCCESS,
     getUserInfo,
     updateUserInfo,
-    RESET_CONSTRUCTOR
+    RESET_CONSTRUCTOR,
+    GET_ALL_ORDERS_FAILED,
+    GET_ALL_ORDERS_SUCCESS,
+    GET_USER_ORDERS_SUCCESS,
+    GET_USER_ORDERS_FAILED 
 }
 
