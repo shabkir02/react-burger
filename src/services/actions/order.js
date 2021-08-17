@@ -6,6 +6,9 @@ export const GET_ORDER_SUCCESS = "GET_ORDER_SUCCESS";
 export const GET_ORDER_FAILED = "GET_ORDER_FAILED";
 export const ORDER_RESET = "ORDER_RESET";
 
+export const GET_ALL_ORDERS_SUCCESS = "GET_ALL_ORDERS_SUCCESS";
+export const GET_ALL_ORDERS_FAILED = "GET_ALL_ORDERS_FAILED";
+
 const _apiUrl = 'https://norma.nomoreparties.space/api';
 
 export function makeOrder(ingredientsIdArr) {
@@ -22,24 +25,22 @@ export function makeOrder(ingredientsIdArr) {
             body: JSON.stringify({
               "ingredients": ingredientsIdArr
             })
+        }).then(response => {
+          if (response.ok) {
+            return response.json()
+          } else {
+            dispatch({
+                type: GET_ORDER_FAILED
+            })
+          }
+        }).then(response => {
+          dispatch({
+              type: GET_ORDER_SUCCESS,
+              payload: response
           })
-            .then(response => {
-              if (response.ok) {
-                return response.json()
-              } else {
-                dispatch({
-                    type: GET_ORDER_FAILED
-                })
-              }
-            })
-            .then(response => {
-                dispatch({
-                    type: GET_ORDER_SUCCESS,
-                    payload: response
-                })
-                dispatch({ type: RESET_CONSTRUCTOR })
-            }).catch(err => {
-              console.log(err);
-            })
+          dispatch({ type: RESET_CONSTRUCTOR })
+          }).catch(err => {
+            console.log(err);
+          })
     }
 }

@@ -1,42 +1,101 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-
-import data from '../../utils/data';
+import { Link, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import s from './order-item.module.sass';
 
-const OrderItem = ({ onOrderClick }) => {
+const OrderItem = ({ onOrderClick, orderInfo }) => {
+
+    const location = useLocation();
+
+    const { createdAt, ingredients, name, number, _id } = orderInfo;
+
+    const { ingredientsStore } = useSelector(store => ({
+        ingredientsStore: store.ingredients.ingredients
+    }))
+
+    const ingredientsFull = useMemo(() => {
+        return ingredients.map(ingredientId => {
+            return ingredientsStore.find(item => item._id === ingredientId)
+        })
+    }, [ingredients, ingredientsStore])
+
+    const orderPrice = useMemo(() => {
+        return ingredientsFull.reduce((acc, curr) => {
+            return acc + curr.price
+        }, 0)
+    }, [ingredientsFull]);
+
+    const ingredientsImageArr = useMemo(() => {
+        const visibleArr = ingredientsFull.slice(0, 5);
+        const hiddenArr = ingredientsFull.slice(5);
+
+        return [visibleArr, hiddenArr]
+    }, [ingredientsFull])
 
     return (
-        <div
-            className={`${s.container_orders_item} mb-6 p-6`}
-            onClick={() => onOrderClick(data[0])}
+        <Link
+            to={{
+                pathname: `${location.pathname}/${_id}`,
+                state: { background: location }
+            }}
+            onClick={() => onOrderClick(orderInfo, ingredientsFull)}
+            className={s.container_orders_item_wrapper}
         >
-            <div className={`${s.order_header} mb-6`}>
-                <p className="text text_type_digits-default">#034535</p>
-                <p className="text text_type_main-small">Сегодня, 16:20 i-GMT+3</p>
-            </div>
-            <h4 className="text text_type_main-medium mb-2">Death Star Starship Main бургер</h4>
-            <p className="text text_type_main-small">Создан</p>
-            <div className={`${s.container_orders_item_footer} mt-6`}>
-                <div className={s.container_orders_item_ingredients}>
-                    <div className={s.container_orders_item_ingredient}>
-                        <img src={data[0].image} alt={data[0].name} />
+            <div className={`${s.container_orders_item} mb-6 p-6`}>
+                <div className={`${s.order_header} mb-6`}>
+                    <p className="text text_type_digits-default">#{number}</p>
+                    <p className="text text_type_main-small dark_gray">{createdAt}</p>
+                </div>
+                <h4 className="text text_type_main-medium mb-2">{name}</h4>
+                {/* <p className="text text_type_main-small">{orderStatus}</p> */}
+                <div className={`${s.container_orders_item_footer} mt-6`}>
+                    <div className={s.container_orders_item_ingredients}>
+                        {ingredientsImageArr[0].map((item, index) => (
+                            <div 
+                                className={s.container_orders_item_ingredient}
+                                key={index}
+                                style={{ 
+                                    transform: `translateX(-${index * 15}px)`,
+                                    zIndex: 6 - index
+                                }}
+                            >
+                                <img src={item.image} alt={item.name} />
+                            </div>
+                        ))}
+                        {ingredientsImageArr[1].length > 0 && (
+                            <div 
+                                className={s.container_orders_item_ingredient}
+                                style={{ 
+                                    transform: `translateX(-75px)`,
+                                    zIndex: 1
+                                }}
+                            >
+                                <img src={ingredientsImageArr[0][0].image} alt={ingredientsImageArr[0][0].name} />
+                                <div className={`${s.container_orders_item_ingredient_length} text text_type_main-default`}>
+                                    +{ingredientsImageArr[1].length}
+                                </div>
+                            </div>
+                        )}
+                        {/* <div className={s.container_orders_item_ingredient}>
+                            <img src={data[0].image} alt={data[0].name} />
+                        </div>
+                        <div className={s.container_orders_item_ingredient}>
+                            <img src={data[0].image} alt={data[0].name} />
+                        </div>
+                        <div className={s.container_orders_item_ingredient}>
+                            <img src={data[0].image} alt={data[0].name} />
+                        </div> */}
                     </div>
-                    <div className={s.container_orders_item_ingredient}>
-                        <img src={data[0].image} alt={data[0].name} />
-                    </div>
-                    <div className={s.container_orders_item_ingredient}>
-                        <img src={data[0].image} alt={data[0].name} />
+                    <div className={`${s.container_orders_item_total}`}>
+                        <span className="text text_type_digits-default mr-2">{orderPrice.toLocaleString('ru-RU')}</span>
+                        <CurrencyIcon/>
                     </div>
                 </div>
-                <div className={`${s.container_orders_item_total}`}>
-                    <span className="text text_type_digits-default mr-2">123</span>
-                    <CurrencyIcon/>
-                </div>
             </div>
-        </div>
+        </Link>
     )
 }
 

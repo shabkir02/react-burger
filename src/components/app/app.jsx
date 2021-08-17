@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route, useHistory, useLocation } from 'react-router-dom';
-
+import { BrowserRouter as Router, Switch, Route, useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import WithAppHeader from '../../layouts/with-app-header/with-app-header';
@@ -20,6 +19,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
 import OrderInfo from '../order-info/order-info';
 import { ProtectedRoute } from '../../layouts/protected-route/protected-route';
+import { useSocket } from '../../hooks/useSocket';
 
 import { 
   makeOrder, 
@@ -27,13 +27,13 @@ import {
   SET_CURRENT_INGREDIENT, 
   SET_MODAL_INNER_INGREDIENT_DETAILS,
   SET_MODAL_INNER_ORDER_DETAILS,
-  SET_MODAL_OPEN,
-  SET_MODAL_CLOSE,
   SET_MODAL_INNER_ORDER_INFO,
   SET_CURRENT_ORDER_INFO,
   getUserInfo,
-  getIngredients
+  getIngredients,
+  GET_ALL_ORDERS_SUCCESS
 } from '../../services/actions';
+import OrderInfoPage from '../../pages/order-info-page/order-info-page';
 
 const App = () => {
 
@@ -45,10 +45,12 @@ const App = () => {
     let background = 
       history.action === "PUSH" && location.state && location.state.background;
 
-    const { order, modalInner, isModalOpen } = useSelector(store => ({
+    const { order, modalInner, user, allOrders, userOrders } = useSelector(store => ({
       order: store.order.order,
       modalInner: store.modal.modalInner,
-      isModalOpen: store.modal.isModalOpen,
+      user: store.user.user,
+      allOrders: store.order.allOrders,
+      userOrders: store.user.userOrders
     }));
 
     const modalInnerDetails = {
@@ -60,30 +62,24 @@ const App = () => {
     const handleIngredientClick = useCallback((item) => {
       dispatch({ type: SET_CURRENT_INGREDIENT, payload: item });
       dispatch({ type: SET_MODAL_INNER_INGREDIENT_DETAILS })
-      // dispatch({ type: SET_MODAL_OPEN })
     }, [dispatch])
 
     const handleOrderClick = useCallback((finalIngredients) => {
       dispatch({ type: SET_MODAL_INNER_ORDER_DETAILS })
-      dispatch({ type: SET_MODAL_OPEN })
+      history.push({ pathname: '/order-details/4321', state: { background: location }  })
 
       dispatch(makeOrder(finalIngredients))
     }, [dispatch])
 
-    const handleOrderInfoClick = useCallback((item) => {
-      dispatch({ type: SET_CURRENT_ORDER_INFO, payload: item });
-      dispatch({ type: SET_MODAL_INNER_ORDER_INFO, payload: '#034533' });
-      dispatch({ type: SET_MODAL_OPEN });
+    const handleOrderInfoClick = useCallback((item, ingredientsArr) => {
+      dispatch({ type: SET_CURRENT_ORDER_INFO, payload: { order: item,  ingredientsArr} });
+      dispatch({ type: SET_MODAL_INNER_ORDER_INFO, payload: `#${item.number}` });
     }, [dispatch])
-
-    const closeIngredientModal = useCallback(() => {
-      history.replace({ pathname: '/', state: null })
-    }, [history])
 
     const closeModal = useCallback(() => {
-      dispatch({ type: SET_MODAL_CLOSE });
       dispatch({ type: ORDER_RESET });
-    }, [dispatch])
+      history.replace({ pathname: location?.state?.background.pathname, state: null })
+    }, [history, location])
 
     useEffect(() => {
       dispatch(getIngredients())
@@ -98,7 +94,6 @@ const App = () => {
       const closeModalByEscape = (e) => {
           if (e.key === "Escape") {
               closeModal();
-              closeIngredientModal()
           }
       }
 
@@ -112,17 +107,12 @@ const App = () => {
 
     return (
           <>
-            {isModalOpen && (
-              <Modal closeModal={closeModal}>
-                {/* {modalInner.type === modalInnerDetails.ingredientDetails && <IngredientDetails/>} */}
-                {modalInner.type === modalInnerDetails.orderDetails && order && <OrderDetails/>}
-                {modalInner.type === modalInnerDetails.orderInfo && <OrderInfo/>}
-              </Modal>
-            )}
             {background && (
-              <Route path="/ingredients/:id" >
-                <Modal closeModal={closeIngredientModal}>
+              <Route path="/:type/:id" >
+                <Modal closeModal={closeModal}>
                   {modalInner.type === modalInnerDetails.ingredientDetails && <IngredientDetails/>}
+                  {modalInner.type === modalInnerDetails.orderDetails && order && <OrderDetails/>}
+                  {modalInner.type === modalInnerDetails.orderInfo && <OrderInfo/>}
                 </Modal>
               </Route>
             )}
@@ -144,13 +134,19 @@ const App = () => {
 
               <Route path="/feed/:id" >
                 <WithAppHeader>
+                  <OrderInfoPage />
+                </WithAppHeader>
+              </Route>
+
+              <Route path="/order-details/:id" >
+                <WithAppHeader>
                   <OrderDetailsPage/>
                 </WithAppHeader>
               </Route>
 
               <ProtectedRoute path="/profile/orders/:id">
                 <WithAppHeader>
-                  <OrderDetailsPage/>
+                  <OrderInfoPage />
                 </WithAppHeader>
               </ProtectedRoute>
 

@@ -7,6 +7,9 @@
 .blue {
     color: #00CCCC;
 }
+.dark_gray {
+    color: #8585AD;
+}
 .text_shadow {
     text-shadow: 0px 0px 16px rgb(51 51 255 / 25%), 0px 0px 8px rgb(51 51 255 / 25%), 0px 4px 32px rgb(51 51 255 / 50%);
 }
