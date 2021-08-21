@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route, useHistory, useLocation, useParams, useRouteMatch } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import WithAppHeader from '../../layouts/with-app-header/with-app-header';
@@ -19,7 +19,6 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
 import OrderInfo from '../order-info/order-info';
 import { ProtectedRoute } from '../../layouts/protected-route/protected-route';
-import { useSocket } from '../../hooks/useSocket';
 
 import { 
   makeOrder, 
@@ -31,7 +30,7 @@ import {
   SET_CURRENT_ORDER_INFO,
   getUserInfo,
   getIngredients,
-  GET_ALL_ORDERS_SUCCESS
+  WS_ALL_ORDERS_CONNECTION_START
 } from '../../services/actions';
 import OrderInfoPage from '../../pages/order-info-page/order-info-page';
 
@@ -45,12 +44,9 @@ const App = () => {
     let background = 
       history.action === "PUSH" && location.state && location.state.background;
 
-    const { order, modalInner, user, allOrders, userOrders } = useSelector(store => ({
+    const { order, modalInner } = useSelector(store => ({
       order: store.order.order,
-      modalInner: store.modal.modalInner,
-      user: store.user.user,
-      allOrders: store.order.allOrders,
-      userOrders: store.user.userOrders
+      modalInner: store.modal.modalInner
     }));
 
     const modalInnerDetails = {
@@ -64,9 +60,10 @@ const App = () => {
       dispatch({ type: SET_MODAL_INNER_INGREDIENT_DETAILS })
     }, [dispatch])
 
-    const handleOrderClick = useCallback((finalIngredients) => {
+    const handleOrderClick = useCallback((finalIngredients, propLocation) => {
       dispatch({ type: SET_MODAL_INNER_ORDER_DETAILS })
-      history.push({ pathname: '/order-details/4321', state: { background: location }  })
+      console.log(propLocation);
+      history.push({ pathname: '/order-details/4321', state: { background: propLocation }  })
 
       dispatch(makeOrder(finalIngredients))
     }, [dispatch])
@@ -87,6 +84,8 @@ const App = () => {
       if (localStorage.getItem('refreshToken')) {
         dispatch(getUserInfo());
       }
+
+      dispatch({ type: WS_ALL_ORDERS_CONNECTION_START });
     }, [dispatch])
 
     useEffect(() => {

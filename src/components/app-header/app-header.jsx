@@ -30,6 +30,7 @@ const AppHeader = () => {
                         <NavLink 
                             className={`${s.header_item} pl-5 pr-5 pt-4 pb-4`}
                             to="/feed"
+                            exact
                             activeClassName={s.active}
                         >
                             <div className="mr-2">

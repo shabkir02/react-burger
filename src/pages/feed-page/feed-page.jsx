@@ -3,33 +3,16 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 
 import OrderItem from '../../components/order-item/order-item';
-import { GET_ALL_ORDERS_SUCCESS } from '../../services/actions';
-import { useSocket } from '../../hooks/useSocket';
 
 import s from './feed-page.module.sass';
 
 const FeedPage = ({ handleOrderInfoClick }) => {
 
     const { allOrders, ingredients } = useSelector(store => ({
-        allOrders: store.order.allOrders,
+        allOrders: store.wsOrders.allOrders,
         ingredients: store.ingredients.ingredients
     }))
-    const dispatch = useDispatch();
-
-    const processEventAllOrders = useCallback((event) => {
-        const normalizedMessage = JSON.parse(event.data);
-        if (normalizedMessage.success === true) {
-            dispatch({ type: GET_ALL_ORDERS_SUCCESS, payload: normalizedMessage })
-        }
-    }, [dispatch])
-  
-    const allOrdersSocket = useSocket('wss://norma.nomoreparties.space/orders/all', {
-        onMessage: processEventAllOrders
-    });
-  
-    useEffect(() => {
-        allOrdersSocket.connect()
-    }, [])
+    // const dispatch = useDispatch();
 
     const formOrdersStatusArr = (status) => {
         const filterArr = allOrders.orders.filter(order => order.status === status);

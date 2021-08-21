@@ -1,4 +1,5 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 
 import s from './order-details-page.module.sass';
 
@@ -7,10 +8,12 @@ import accept from '../../images/stroke.svg';
 
 const OrderDetailsPage = () => {
 
+    const { id } = useParams();
+
     return (
         <div className={s.order_wrapper}>
             <div className={`pt-20 pb-20`}>
-                <p className={`${s.count} text text_type_digits-large mb-8`}>31231</p>
+                <p className={`${s.count} text text_type_digits-large mb-8`}>{id}</p>
                 <h4 className={`${s.count_descr} text text_type_main-medium mb-15`}>идентификатор заказа</h4>
                 <div className={`${s.image_wrapper} mb-15`}>
                     <img className={s.accept} src={accept} alt="accept" /> 

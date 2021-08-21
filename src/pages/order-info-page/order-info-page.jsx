@@ -3,53 +3,49 @@ import { useParams, useRouteMatch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import OrderInfo from '../../components/order-info/order-info';
-import { SET_CURRENT_ORDER_INFO, GET_ALL_ORDERS_SUCCESS } from '../../services/actions';
-import { useSocket } from '../../hooks/useSocket';
+import { SET_CURRENT_ORDER_INFO, WS_USER_ORDERS_CONNECTION_START } from '../../services/actions';
 
 import s from './order-info-page.module.sass';
 
 const OrderInfoPage = () => {
-
     const params = useParams();
-    const match = useRouteMatch();
+    const { path } = useRouteMatch();
     const dispatch = useDispatch();
-    const { ingredients, allOrders } = useSelector(store => ({
+    const { ingredients, allOrders, userOrders, currentOrderInfo } = useSelector(store => ({
         ingredients: store.ingredients.ingredients,
-        allOrders: store.order.allOrders
+        allOrders: store.wsOrders.allOrders,
+        userOrders: store.wsOrders.userOrders,
+        currentOrderInfo: store.modal.currentOrderInfo
     }))
 
-    console.log(params);
-    console.log(match);
-
-    const processEventAllOrders = useCallback((event) => {
-        const normalizedMessage = JSON.parse(event.data);
-        if (normalizedMessage.success === true) {
-            dispatch({ type: GET_ALL_ORDERS_SUCCESS, payload: normalizedMessage })
-        }
-    }, [dispatch])
-  
-    const allOrdersSocket = useSocket('wss://norma.nomoreparties.space/orders/all', {
-        onMessage: processEventAllOrders
-    });
-  
     useEffect(() => {
-        allOrdersSocket.connect()
+        if (path === '/profile/orders/:id') {
+            dispatch({ type: WS_USER_ORDERS_CONNECTION_START })
+        }
     }, [])
 
+    const dispatchCurrentOrder = (ordersArr) => {
+        const currentOrder = ordersArr.orders.find(order => order._id === params.id);
+
+        const ingredientsArr = currentOrder.ingredients.map(ingredientId => {
+            return ingredients.find(item => item._id === ingredientId)
+        })
+
+        dispatch({ type: SET_CURRENT_ORDER_INFO, payload: { order: currentOrder,  ingredientsArr} });
+    }
+
     useEffect(() => {
-        if (ingredients && allOrders) {
-            const currentOrder = allOrders.orders.find(order => order._id === params.id);
-
-            const ingredientsArr = currentOrder.ingredients.map(ingredientId => {
-                return ingredients.find(item => item._id === ingredientId)
-            })
-
-            dispatch({ type: SET_CURRENT_ORDER_INFO, payload: { order: currentOrder,  ingredientsArr} });
+        if (ingredients && allOrders && path === '/feed/:id') {
+            dispatchCurrentOrder(allOrders)
         }
-    }, [allOrders, ingredients])
-
+        if (ingredients && userOrders && path === '/profile/orders/:id') {
+            dispatchCurrentOrder(userOrders)
+        }
+    }, [allOrders, ingredients, userOrders])
+    
     return (
         <div className={s.order_wrapper}>
+            {currentOrderInfo && <h3 className={`${s.title} text text_type_digits-medium`}>#{currentOrderInfo.order.number}</h3>}
             <OrderInfo />
         </div>
     )

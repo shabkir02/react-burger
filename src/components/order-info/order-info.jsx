@@ -10,7 +10,6 @@ const OrderInfo = () => {
         currentOrderInfo: store.modal.currentOrderInfo
     }))
 
-    
     const statusText = useMemo(() => {
         if (currentOrderInfo) {
             switch(currentOrderInfo.order.status) {

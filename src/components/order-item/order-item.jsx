@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useRouteMatch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import s from './order-item.module.sass';
@@ -9,6 +9,7 @@ import s from './order-item.module.sass';
 const OrderItem = ({ onOrderClick, orderInfo }) => {
 
     const location = useLocation();
+    const { path } = useRouteMatch();
 
     const { createdAt, ingredients, name, number, _id } = orderInfo;
 
@@ -35,6 +36,21 @@ const OrderItem = ({ onOrderClick, orderInfo }) => {
         return [visibleArr, hiddenArr]
     }, [ingredientsFull])
 
+    const statusText = useMemo(() => {
+        if (orderInfo) {
+            switch(orderInfo.status) {
+                case 'created':
+                    return "Создан"
+                case 'pending':
+                    return "В работе"
+                case 'done':
+                    return 'Выполнен'
+                default:
+                    return ''
+            }
+        }
+    }, [orderInfo])
+
     return (
         <Link
             to={{
@@ -50,7 +66,9 @@ const OrderItem = ({ onOrderClick, orderInfo }) => {
                     <p className="text text_type_main-small dark_gray">{createdAt}</p>
                 </div>
                 <h4 className="text text_type_main-medium mb-2">{name}</h4>
-                {/* <p className="text text_type_main-small">{orderStatus}</p> */}
+                {path === "/profile/orders" && (
+                    <p className={`text text_type_main-small ${orderInfo.status === 'done' ? 'blue' : ''}`}>{statusText}</p>
+                )}
                 <div className={`${s.container_orders_item_footer} mt-6`}>
                     <div className={s.container_orders_item_ingredients}>
                         {ingredientsImageArr[0].map((item, index) => (
@@ -79,15 +97,6 @@ const OrderItem = ({ onOrderClick, orderInfo }) => {
                                 </div>
                             </div>
                         )}
-                        {/* <div className={s.container_orders_item_ingredient}>
-                            <img src={data[0].image} alt={data[0].name} />
-                        </div>
-                        <div className={s.container_orders_item_ingredient}>
-                            <img src={data[0].image} alt={data[0].name} />
-                        </div>
-                        <div className={s.container_orders_item_ingredient}>
-                            <img src={data[0].image} alt={data[0].name} />
-                        </div> */}
                     </div>
                     <div className={`${s.container_orders_item_total}`}>
                         <span className="text text_type_digits-default mr-2">{orderPrice.toLocaleString('ru-RU')}</span>

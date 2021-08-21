@@ -1,11 +1,9 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
 import OrderItem from '../../components/order-item/order-item';
-import { useSocket } from '../../hooks/useSocket';
-import { GET_USER_ORDERS_SUCCESS } from '../../services/actions';
-import { getCookie } from '../../utils/cookies';
+import { WS_USER_ORDERS_CONNECTION_START } from '../../services/actions';
 
 import s from './orders-page.module.sass';
 
@@ -13,28 +11,17 @@ const OrdersPage = ({ handleOrderInfoClick }) => {
 
     const dispatch = useDispatch();
     const { userOrders } = useSelector(store => ({
-        userOrders: store.user.userOrders
+        userOrders: store.wsOrders.userOrders,
     }))
-
-    const processEvent = useCallback((event) => {
-        const normalizedMessage = JSON.parse(event.data);
-        if (normalizedMessage.success === true) {
-            dispatch({ type: GET_USER_ORDERS_SUCCESS, payload: normalizedMessage })
-        }
-    }, [dispatch])
-  
-    const { connect } = useSocket('wss://norma.nomoreparties.space/orders', {
-        onMessage: processEvent
-    });
   
     useEffect(() => {
-        connect(getCookie('accessToken'))
+        dispatch({ type: WS_USER_ORDERS_CONNECTION_START });
     }, [])
 
     return (
         <div className={`${s.container_orders} pt-12`}> 
             <div className={s.container_orders_wrapper}>
-                {userOrders && userOrders.orders.map(order => (
+                {userOrders && userOrders?.orders?.map(order => (
                     <OrderItem 
                         onOrderClick={handleOrderInfoClick} 
                         orderInfo={order}
