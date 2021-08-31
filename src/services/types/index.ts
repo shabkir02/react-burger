@@ -3,7 +3,11 @@ import { Action, ActionCreator } from 'redux';
 import { Dispatch } from 'redux';
 
 import { store } from '../reducers';
-import { TIngredientsActions, TOrderActions, TModalActions } from '../actions';
+
+import { TIngredientsActions } from '../actions/ingredients';
+import { TOrderActions } from '../actions/order';
+import { TModalActions } from '../actions/modal';
+import { TResetPasswordActions } from '../actions/reset-password';
 
 export type RootState = ReturnType<typeof store.getState>;
 
@@ -12,6 +16,7 @@ type TApplicationActions =
   & TIngredientsActions
   & TOrderActions
   & TModalActions
+  & TResetPasswordActions
 ; 
 
 // Типизация thunk'ов

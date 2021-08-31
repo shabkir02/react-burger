@@ -1,5 +1,5 @@
 import { getCookie } from '../../utils/cookies';
-import { resetConstructor } from '../actions';
+import { resetConstructor } from '../actions/ingredients'
 
 import {
   GET_ORDER_REQUEST,
@@ -9,6 +9,7 @@ import {
 } from '../constants/order';
 
 import { AppDispatch } from '../types';
+import { TOrder } from '../types/data';
 
 const _apiUrl = 'https://norma.nomoreparties.space/api';
 
@@ -17,12 +18,12 @@ export interface IGetOrderRequest {
 }
 export interface IGetOrderSuccess {
   readonly type: typeof GET_ORDER_SUCCESS;
-  payload: any
+  payload: TOrder
 }
 export interface IGetOrderFailed {
   readonly type: typeof GET_ORDER_FAILED;
 }
-export interface IOrderResett {
+export interface IOrderReset {
   readonly type: typeof ORDER_RESET;
 }
 
@@ -30,25 +31,25 @@ export type TOrderActions =
   | IGetOrderRequest
   | IGetOrderSuccess
   | IGetOrderFailed
-  | IOrderResett
+  | IOrderReset
 ;
 
 export const getOrderRequest = (): IGetOrderRequest => ({
   type: GET_ORDER_REQUEST
 })
-export const getOrderSuccess = (order: any): IGetOrderSuccess => ({
+export const getOrderSuccess = (order: TOrder): IGetOrderSuccess => ({
   type: GET_ORDER_SUCCESS,
   payload: order
 })
 export const getOrderFailed = (): IGetOrderFailed => ({
   type: GET_ORDER_FAILED
 })
-export const resetOrder = (): IOrderResett => ({
+export const orderReset = (): IOrderReset => ({
   type: ORDER_RESET
 })
 
-export function makeOrder(ingredientsIdArr: any) {
-    return function(dispatch: AppDispatch) {
+export function makeOrder(ingredientsIdArr: ReadonlyArray<string>) {
+    return function(dispatch: any) {
         dispatch(getOrderRequest())
         fetch(`${_apiUrl}/orders`, {
             method: 'POST',
@@ -66,7 +67,7 @@ export function makeOrder(ingredientsIdArr: any) {
             dispatch(getOrderFailed())
           }
         }).then(response => {
-          dispatch(getOrderSuccess(response))
+          dispatch(getOrderSuccess(response.order))
           dispatch(resetConstructor())
           }).catch(err => {
             console.log(err);

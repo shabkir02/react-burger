@@ -3,7 +3,7 @@ import { Logo, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-dev
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { userLogin, SET_EMAIL, SET_PASSWORD } from '../../services/actions'
+import { userLogin, setEmail, setPassword } from '../../services/actions/user';
 
 import s from './login-page.module.sass';
 
@@ -38,13 +38,13 @@ const LoginPage = () => {
                     <div className="mb-6">
                         <EmailInput 
                             value={email}
-                            onChange={e => dispatch({ type: SET_EMAIL, payload: e.target.value })}
+                            onChange={e => dispatch(setEmail(e.target.value))}
                         />
                     </div>
                     <div className="mb-6">
                         <PasswordInput 
                             value={password}
-                            onChange={e => dispatch({ type: SET_PASSWORD, payload: e.target.value })}
+                            onChange={e => dispatch(setPassword(e.target.value))}
                         />
                     </div>
                     <Button>Войти</Button>

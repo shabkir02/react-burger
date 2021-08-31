@@ -1,9 +1,10 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useRouteMatch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import OrderInfo from '../../components/order-info/order-info';
-import { setCurrentOrderInfo, WS_USER_ORDERS_CONNECTION_START } from '../../services/actions';
+import { WS_USER_ORDERS_CONNECTION_START } from '../../services/actions';
+import { setCurrentOrderInfo } from '../../services/actions/modal';
 
 import s from './order-info-page.module.sass';
 

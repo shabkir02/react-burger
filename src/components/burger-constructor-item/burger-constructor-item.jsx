@@ -2,8 +2,9 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux';
 import {  ConstructorElement, DragIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
-import { deleteIngredientFromConstructor, moveIngredientInConstructor } from '../../services/actions';
 import { useDrag, useDrop } from 'react-dnd';
+
+import { deleteIngredientFromConstructor, moveIngredientInConstructor } from '../../services/actions/ingredients';
 
 import s from './burger-constructor-item.module.sass';
 

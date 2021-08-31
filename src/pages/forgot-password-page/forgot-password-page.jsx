@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, Redirect, useLocation } from 'react-router-dom';
 
-import { SET_EMAIL, sendEmailForResetPass } from '../../services/actions';
+import { setEmail } from '../../services/actions/user';
+import { sendEmailForResetPass } from '../../services/actions/reset-password';
 
 import s from './forgot-password-page.module.sass';
 
@@ -55,7 +56,7 @@ const ForgotPasswordPage = () => {
                             type="text"
                             placeholder="Укажите e-mail"
                             value={email}
-                            onChange={e => dispatch({ type: SET_EMAIL, payload: e.target.value })}
+                            onChange={e => dispatch(setEmail(e.target.value))}
                         />
                     </div>
                     <Button>Восстановить</Button>

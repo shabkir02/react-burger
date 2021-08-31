@@ -10,7 +10,7 @@ const OrderDetails = () => {
 
     const order = useSelector(store => store.order.order);
 
-    const { order: { number } } = order;
+    const { number } = order;
 
     return (
         <div className={`pt-20 pb-20`}>

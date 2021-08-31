@@ -1,24 +1,105 @@
 import { setCookie, getCookie, deleteCookie } from "../../utils/cookies";
 
-export const SET_USER_REQUEST = "SET_USER_REQUEST";
-export const SET_USER_SUCCESS = "SET_USER_SUCCESS";
-export const SET_USER_FAILED = "SET_USER_FAILED";
+import {
+    SET_USER_REQUEST,
+    SET_USER_SUCCESS,
+    SET_USER_FAILED,
+    SET_EMAIL,
+    RESET_EMAIL,
+    SET_PASSWORD,
+    RESET_PASSWORD,
+    SET_NAME,
+    RESET_NAME,
+    USER_INFO
+} from '../constants/user';
 
-export const SET_EMAIL = "SET_EMAIL";
-export const RESET_EMAIL = "RESET_EMAIL";
-
-export const SET_PASSWORD = "SET_PASSWORD";
-export const RESET_PASSWORD = "RESET_PASSWORD";
-
-export const SET_NAME = "SET_NAME";
-export const RESET_NAME = "RESET_NAME"
-
-export const USER_INFO = "USER_INFO";
-
-export const GET_USER_ORDERS_SUCCESS = "GET_ALL_ORDERS_SUCCESS";
-export const GET_USER_ORDERS_FAILED = "GET_ALL_ORDERS_FAILED";
+import { AppDispatch } from "../types";
+import { TUserInfo } from "../types/data";
 
 const _apiUrl = 'https://norma.nomoreparties.space/api';
+
+export interface ISetUserRequest {
+    readonly type: typeof SET_USER_REQUEST;
+}
+export interface ISetUserSuccess {
+    readonly type: typeof SET_USER_SUCCESS;
+    payload: null | TUserInfo
+}
+export interface ISetUserFailed {
+    readonly type: typeof SET_USER_FAILED;
+}
+export interface ISetEmail {
+    readonly type: typeof SET_EMAIL;
+    payload: string
+}
+export interface IResetEmail {
+    readonly type: typeof RESET_EMAIL;
+}
+export interface ISetPassword {
+    readonly type: typeof SET_PASSWORD;
+    payload: string
+}
+export interface IResetPassword {
+    readonly type: typeof RESET_PASSWORD;
+}
+export interface ISetName {
+    readonly type: typeof SET_NAME;
+    payload: string
+}
+export interface IResetName {
+    readonly type: typeof RESET_NAME;
+}
+export interface IUserInfo {
+    readonly type: typeof USER_INFO;
+}
+
+export type TUserActions = 
+    | ISetUserRequest
+    | ISetUserSuccess
+    | ISetUserFailed
+    | ISetEmail
+    | IResetEmail
+    | ISetPassword
+    | IResetPassword
+    | ISetName
+    | IResetName
+    | IUserInfo
+;
+
+export const setUserRequest = (): ISetUserRequest => ({
+    type: SET_USER_REQUEST
+})
+export const setUserSuccess = (user: null |TUserInfo): ISetUserSuccess => ({
+    type: SET_USER_SUCCESS,
+    payload: user
+})
+export const setUserFailed = (): ISetUserFailed => ({
+    type: SET_USER_FAILED
+})
+export const setEmail = (email: string): ISetEmail => ({
+    type: SET_EMAIL,
+    payload: email
+})
+export const resetEmail = (): IResetEmail => ({
+    type: RESET_EMAIL
+})
+export const setPassword = (password: string): ISetPassword => ({
+    type: SET_PASSWORD,
+    payload: password
+})
+export const resetPassword = (): IResetPassword => ({
+    type: RESET_PASSWORD
+})
+export const setName = (name: string): ISetName => ({
+    type: SET_NAME,
+    payload: name
+})
+export const resetName = (): IResetName => ({
+    type: RESET_NAME
+})
+export const userInfo = (): IUserInfo => ({
+    type: USER_INFO
+})
 
 function updateAccessToken() {
     return fetch(`${_apiUrl}/auth/token`, {
@@ -46,7 +127,7 @@ function userInfoFetch() {
     })
 }
 
-function updateUserInfoFetch(userObj) {
+function updateUserInfoFetch(userObj: any) {
     return fetch(`${_apiUrl}/auth/user`, {
         method: 'PATCH',
         headers: {
@@ -60,24 +141,15 @@ function updateUserInfoFetch(userObj) {
 }
 
 export function getUserInfo() {
-    return function(dispatch) {
-        dispatch({ type: SET_USER_REQUEST});
+    return function(dispatch: any) {
+        dispatch(setUserRequest());
         userInfoFetch().then(response => {
             if (response.success) {
-                dispatch({
-                    type: SET_USER_SUCCESS,
-                    payload: response.user
-                })
-                dispatch({
-                    type: SET_NAME,
-                    payload: response.user.name
-                })
-                dispatch({
-                    type: SET_EMAIL,
-                    payload: response.user.email
-                })
+                dispatch(setUserSuccess(response.user))
+                dispatch(setName(response.user.name))
+                dispatch(setEmail(response.user.email))
             } else {
-                dispatch({ type: SET_USER_FAILED })
+                dispatch(setUserFailed())
                 if (response.message === 'jwt expired') {
                     updateAccessToken().then(data => {
                         if (data.success) {
@@ -88,18 +160,9 @@ export function getUserInfo() {
                             localStorage.setItem('refreshToken', refreshToken)
 
                             userInfoFetch().then(response => {
-                                dispatch({
-                                    type: SET_USER_SUCCESS,
-                                    payload: response.user
-                                })
-                                dispatch({
-                                    type: SET_NAME,
-                                    payload: response.user.name
-                                })
-                                dispatch({
-                                    type: SET_EMAIL,
-                                    payload: response.user.email
-                                })
+                                dispatch(setUserSuccess(response.user))
+                                dispatch(setName(response.user.name))
+                                dispatch(setEmail(response.user.email))
                             }).catch(err => {
                                 console.log(err);
                             })
@@ -113,23 +176,14 @@ export function getUserInfo() {
     }
 }
 
-export function updateUserInfo(userObj) {
-    return function(dispatch) {
-        dispatch({ type: SET_USER_REQUEST});
+export function updateUserInfo(userObj: any) {
+    return function(dispatch: any) {
+        dispatch(setUserRequest());
         updateUserInfoFetch(userObj).then(response => {
             if (response.success) {
-                dispatch({
-                    type: SET_USER_SUCCESS,
-                    payload: response.user
-                })
-                dispatch({
-                    type: SET_NAME,
-                    payload: response.user.name
-                })
-                dispatch({
-                    type: SET_EMAIL,
-                    payload: response.user.email
-                })
+                dispatch(setUserSuccess(response.user))
+                dispatch(setName(response.user.name))
+                dispatch(setEmail(response.user.email))
             } else {
                 dispatch({ type: SET_USER_FAILED })
                 if (response.message === 'jwt expired') {
@@ -142,18 +196,9 @@ export function updateUserInfo(userObj) {
                             localStorage.setItem('refreshToken', refreshToken)
 
                             updateUserInfoFetch(userObj).then(response => {
-                                dispatch({
-                                    type: SET_USER_SUCCESS,
-                                    payload: response.user
-                                })
-                                dispatch({
-                                    type: SET_NAME,
-                                    payload: response.user.name
-                                })
-                                dispatch({
-                                    type: SET_EMAIL,
-                                    payload: response.user.email
-                                })
+                                dispatch(setUserSuccess(response.user))
+                                dispatch(setName(response.user.name))
+                                dispatch(setEmail(response.user.email))
                             }).catch(err => {
                                 console.log(err);
                             })
@@ -167,11 +212,9 @@ export function updateUserInfo(userObj) {
     }
 }
 
-export function userRegister(name, email, password) {
-    return function(dispatch) {
-        dispatch({
-            type: SET_USER_REQUEST
-        });
+export function userRegister(name: string, email: string, password: string) {
+    return function(dispatch: any) {
+        dispatch(setUserRequest());
         fetch(`${_apiUrl}/auth/register`, {
             method: 'POST',
             headers: {
@@ -186,19 +229,14 @@ export function userRegister(name, email, password) {
             if (response.ok) {
                 return response.json()
             } else {
-                dispatch({
-                    type: SET_USER_FAILED
-                })
+                dispatch(setUserFailed())
             }
         }).then(response => {
             if (response.success) {
-                dispatch({
-                    type: SET_USER_SUCCESS,
-                    payload: response.user
-                })
-                dispatch({ type: RESET_EMAIL })
-                dispatch({ type: RESET_PASSWORD })
-                dispatch({ type: RESET_NAME })
+                dispatch(setUserSuccess(response.user))
+                dispatch(resetEmail())
+                dispatch(resetPassword())
+                dispatch(resetName())
 
                 const accessToken = response.accessToken.split('Bearer ')[1];
                 const refreshToken = response.refreshToken;
@@ -206,9 +244,7 @@ export function userRegister(name, email, password) {
                 setCookie('accessToken', accessToken);
                 localStorage.setItem('refreshToken', refreshToken)
             } else {
-                dispatch({
-                    type: SET_USER_FAILED
-                })
+                dispatch(setUserFailed())
             }
         }).catch(err => {
             console.log(err);
@@ -216,11 +252,9 @@ export function userRegister(name, email, password) {
     }
 }
 
-export function userLogin(email, password) {
-    return function(dispatch) {
-        dispatch({
-            type: SET_USER_REQUEST
-        });
+export function userLogin(email: string, password: string) {
+    return function(dispatch: any) {
+        dispatch(setUserRequest());
         fetch(`${_apiUrl}/auth/login`, {
             method: 'POST',
             headers: {
@@ -234,27 +268,16 @@ export function userLogin(email, password) {
             if (response.ok) {
                 return response.json()
             } else {
-                dispatch({
-                    type: SET_USER_FAILED
-                })
+                dispatch(setUserFailed())
             }
         }).then(response => {
             if (response.success) {
-                dispatch({
-                    type: SET_USER_SUCCESS,
-                    payload: response.user
-                })
-                dispatch({ type: RESET_EMAIL })
-                dispatch({ type: RESET_PASSWORD })
+                dispatch(setUserSuccess(response.user))
+                dispatch(resetEmail())
+                dispatch(resetPassword())
 
-                dispatch({
-                    type: SET_NAME,
-                    payload: response.user.name
-                })
-                dispatch({
-                    type: SET_EMAIL,
-                    payload: response.user.email
-                })
+                dispatch(setName(response.user.name))
+                dispatch(setEmail(response.user.email))
 
                 const accessToken = response.accessToken.split('Bearer ')[1];
                 const refreshToken = response.refreshToken;
@@ -262,9 +285,7 @@ export function userLogin(email, password) {
                 setCookie('accessToken', accessToken);
                 localStorage.setItem('refreshToken', refreshToken)
             } else {
-                dispatch({
-                    type: SET_USER_FAILED
-                })
+                dispatch(setUserFailed())
             }
         }).catch(err => {
             console.log(err);
@@ -272,11 +293,9 @@ export function userLogin(email, password) {
     }
 }
 
-export function userLogout(token) {
-    return function(dispatch) {
-        dispatch({
-            type: SET_USER_REQUEST
-        });
+export function userLogout(token: string) {
+    return function(dispatch: any) {
+        dispatch(setUserRequest());
         fetch(`${_apiUrl}/auth/logout`, {
             method: 'POST',
             headers: {
@@ -289,22 +308,15 @@ export function userLogout(token) {
             if (response.ok) {
                 return response.json()
             } else {
-                dispatch({
-                    type: SET_USER_FAILED
-                })
+                dispatch(setUserFailed())
             }
         }).then(response => {
             if (response.success) {
-                dispatch({
-                    type: SET_USER_SUCCESS,
-                    payload: null
-                })
+                dispatch(setUserSuccess(null))
                 localStorage.removeItem('refreshToken')
                 deleteCookie('accessToken')
             } else {
-                dispatch({
-                    type: SET_USER_FAILED
-                })
+                dispatch(setUserFailed())
             }
         }).catch(err => {
             console.log(err);

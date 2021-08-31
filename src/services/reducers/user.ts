@@ -8,11 +8,21 @@ import {
     RESET_PASSWORD,
     SET_NAME,
     RESET_NAME,
-    GET_USER_ORDERS_SUCCESS,
-    GET_USER_ORDERS_FAILED 
-} from '../actions';
+} from '../constants/user';
 
-const initialState = {
+import { TUserActions } from '../actions/user';
+
+type TUserState = {
+    userReguest: boolean;
+    userFailed: boolean;
+    user: null | any
+
+    name: string;
+    email: string;
+    password: string
+}
+
+const initialState : TUserState = {
     userReguest: false,
     userFailed: false,
     user: null,
@@ -20,25 +30,10 @@ const initialState = {
     name: '',
     email: '',
     password: '',
-
-    userOrders: null,
-    userOrdersFailed: false
 }
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action: TUserActions) => {
     switch(action.type) {
-        case GET_USER_ORDERS_SUCCESS: 
-            return {
-                ...state,
-                userOrders: action.payload,
-                userOrdersFailed: false
-            }
-        case GET_USER_ORDERS_FAILED: 
-            return {
-                ...state,
-                userOrders: action.payload,
-                userOrdersFailed: true
-            }
         case SET_USER_REQUEST:
             return {
                 ...state,

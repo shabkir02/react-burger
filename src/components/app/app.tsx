@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, useHistory, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks/hooks';
 
 import WithAppHeader from '../../layouts/with-app-header/with-app-header';
 import WithProfileNav from '../../layouts/with-profile-nav/with-profile-nav';
@@ -20,27 +20,34 @@ import OrderDetails from '../order-details/order-details';
 import OrderInfo from '../order-info/order-info';
 import { ProtectedRoute } from '../../layouts/protected-route/protected-route';
 
-import { 
-  setCurrentIngredient,
-  setModalInnerIngredientsDetails,
-  setModalInnerOrderDetails,
-  setModalInnerOrderInfo,
-  setCurrentOrderInfo,
+import { WS_ALL_ORDERS_CONNECTION_START } from '../../services/actions';
 
-  makeOrder, 
-  ORDER_RESET,
-  getUserInfo,
-  getIngredients,
-  WS_ALL_ORDERS_CONNECTION_START
-} from '../../services/actions';
+import { makeOrder, orderReset} from '../../services/actions/order';
+import { getIngredients } from '../../services/actions/ingredients';
+import { getUserInfo } from '../../services/actions/user';
+import { TIngredient, TOrder } from '../../services/types/data';
+
+import { 
+  setCurrentIngredient, 
+  setModalInnerIngredientsDetails, 
+  setModalInnerOrderDetails, 
+  setModalInnerOrderInfo, 
+  setCurrentOrderInfo 
+} from '../../services/actions/modal';
 import OrderInfoPage from '../../pages/order-info-page/order-info-page';
+
+interface ILocationState {
+  state: {
+    background: object
+  }
+}
 
 const App = () => {
 
   const ModalSwitch = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const location = useLocation();
+    const location = useLocation<ILocationState>();
 
     let background = 
       history.action === "PUSH" && location.state && location.state.background;
@@ -56,28 +63,27 @@ const App = () => {
       orderInfo: 'orderInfo'
     }
 
-    const handleIngredientClick = useCallback((item) => {
+    const handleIngredientClick = (item: TIngredient): void => {
       dispatch(setCurrentIngredient(item));
       dispatch(setModalInnerIngredientsDetails())
-    }, [dispatch])
+    }
 
-    const handleOrderClick = useCallback((finalIngredients, propLocation) => {
+    const handleOrderClick = (finalIngredients: ReadonlyArray<string>, propLocation: any): void => {
       dispatch(setModalInnerOrderDetails())
-      console.log(propLocation);
       history.push({ pathname: '/order-details/4321', state: { background: propLocation }  })
 
       dispatch(makeOrder(finalIngredients))
-    }, [dispatch])
+    }
 
-    const handleOrderInfoClick = useCallback((item, ingredientsArr) => {
-      dispatch(setCurrentOrderInfo({ order: item,  ingredientsArr}));
-      dispatch(setModalInnerOrderInfo(`#${item.number}`));
-    }, [dispatch])
+    const handleOrderInfoClick = (order: TOrder, ingredientsArr: ReadonlyArray<TIngredient>): void => {
+      dispatch(setCurrentOrderInfo({ order, ingredientsArr}));
+      dispatch(setModalInnerOrderInfo(`#${order.number}`));
+    }
 
-    const closeModal = useCallback(() => {
-      dispatch({ type: ORDER_RESET });
+    const closeModal = (): void => {
+      dispatch(orderReset());
       history.goBack()
-    }, [history, location])
+    }
 
     useEffect(() => {
       dispatch(getIngredients())
@@ -91,7 +97,7 @@ const App = () => {
 
     useEffect(() => {
 
-      const closeModalByEscape = (e) => {
+      const closeModalByEscape = (e: any ) => {
           if (e.key === "Escape") {
               closeModal();
           }

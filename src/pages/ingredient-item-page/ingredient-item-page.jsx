@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setCurrentIngredient } from '../../services/actions';
+import { setCurrentIngredient } from '../../services/actions/modal';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';
 
 import s from './ingredient-item-page.module.sass';

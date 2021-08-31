@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
 
-import { userLogout } from '../../services/actions';
+import { userLogout } from '../../services/actions/user';
 
 import s from './profile-nav.module.sass';
 

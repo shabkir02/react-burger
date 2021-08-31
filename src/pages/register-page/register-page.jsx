@@ -3,7 +3,7 @@ import { Logo, EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/re
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { SET_EMAIL, SET_NAME, SET_PASSWORD, userRegister } from '../../services/actions';
+import { setEmail, setName, setPassword, userRegister } from '../../services/actions/user';
 
 import s from './register-page.module.sass';
 
@@ -45,19 +45,19 @@ const RegisterPage = () => {
                             type="text"
                             placeholder="Имя"
                             value={name}
-                            onChange={e => dispatch({ type: SET_NAME, payload: e.target.value })}
+                            onChange={e => dispatch(setName(e.target.value))}
                         />
                     </div>
                     <div className="mb-6">
                         <EmailInput
                             value={email}
-                            onChange={e => dispatch({ type: SET_EMAIL, payload: e.target.value })}
+                            onChange={e => dispatch(setEmail(e.target.value))}
                         />
                     </div>
                     <div className="mb-6">
                         <PasswordInput 
                             value={password}
-                            onChange={e => dispatch({ type: SET_PASSWORD, payload: e.target.value })}
+                            onChange={e => dispatch(setPassword(e.target.value))}
                         />
                     </div>
                     <Button>Зарегистрироваться</Button>

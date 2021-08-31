@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { getUserInfo } from '../../services/actions';
+import { getUserInfo } from '../../services/actions/user';
 import { useDispatch, useSelector } from 'react-redux';
 
 export function ProtectedRoute({ children, ...rest }) {

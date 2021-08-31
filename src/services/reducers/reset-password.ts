@@ -7,9 +7,23 @@ import {
     RESET_PASSWORD_FAILED,
     SET_EMAILCODE,
     RESET_EMAILCODE
-} from '../actions';
+} from '../constants/reset-password';
 
-const initialState = {
+import { TResetPasswordActions } from '../actions/reset-password';
+
+type TResetPasswordState = {
+    sendEmailSuccess: null | any;
+    sendEmailRequest: boolean;
+    sendEmailFailed: boolean;
+
+    resetPasswordRequest: boolean;
+    resetPasswordSuccess: null | any;
+    resetPasswordFailed: boolean;
+    
+    emailCode: string
+}
+
+const initialState: TResetPasswordState = {
     sendEmailSuccess: null,
     sendEmailRequest: false,
     sendEmailFailed: false,
@@ -21,7 +35,7 @@ const initialState = {
     emailCode: ''
 }
 
-export const resetPasswordReducer = (state = initialState, action) => {
+export const resetPasswordReducer = (state = initialState, action: TResetPasswordActions ) => {
     switch(action.type) {
         case SEND_EMAIL_REQUEST:
             return {

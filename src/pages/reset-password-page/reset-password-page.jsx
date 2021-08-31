@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, Redirect, useLocation } from 'react-router-dom';
 
-import { resetPassword, SET_EMAILCODE, SET_PASSWORD } from '../../services/actions'
+import { resetPassword, setEmailCode } from '../../services/actions/reset-password';
+import { setPassword } from '../../services/actions/user';
 
 import s from './reset-password-page.module.sass';
 
@@ -54,7 +55,7 @@ const ResetPasswordPage = () => {
                     <div className="mb-6">
                         <PasswordInput 
                             value={password}
-                            onChange={e => dispatch({ type: SET_PASSWORD, payload: e.target.value })}
+                            onChange={e => dispatch(setPassword(e.target.value))}
                         />
                     </div>
                     <div className="mb-6">
@@ -62,7 +63,7 @@ const ResetPasswordPage = () => {
                             type="text"
                             placeholder="Введите код из письма"
                             value={emailCode}
-                            onChange={e => dispatch({ type: SET_EMAILCODE, payload: e.target.value })}
+                            onChange={e => dispatch(setEmailCode(e.target.value))}
                         />
                     </div>
                     <Button>Сохранить</Button>

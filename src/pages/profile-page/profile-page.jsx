@@ -2,7 +2,7 @@ import React from 'react';
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { SET_NAME, SET_EMAIL, SET_PASSWORD, updateUserInfo } from '../../services/actions';
+import { setName, setEmail, setPassword, updateUserInfo } from '../../services/actions/user';
 
 import s from './profile-page.module.sass';
 
@@ -32,19 +32,19 @@ const ProfilePage = () => {
                         type="text"
                         placeholder="Имя"
                         value={name}
-                        onChange={e => dispatch({ type: SET_NAME, payload: e.target.value })}
+                        onChange={e => dispatch(setName(e.target.value))}
                     />
                 </div>
                 <div className="mb-6">
                     <EmailInput
                         value={email}
-                        onChange={e => dispatch({ type: SET_EMAIL, payload: e.target.value })}
+                        onChange={e => dispatch(setEmail(e.target.value))}
                     />
                 </div>
                 <div className="mb-6">
                     <PasswordInput 
                         value={password}
-                        onChange={e => dispatch({ type: SET_PASSWORD, payload: e.target.value })}
+                        onChange={e => dispatch(setPassword(e.target.value))}
                     />
                 </div>
                 <div className={s.profile_btn_wrapper}>

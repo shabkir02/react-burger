@@ -42,7 +42,7 @@ export interface IMoveIngredientInConstructorAction {
 }
 export interface IResetConstructorAction {
     readonly type: typeof RESET_CONSTRUCTOR;
-}
+};
 
 export type TIngredientsActions = 
     | IGetIngredientsRequestAction
@@ -86,7 +86,7 @@ export const resetConstructor = (): IResetConstructorAction  => ({
 })
 
 export const getIngredients: AppThunk = () => {
-    return function(dispatch: AppDispatch) {
+    return function(dispatch: any) {
         dispatch(getIngredientsRequest());
         fetch(`${_apiUrl}/ingredients `).then(response => {
             if (response.ok) {

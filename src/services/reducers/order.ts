@@ -2,12 +2,23 @@ import {
     GET_ORDER_REQUEST,
     GET_ORDER_SUCCESS,
     GET_ORDER_FAILED,
-    ORDER_RESET,
-    GET_ALL_ORDERS_FAILED,
-    GET_ALL_ORDERS_SUCCESS,
-} from '../actions';
+    ORDER_RESET
+} from '../constants/order';
 
-const initialState = {
+import { TOrderActions } from '../actions/order';
+
+type TOrderState = {
+    order: null | any;
+    orderRequest: boolean;
+    orderFiled: boolean;
+
+    allOrders: null | any;
+    allOrdersFailed: boolean;
+
+    orderInfo: null | any
+}
+
+const initialState: TOrderState = {
     order: null,
     orderRequest: false,
     orderFiled: false,
@@ -18,7 +29,7 @@ const initialState = {
     orderInfo: null
 }
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action: TOrderActions) => {
     switch(action.type) {
         case GET_ORDER_REQUEST:
             return {
@@ -41,17 +52,6 @@ export const orderReducer = (state = initialState, action) => {
             return {
                 ...state,
                 order: null
-            }
-        case GET_ALL_ORDERS_SUCCESS: 
-            return {
-                ...state,
-                allOrdersFailed: false,
-                allOrders: action.payload
-            }
-        case GET_ALL_ORDERS_FAILED: 
-            return {
-                ...state,
-                allOrdersFailed: true
             }
         default: {
             return state

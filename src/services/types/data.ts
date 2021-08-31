@@ -41,3 +41,22 @@ export type TOrderInfo = {
     ingredientsArr: ReadonlyArray<TIngredient>;
     order: TOrder
 }
+
+export type TMessageResetPassword = {
+    readonly message: string;
+    readonly success: boolean;
+}
+
+export type TUserInfo = {
+    readonly accessToken: string
+    readonly refreshToken: string
+    readonly success: boolean
+    readonly user: TUser
+    readonly email: string
+    readonly name: string
+}
+
+export type TUser = {
+    readonly email: string
+    readonly name: string
+}
