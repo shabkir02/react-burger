@@ -1,32 +1,30 @@
 import { 
-    GET_INGREDIENTS_REQUEST, 
-    GET_INGREDIENTS_SUCCESS, 
-    GET_INGREDIENTS_FAILED, 
-    DELETE_INGREDIENT_FROM_CONSTRUCTOR,
-    ADD_INGREDIENT_TO_CONSTRUCTOR,
-    ADD_BUN_TO_CONSTRUCTOR,
-    MOVE_INGREDIENT_IN_CONSTRUCTOR,
+    addIngredientToConstructor,
+    deleteIngredientFromConstructor,
+    addBunToConstructor,
+    moveIngredientInConstructor,
+    resetConstructor,
     getIngredients,
-    RESET_CONSTRUCTOR
+    TIngredientsActions
 } from './ingredients';
 
 import {
-    GET_ORDER_REQUEST, 
-    GET_ORDER_SUCCESS, 
-    GET_ORDER_FAILED, 
-    ORDER_RESET,
+    getOrderRequest,
+    getOrderSuccess,
+    getOrderFailed,
     makeOrder,
-    GET_ALL_ORDERS_FAILED,
-    GET_ALL_ORDERS_SUCCESS,
+    TOrderActions
 } from './order';
 
 import {
-    SET_MODAL_INNER_INGREDIENT_DETAILS, 
-    SET_MODAL_INNER_ORDER_DETAILS,
-    SET_MODAL_OPEN, 
-    SET_MODAL_CLOSE, SET_CURRENT_INGREDIENT,
-    SET_MODAL_INNER_ORDER_INFO,
-    SET_CURRENT_ORDER_INFO
+    setModalInnerIngredientsDetails,
+    setModalInnerOrderDetails,
+    setModalInnerOrderInfo,
+    // setModalOpen,
+    // setModalClose,
+    setCurrentIngredient,
+    setCurrentOrderInfo,
+    TModalActions
 } from './modal';
 
 import {
@@ -76,25 +74,29 @@ import {
 } from './wsOrders'
 
 export {
-    GET_INGREDIENTS_REQUEST, 
-    GET_INGREDIENTS_SUCCESS, 
-    GET_INGREDIENTS_FAILED, 
+    addIngredientToConstructor,
+    deleteIngredientFromConstructor,
+    addBunToConstructor,
+    moveIngredientInConstructor,
+    resetConstructor,
     getIngredients,
-    GET_ORDER_REQUEST, 
-    GET_ORDER_SUCCESS, 
-    GET_ORDER_FAILED, 
-    ORDER_RESET,
+    TIngredientsActions,
+
+    setModalInnerIngredientsDetails,
+    setModalInnerOrderDetails,
+    setModalInnerOrderInfo,
+    // setModalOpen,
+    // setModalClose,
+    setCurrentIngredient,
+    setCurrentOrderInfo,
+    TModalActions,
+
+    getOrderRequest,
+    getOrderSuccess,
+    getOrderFailed,
     makeOrder,
-    SET_MODAL_INNER_INGREDIENT_DETAILS, 
-    SET_MODAL_INNER_ORDER_DETAILS,
-    SET_MODAL_INNER_ORDER_INFO,
-    SET_MODAL_OPEN, 
-    SET_MODAL_CLOSE, SET_CURRENT_INGREDIENT,
-    SET_CURRENT_ORDER_INFO,
-    DELETE_INGREDIENT_FROM_CONSTRUCTOR,
-    ADD_INGREDIENT_TO_CONSTRUCTOR,
-    ADD_BUN_TO_CONSTRUCTOR,
-    MOVE_INGREDIENT_IN_CONSTRUCTOR,
+    TOrderActions,
+
     SEND_EMAIL_REQUEST,
     SEND_EMAIL_SUCCESS,
     SEND_EMAIL_FAILED ,
@@ -119,9 +121,6 @@ export {
     SET_USER_SUCCESS,
     getUserInfo,
     updateUserInfo,
-    RESET_CONSTRUCTOR,
-    GET_ALL_ORDERS_FAILED,
-    GET_ALL_ORDERS_SUCCESS,
     GET_USER_ORDERS_SUCCESS,
     GET_USER_ORDERS_FAILED,
     WS_ALL_ORDERS_CONNECTION_SUCCESS, 

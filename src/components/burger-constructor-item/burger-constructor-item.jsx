@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux';
 import {  ConstructorElement, DragIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
-import { DELETE_INGREDIENT_FROM_CONSTRUCTOR, MOVE_INGREDIENT_IN_CONSTRUCTOR } from '../../services/actions';
+import { deleteIngredientFromConstructor, moveIngredientInConstructor } from '../../services/actions';
 import { useDrag, useDrop } from 'react-dnd';
 
 import s from './burger-constructor-item.module.sass';
@@ -12,8 +12,8 @@ const BurgerConstructorItem = ({ ingredient, index }) => {
     const dispatch = useDispatch();
     const ref = useRef(null);
 
-    const deleteIngredientFromConstructor = (ingredient) => {
-        dispatch({ type: DELETE_INGREDIENT_FROM_CONSTRUCTOR, payload: ingredient })
+    const deleteIngredient = (ingredient) => {
+        dispatch(deleteIngredientFromConstructor(ingredient))
     }
 
     const [, drop] = useDrop({
@@ -43,7 +43,7 @@ const BurgerConstructorItem = ({ ingredient, index }) => {
             if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
                 return;
             }
-            dispatch({ type: MOVE_INGREDIENT_IN_CONSTRUCTOR, payload: {hoverIndex, dragIndex} })
+            dispatch(moveIngredientInConstructor({hoverIndex, dragIndex}))
             item.index = hoverIndex;
         },
     });
@@ -72,7 +72,7 @@ const BurgerConstructorItem = ({ ingredient, index }) => {
                 text={ingredient.name}
                 price={ingredient.price}
                 thumbnail={ingredient.image}
-                handleClose={() => deleteIngredientFromConstructor(ingredient)}
+                handleClose={() => deleteIngredient(ingredient)}
             />
         </div>
     )

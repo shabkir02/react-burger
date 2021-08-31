@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getIngredients, SET_CURRENT_INGREDIENT } from '../../services/actions';
+import { setCurrentIngredient } from '../../services/actions';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';
 
 import s from './ingredient-item-page.module.sass';
@@ -20,7 +20,7 @@ const IngredientItemPage = () => {
     useEffect(() => {
         if (ingredients) {
             const ingredient = ingredients.find(item => item._id === id)
-            dispatch({ type: SET_CURRENT_INGREDIENT, payload: ingredient });
+            dispatch(setCurrentIngredient(ingredient));
         }
     }, [ingredients, id, dispatch])
 

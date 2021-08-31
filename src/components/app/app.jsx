@@ -21,13 +21,14 @@ import OrderInfo from '../order-info/order-info';
 import { ProtectedRoute } from '../../layouts/protected-route/protected-route';
 
 import { 
+  setCurrentIngredient,
+  setModalInnerIngredientsDetails,
+  setModalInnerOrderDetails,
+  setModalInnerOrderInfo,
+  setCurrentOrderInfo,
+
   makeOrder, 
-  ORDER_RESET, 
-  SET_CURRENT_INGREDIENT, 
-  SET_MODAL_INNER_INGREDIENT_DETAILS,
-  SET_MODAL_INNER_ORDER_DETAILS,
-  SET_MODAL_INNER_ORDER_INFO,
-  SET_CURRENT_ORDER_INFO,
+  ORDER_RESET,
   getUserInfo,
   getIngredients,
   WS_ALL_ORDERS_CONNECTION_START
@@ -56,12 +57,12 @@ const App = () => {
     }
 
     const handleIngredientClick = useCallback((item) => {
-      dispatch({ type: SET_CURRENT_INGREDIENT, payload: item });
-      dispatch({ type: SET_MODAL_INNER_INGREDIENT_DETAILS })
+      dispatch(setCurrentIngredient(item));
+      dispatch(setModalInnerIngredientsDetails())
     }, [dispatch])
 
     const handleOrderClick = useCallback((finalIngredients, propLocation) => {
-      dispatch({ type: SET_MODAL_INNER_ORDER_DETAILS })
+      dispatch(setModalInnerOrderDetails())
       console.log(propLocation);
       history.push({ pathname: '/order-details/4321', state: { background: propLocation }  })
 
@@ -69,13 +70,13 @@ const App = () => {
     }, [dispatch])
 
     const handleOrderInfoClick = useCallback((item, ingredientsArr) => {
-      dispatch({ type: SET_CURRENT_ORDER_INFO, payload: { order: item,  ingredientsArr} });
-      dispatch({ type: SET_MODAL_INNER_ORDER_INFO, payload: `#${item.number}` });
+      dispatch(setCurrentOrderInfo({ order: item,  ingredientsArr}));
+      dispatch(setModalInnerOrderInfo(`#${item.number}`));
     }, [dispatch])
 
     const closeModal = useCallback(() => {
       dispatch({ type: ORDER_RESET });
-      history.replace({ pathname: location?.state?.background.pathname, state: null })
+      history.goBack()
     }, [history, location])
 
     useEffect(() => {
@@ -102,7 +103,7 @@ const App = () => {
           document.removeEventListener('keydown', closeModalByEscape)
       }
       
-    }, [dispatch])
+    }, [])
 
     return (
           <>

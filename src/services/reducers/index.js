@@ -9,7 +9,6 @@ import { resetPasswordReducer } from './reset-password';
 import { userReducer } from './user';
 import { wsReducer } from './wsOrders';
 import { socketMiddleware } from '../middleware/socketMiddleware';
-import { getCookie } from '../../utils/cookies';
 
 import {
     WS_ALL_ORDERS_CONNECTION_SUCCESS, 
@@ -24,8 +23,7 @@ import {
     WS_USER_ORDERS_CONNECTION_START
 } from '../actions';
 
-/// Get all orders
-const wsAllOrdersUrl = 'wss://norma.nomoreparties.space/orders/all';
+/// Все заказы
 const wsAllOrdersActions = {
     wsInit: WS_ALL_ORDERS_CONNECTION_START,
     onOpen: WS_ALL_ORDERS_CONNECTION_SUCCESS,
@@ -34,8 +32,7 @@ const wsAllOrdersActions = {
     onMessage: WS_ALL_ORDERS_GET_MESSAGE
 };
 
-/// Get only user orders
-const wsUserOrdersUrl = `wss://norma.nomoreparties.space/orders?token=${getCookie('accessToken')}`;
+/// Заказы юзера
 const wsUserOrdersActions = {
     wsInit: WS_USER_ORDERS_CONNECTION_START,
     onOpen: WS_USER_ORDERS_CONNECTION_SUCCESS,
@@ -61,8 +58,8 @@ const composeEnhancers =
 
 const enhancer = composeEnhancers(applyMiddleware(
     thunk,
-    socketMiddleware(wsAllOrdersUrl, wsAllOrdersActions),
-    socketMiddleware(wsUserOrdersUrl, wsUserOrdersActions)
+    socketMiddleware(null, wsAllOrdersActions),
+    socketMiddleware('token', wsUserOrdersActions)
 ));
 
 export const store = createStore(rootReducer, enhancer);

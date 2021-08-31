@@ -1,5 +1,8 @@
-import { 
-    GET_INGREDIENTS_REQUEST, 
+import { TIngredient, TIngredientConstructor } from '../types/data';
+import { TIngredientsActions } from '../actions/ingredients';
+
+import {
+    GET_INGREDIENTS_REQUEST,
     GET_INGREDIENTS_SUCCESS, 
     GET_INGREDIENTS_FAILED,
     ADD_INGREDIENT_TO_CONSTRUCTOR,
@@ -7,9 +10,18 @@ import {
     ADD_BUN_TO_CONSTRUCTOR,
     MOVE_INGREDIENT_IN_CONSTRUCTOR,
     RESET_CONSTRUCTOR
-} from '../actions';
+} from '../constants/ingredients';
 
-const initialState = {
+type TIngredientState = {
+    ingredients: null | ReadonlyArray<TIngredient>;
+    ingredientsRequest: boolean;
+    ingredientsFiled: boolean;
+
+    constructorIngredients: Array<TIngredientConstructor>,
+    constructorBun: null | TIngredient
+}
+
+const initialState: TIngredientState = {
     ingredients: null,
     ingredientsRequest: false,
     ingredientsFiled: false,
@@ -18,7 +30,7 @@ const initialState = {
     constructorBun: null
 }
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (state = initialState, action: TIngredientsActions): TIngredientState => {
     switch(action.type) {
         case GET_INGREDIENTS_REQUEST:
             return {

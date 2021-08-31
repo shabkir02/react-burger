@@ -3,7 +3,7 @@ import { useParams, useRouteMatch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import OrderInfo from '../../components/order-info/order-info';
-import { SET_CURRENT_ORDER_INFO, WS_USER_ORDERS_CONNECTION_START } from '../../services/actions';
+import { setCurrentOrderInfo, WS_USER_ORDERS_CONNECTION_START } from '../../services/actions';
 
 import s from './order-info-page.module.sass';
 
@@ -31,7 +31,7 @@ const OrderInfoPage = () => {
             return ingredients.find(item => item._id === ingredientId)
         })
 
-        dispatch({ type: SET_CURRENT_ORDER_INFO, payload: { order: currentOrder,  ingredientsArr} });
+        dispatch(setCurrentOrderInfo({ order: currentOrder,  ingredientsArr}));
     }
 
     useEffect(() => {

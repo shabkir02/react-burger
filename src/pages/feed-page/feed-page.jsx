@@ -29,13 +29,17 @@ const FeedPage = ({ handleOrderInfoClick }) => {
 
     const allOrdersContent = useMemo(() => {
         if (allOrders && ingredients) {
-            return allOrders.orders.map(order => (
-                <OrderItem 
-                    orderInfo={order} 
-                    onOrderClick={handleOrderInfoClick} 
-                    key={order._id}
-                />
-            ))
+            return allOrders.orders.map(order => {
+                if (order && order.ingredients) {
+                    return (
+                        <OrderItem 
+                            orderInfo={order} 
+                            onOrderClick={handleOrderInfoClick} 
+                            key={order._id}
+                        />
+                    )
+                }
+            })
         }
     }, [allOrders, handleOrderInfoClick, ingredients])
 

@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
-import { ADD_INGREDIENT_TO_CONSTRUCTOR, ADD_BUN_TO_CONSTRUCTOR } from '../../services/actions';
+import { addBunToConstructor, addIngredientToConstructor } from '../../services/actions';
 
 import s from './burger-constructor.module.sass';
 
@@ -42,10 +42,10 @@ const BurgerConstructor = ({ handleOrderClick }) => {
         accept: "constructor",
         drop(item) {
             if (item.type === 'bun') {
-                dispatch({ type: ADD_BUN_TO_CONSTRUCTOR, payload: item })
+                dispatch(addBunToConstructor(item))
                 return
             }
-            dispatch({ type: ADD_INGREDIENT_TO_CONSTRUCTOR, payload: {...item, drag_id: uuidv4() } })
+            dispatch(addIngredientToConstructor({...item, drag_id: uuidv4()}))
         }
     })
 

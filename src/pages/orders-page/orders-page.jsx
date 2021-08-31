@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -18,16 +18,26 @@ const OrdersPage = ({ handleOrderInfoClick }) => {
         dispatch({ type: WS_USER_ORDERS_CONNECTION_START });
     }, [])
 
+    const ordersContetnt = useMemo(() => {
+        if (userOrders && userOrders.orders) {
+            return userOrders.orders.map(order => {
+                if (order && order.ingredients) {
+                    return (
+                        <OrderItem 
+                            onOrderClick={handleOrderInfoClick} 
+                            orderInfo={order}
+                            key={order._id}
+                        />
+                    )
+                }
+            })
+        }
+    }, [userOrders, handleOrderInfoClick])
+
     return (
         <div className={`${s.container_orders} pt-12`}> 
             <div className={s.container_orders_wrapper}>
-                {userOrders && userOrders?.orders?.map(order => (
-                    <OrderItem 
-                        onOrderClick={handleOrderInfoClick} 
-                        orderInfo={order}
-                        key={order._id}
-                    />
-                ))}
+                {ordersContetnt}
             </div>
         </div> 
     )
