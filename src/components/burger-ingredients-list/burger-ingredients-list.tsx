@@ -5,8 +5,21 @@ import PropTypes from 'prop-types';
 import BurgerIngredientsItem from '../burger-ingredients-item/burger-ingredients-item';
 
 import s from './burger-ingredients-list.module.sass';
+import { TIngredient } from '../../services/types/data';
 
-const BurgerIngredientsList = ({ title, type, onIngredientClick }) => {
+interface IBurgerIngredientsListProps {
+    title: 'Булки' | 'Соусы' | 'Начинки';
+    type: 'bun' | 'sauce' | 'main';
+    onIngredientClick: (
+        item: TIngredient
+    ) => void
+}
+
+interface ICounters {
+    [name: string]: number; 
+}
+
+const BurgerIngredientsList = ({ title, type, onIngredientClick }: IBurgerIngredientsListProps) => {
 
     const { ingredients, constructorIngredients, constructorBun } = useSelector(store => ({
         ingredients: store.ingredients.ingredients,
@@ -15,19 +28,22 @@ const BurgerIngredientsList = ({ title, type, onIngredientClick }) => {
     }));
 
     const counters = useMemo(() => {
-		const counter = {};
+		const counter: ICounters = {};
 
-		constructorIngredients.map((ingredient) => {
-			if (!counter[ingredient._id]) counter[ingredient._id] = 0;
+		constructorIngredients.map((ingredient: TIngredient): void => {
+			if (!counter[ingredient._id]) {
+                counter[ingredient._id] = 0;
+            }
 			counter[ingredient._id]++;
 		});
 
-		if (constructorBun) counter[constructorBun._id] = 2;
-
+		if (constructorBun) {
+            counter[constructorBun._id] = 2;
+        }
 		return counter;
 	}, [constructorIngredients, constructorBun]);
 
-    const ingredientsArr = ingredients.map(ingredient => {
+    const ingredientsArr = ingredients.map((ingredient: TIngredient): any => {
         if (ingredient.type === type) {
             return (
                 <BurgerIngredientsItem 

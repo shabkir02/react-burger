@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import { Logo, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +10,7 @@ import s from './login-page.module.sass';
 const LoginPage = () => {
 
     const dispatch = useDispatch();
-    const { state } = useLocation()
+    const { state } = useLocation<any>()
 
     const { email, password, user } = useSelector(store => ({
         email: store.user.email,
@@ -18,7 +18,7 @@ const LoginPage = () => {
         user: store.user.user
     }))
 
-    const onFormSubmit = (e) => {
+    const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(userLogin(email, password))
     }

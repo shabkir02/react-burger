@@ -11,80 +11,80 @@ import {
     RESET_EMAILCODE
 } from '../constants/reset-password';
 
-import { AppDispatch } from '../types';
+import { AppDispatch, AppThunk } from '../types';
 import { TMessageResetPassword } from '../types/data';
 
 const _apiUrl = 'https://norma.nomoreparties.space/api';
 
-export interface ISendEmailRequest {
+export interface ISendEmailRequestAction {
     readonly type: typeof SEND_EMAIL_REQUEST;
 }
-export interface ISendEmailSuccess {
+export interface ISendEmailSuccessAction {
     readonly type: typeof SEND_EMAIL_SUCCESS;
     payload: TMessageResetPassword
 }
-export interface ISendEmailFailed {
+export interface ISendEmailFailedAction {
     readonly type: typeof SEND_EMAIL_FAILED;
 }
-export interface IResetPasswordRequest {
+export interface IResetPasswordRequestAction {
     readonly type: typeof RESET_PASSWORD_REQUEST;
 }
-export interface IResetPasswordSuccess {
+export interface IResetPasswordSuccessAction {
     readonly type: typeof RESET_PASSWORD_SUCCESS;
     payload: TMessageResetPassword
 }
-export interface IResetPasswordFailed {
+export interface IResetPasswordFailedAction {
     readonly type: typeof RESET_PASSWORD_FAILED;
 }
-export interface ISetEmailCode {
+export interface ISetEmailCodeAction {
     readonly type: typeof SET_EMAILCODE;
     payload: string
 }
-export interface IResetEmailCode {
+export interface IResetEmailCodeAction {
     readonly type: typeof RESET_EMAILCODE;
 }
 
 export type TResetPasswordActions = 
-    | ISendEmailRequest
-    | ISendEmailSuccess
-    | ISendEmailFailed
-    | IResetPasswordRequest
-    | IResetPasswordSuccess
-    | IResetPasswordFailed
-    | ISetEmailCode
-    | IResetEmailCode
+    | ISendEmailRequestAction
+    | ISendEmailSuccessAction
+    | ISendEmailFailedAction
+    | IResetPasswordRequestAction
+    | IResetPasswordSuccessAction
+    | IResetPasswordFailedAction
+    | ISetEmailCodeAction
+    | IResetEmailCodeAction
 ;
 
-export const sendEmailRequest = (): ISendEmailRequest => ({
+export const sendEmailRequest = (): ISendEmailRequestAction => ({
     type: SEND_EMAIL_REQUEST
 })
-export const sendEmailSuccess = (email: TMessageResetPassword): ISendEmailSuccess => ({
+export const sendEmailSuccess = (email: TMessageResetPassword): ISendEmailSuccessAction => ({
     type: SEND_EMAIL_SUCCESS,
     payload: email
 })
-export const sendEmailFailed = (): ISendEmailFailed => ({
+export const sendEmailFailed = (): ISendEmailFailedAction => ({
     type: SEND_EMAIL_FAILED
 })
-export const resetPasswordRequest = (): IResetPasswordRequest => ({
+export const resetPasswordRequest = (): IResetPasswordRequestAction => ({
     type: RESET_PASSWORD_REQUEST
 })
-export const resetPasswordSuccess = (password: TMessageResetPassword): IResetPasswordSuccess => ({
+export const resetPasswordSuccess = (password: TMessageResetPassword): IResetPasswordSuccessAction => ({
     type: RESET_PASSWORD_SUCCESS,
     payload: password
 })
-export const resetPasswordFailed = (): IResetPasswordFailed => ({
+export const resetPasswordFailed = (): IResetPasswordFailedAction => ({
     type: RESET_PASSWORD_FAILED
 })
-export const setEmailCode = (code: string): ISetEmailCode => ({
+export const setEmailCode = (code: string): ISetEmailCodeAction => ({
     type: SET_EMAILCODE,
     payload: code
 })
-export const resetEmailCode = (): IResetEmailCode => ({
+export const resetEmailCode = (): IResetEmailCodeAction => ({
     type: RESET_EMAILCODE
 })
 
-export function sendEmailForResetPass(email: string) {
-    return function(dispatch: any) {
+export const sendEmailForResetPass: AppThunk = (email: string) => {
+    return function(dispatch: AppDispatch) {
         dispatch(sendEmailRequest());
         fetch(`${_apiUrl}/password-reset`, {
             method: 'POST',
@@ -111,8 +111,8 @@ export function sendEmailForResetPass(email: string) {
     }
 }
 
-export function resetPassword(newPassword: string, emailCode: string) {
-    return function(dispatch: any) {
+export const  resetPassword: AppThunk = (newPassword: string, emailCode: string) => {
+    return function(dispatch: AppDispatch) {
         dispatch(resetPasswordRequest())
         fetch(`${_apiUrl}/password-reset/reset`, {
             method: 'POST',

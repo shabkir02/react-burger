@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { FC } from 'react';
 import AppHeader from '../../components/app-header/app-header';
 
-const WithAppHeader = ({ children }) => {
+const WithAppHeader: FC = ({ children }) => {
     return (
         <>
             <AppHeader/>

@@ -32,7 +32,7 @@ const initialState : TUserState = {
     password: '',
 }
 
-export const userReducer = (state = initialState, action: TUserActions) => {
+export const userReducer = (state = initialState, action: TUserActions): TUserState => {
     switch(action.type) {
         case SET_USER_REQUEST:
             return {

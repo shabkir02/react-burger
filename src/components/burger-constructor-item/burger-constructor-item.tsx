@@ -8,12 +8,19 @@ import { deleteIngredientFromConstructor, moveIngredientInConstructor } from '..
 
 import s from './burger-constructor-item.module.sass';
 
-const BurgerConstructorItem = ({ ingredient, index }) => {
+import { TIngredientConstructor } from '../../services/types/data';
+
+interface IBurgerConstructorItemProps {
+    ingredient: TIngredientConstructor;
+    index: number;
+}
+
+const BurgerConstructorItem = ({ ingredient, index }: IBurgerConstructorItemProps) => {
 
     const dispatch = useDispatch();
     const ref = useRef(null);
 
-    const deleteIngredient = (ingredient) => {
+    const deleteIngredient = (ingredient: TIngredientConstructor) => {
         dispatch(deleteIngredientFromConstructor(ingredient))
     }
 

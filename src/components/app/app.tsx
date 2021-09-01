@@ -97,7 +97,7 @@ const App = () => {
 
     useEffect(() => {
 
-      const closeModalByEscape = (e: any ) => {
+      const closeModalByEscape = (e: KeyboardEvent ) => {
           if (e.key === "Escape") {
               closeModal();
           }

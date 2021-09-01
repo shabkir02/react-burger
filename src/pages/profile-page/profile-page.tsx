@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -15,7 +15,7 @@ const ProfilePage = () => {
         password: store.user.password
     }))
 
-    const updateUserInfoClick = (e) => {
+    const updateUserInfoClick = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(updateUserInfo({
             name,

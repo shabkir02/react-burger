@@ -7,9 +7,10 @@ import { WS_USER_ORDERS_CONNECTION_START } from '../../services/actions';
 import { setCurrentOrderInfo } from '../../services/actions/modal';
 
 import s from './order-info-page.module.sass';
+import { TIngredient, TOrder } from '../../services/types/data';
 
 const OrderInfoPage = () => {
-    const params = useParams();
+    const params = useParams<{id: string}>();
     const { path } = useRouteMatch();
     const dispatch = useDispatch();
     const { ingredients, allOrders, userOrders, currentOrderInfo } = useSelector(store => ({
@@ -25,11 +26,11 @@ const OrderInfoPage = () => {
         }
     }, [])
 
-    const dispatchCurrentOrder = (ordersArr) => {
-        const currentOrder = ordersArr.orders.find(order => order._id === params.id);
+    const dispatchCurrentOrder = (ordersArr: any) => {
+        const currentOrder = ordersArr.orders.find((order: TOrder) => order._id === params.id);
 
-        const ingredientsArr = currentOrder.ingredients.map(ingredientId => {
-            return ingredients.find(item => item._id === ingredientId)
+        const ingredientsArr = currentOrder.ingredients.map((ingredientId: string) => {
+            return ingredients.find((item: TIngredient) => item._id === ingredientId)
         })
 
         dispatch(setCurrentOrderInfo({ order: currentOrder,  ingredientsArr}));

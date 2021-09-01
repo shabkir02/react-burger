@@ -5,8 +5,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import OrderItem from '../../components/order-item/order-item';
 
 import s from './feed-page.module.sass';
+import { TOrder, TIngredient } from '../../services/types/data';
 
-const FeedPage = ({ handleOrderInfoClick }) => {
+interface IFeedPageProps {
+    handleOrderInfoClick: (
+        order: TOrder, 
+        ingredientsArr: ReadonlyArray<TIngredient>
+    ) => void
+}
+
+const FeedPage = ({ handleOrderInfoClick }: IFeedPageProps) => {
 
     const { allOrders, ingredients } = useSelector(store => ({
         allOrders: store.wsOrders.allOrders,
@@ -14,8 +22,8 @@ const FeedPage = ({ handleOrderInfoClick }) => {
     }))
     // const dispatch = useDispatch();
 
-    const formOrdersStatusArr = (status) => {
-        const filterArr = allOrders.orders.filter(order => order.status === status);
+    const formOrdersStatusArr = (status: 'done' | 'created' | 'pending') => {
+        const filterArr = allOrders.orders.filter((order: TOrder) => order.status === status);
 
         if (filterArr.length > 10) {
             return filterArr.slice(0, 10)
@@ -29,7 +37,7 @@ const FeedPage = ({ handleOrderInfoClick }) => {
 
     const allOrdersContent = useMemo(() => {
         if (allOrders && ingredients) {
-            return allOrders.orders.map(order => {
+            return allOrders.orders.map((order: TOrder) => {
                 if (order && order.ingredients) {
                     return (
                         <OrderItem 

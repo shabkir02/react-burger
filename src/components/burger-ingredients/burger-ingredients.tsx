@@ -5,11 +5,18 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredientsList from '../burger-ingredients-list/burger-ingredients-list';
 
 import s from './burger-ingredients.module.sass';
+import { TIngredient } from '../../services/types/data';
 
-const BurgerIngredients = ({ handleIngredientClick }) => {
+interface IBurgerIngredientsProps {
+    handleIngredientClick: (
+        item: TIngredient
+    ) => void
+}
 
-    const [currentTab, setCurrentTab] = useState('bun')
-    const boxRef = useRef();
+const BurgerIngredients = ({ handleIngredientClick }: IBurgerIngredientsProps) => {
+
+    const [currentTab, setCurrentTab] = useState<'bun' | 'sauce' | 'main'>('bun')
+    const boxRef = useRef<HTMLDivElement>();
 
     const switchCurrentTab = (type) => {
         const offset = document.querySelector(`[data-scroll-id="${type}"]`).offsetTop;

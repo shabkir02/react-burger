@@ -5,8 +5,17 @@ import { Link, useLocation, useRouteMatch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import s from './order-item.module.sass';
+import { TIngredient, TOrder } from '../../services/types/data';
 
-const OrderItem = ({ onOrderClick, orderInfo }) => {
+interface TOrderItem {
+    onOrderClick: (
+        orderInfo: TOrder,
+        ingredientsFull: Array<TIngredient>
+    ) => void;
+    orderInfo: TOrder
+}
+
+const OrderItem = ({ onOrderClick, orderInfo }: TOrderItem) => {
 
     const location = useLocation();
     const { path } = useRouteMatch();
@@ -18,13 +27,13 @@ const OrderItem = ({ onOrderClick, orderInfo }) => {
     }))
 
     const ingredientsFull = useMemo(() => {
-        return ingredients.map(ingredientId => {
-            return ingredientsStore.find(item => item._id === ingredientId)
+        return ingredients.map((ingredientId: string) => {
+            return ingredientsStore.find((item: TIngredient) => item._id === ingredientId)
         })
     }, [ingredients, ingredientsStore])
 
     const orderPrice = useMemo(() => {
-        return ingredientsFull.reduce((acc, curr) => {
+        return ingredientsFull.reduce((acc: number, curr: TIngredient): number => {
             return acc + curr.price
         }, 0)
     }, [ingredientsFull]);

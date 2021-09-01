@@ -86,7 +86,7 @@ export const resetConstructor = (): IResetConstructorAction  => ({
 })
 
 export const getIngredients: AppThunk = () => {
-    return function(dispatch: any) {
+    return function(dispatch: AppDispatch) {
         dispatch(getIngredientsRequest());
         fetch(`${_apiUrl}/ingredients `).then(response => {
             if (response.ok) {

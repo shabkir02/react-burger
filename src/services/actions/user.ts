@@ -13,91 +13,91 @@ import {
     USER_INFO
 } from '../constants/user';
 
-import { AppDispatch } from "../types";
+import { AppDispatch, AppThunk } from "../types";
 import { TUserInfo } from "../types/data";
 
 const _apiUrl = 'https://norma.nomoreparties.space/api';
 
-export interface ISetUserRequest {
+export interface ISetUserRequestAction {
     readonly type: typeof SET_USER_REQUEST;
 }
-export interface ISetUserSuccess {
+export interface ISetUserSuccessAction {
     readonly type: typeof SET_USER_SUCCESS;
     payload: null | TUserInfo
 }
-export interface ISetUserFailed {
+export interface ISetUserFailedAction {
     readonly type: typeof SET_USER_FAILED;
 }
-export interface ISetEmail {
+export interface ISetEmailAction {
     readonly type: typeof SET_EMAIL;
     payload: string
 }
-export interface IResetEmail {
+export interface IResetEmailAction {
     readonly type: typeof RESET_EMAIL;
 }
-export interface ISetPassword {
+export interface ISetPasswordAction {
     readonly type: typeof SET_PASSWORD;
     payload: string
 }
-export interface IResetPassword {
+export interface IResetPasswordAction {
     readonly type: typeof RESET_PASSWORD;
 }
-export interface ISetName {
+export interface ISetNameAction {
     readonly type: typeof SET_NAME;
     payload: string
 }
-export interface IResetName {
+export interface IResetNameAction {
     readonly type: typeof RESET_NAME;
 }
-export interface IUserInfo {
+export interface IUserInfoAction {
     readonly type: typeof USER_INFO;
 }
 
 export type TUserActions = 
-    | ISetUserRequest
-    | ISetUserSuccess
-    | ISetUserFailed
-    | ISetEmail
-    | IResetEmail
-    | ISetPassword
-    | IResetPassword
-    | ISetName
-    | IResetName
-    | IUserInfo
+    | ISetUserRequestAction
+    | ISetUserSuccessAction
+    | ISetUserFailedAction
+    | ISetEmailAction
+    | IResetEmailAction
+    | ISetPasswordAction
+    | IResetPasswordAction
+    | ISetNameAction
+    | IResetNameAction
+    | IUserInfoAction
 ;
 
-export const setUserRequest = (): ISetUserRequest => ({
+export const setUserRequest = (): ISetUserRequestAction => ({
     type: SET_USER_REQUEST
 })
-export const setUserSuccess = (user: null |TUserInfo): ISetUserSuccess => ({
+export const setUserSuccess = (user: null |TUserInfo): ISetUserSuccessAction => ({
     type: SET_USER_SUCCESS,
     payload: user
 })
-export const setUserFailed = (): ISetUserFailed => ({
+export const setUserFailed = (): ISetUserFailedAction => ({
     type: SET_USER_FAILED
 })
-export const setEmail = (email: string): ISetEmail => ({
+export const setEmail = (email: string): ISetEmailAction => ({
     type: SET_EMAIL,
     payload: email
 })
-export const resetEmail = (): IResetEmail => ({
+export const resetEmail = (): IResetEmailAction => ({
     type: RESET_EMAIL
 })
-export const setPassword = (password: string): ISetPassword => ({
+export const setPassword = (password: string): ISetPasswordAction => ({
     type: SET_PASSWORD,
     payload: password
 })
-export const resetPassword = (): IResetPassword => ({
+export const resetPassword = (): IResetPasswordAction => ({
     type: RESET_PASSWORD
 })
-export const setName = (name: string): ISetName => ({
+export const setName = (name: string): ISetNameAction => ({
     type: SET_NAME,
     payload: name
 })
-export const resetName = (): IResetName => ({
+export const resetName = (): IResetNameAction => ({
     type: RESET_NAME
 })
-export const userInfo = (): IUserInfo => ({
+export const userInfo = (): IUserInfoAction => ({
     type: USER_INFO
 })
 
@@ -140,8 +140,8 @@ function updateUserInfoFetch(userObj: any) {
     })
 }
 
-export function getUserInfo() {
-    return function(dispatch: any) {
+export const getUserInfo: AppThunk = () => {
+    return function(dispatch: AppDispatch) {
         dispatch(setUserRequest());
         userInfoFetch().then(response => {
             if (response.success) {
@@ -176,8 +176,8 @@ export function getUserInfo() {
     }
 }
 
-export function updateUserInfo(userObj: any) {
-    return function(dispatch: any) {
+export const updateUserInfo: AppThunk = (userObj: any) => {
+    return function(dispatch: AppDispatch) {
         dispatch(setUserRequest());
         updateUserInfoFetch(userObj).then(response => {
             if (response.success) {
@@ -185,7 +185,7 @@ export function updateUserInfo(userObj: any) {
                 dispatch(setName(response.user.name))
                 dispatch(setEmail(response.user.email))
             } else {
-                dispatch({ type: SET_USER_FAILED })
+                dispatch(setUserFailed())
                 if (response.message === 'jwt expired') {
                     updateAccessToken().then(data => {
                         if (data.success) {
@@ -212,8 +212,8 @@ export function updateUserInfo(userObj: any) {
     }
 }
 
-export function userRegister(name: string, email: string, password: string) {
-    return function(dispatch: any) {
+export const userRegister: AppThunk = (name: string, email: string, password: string) => {
+    return function(dispatch: AppDispatch) {
         dispatch(setUserRequest());
         fetch(`${_apiUrl}/auth/register`, {
             method: 'POST',
@@ -252,7 +252,7 @@ export function userRegister(name: string, email: string, password: string) {
     }
 }
 
-export function userLogin(email: string, password: string) {
+export const userLogin: AppThunk = (email: string, password: string) => {
     return function(dispatch: any) {
         dispatch(setUserRequest());
         fetch(`${_apiUrl}/auth/login`, {
@@ -293,8 +293,8 @@ export function userLogin(email: string, password: string) {
     }
 }
 
-export function userLogout(token: string) {
-    return function(dispatch: any) {
+export const userLogout: AppThunk = (token: string) => {
+    return function(dispatch: AppThunk) {
         dispatch(setUserRequest());
         fetch(`${_apiUrl}/auth/logout`, {
             method: 'POST',

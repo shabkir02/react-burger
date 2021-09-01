@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FormEvent } from 'react';
 import { Logo, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,7 +21,7 @@ const ForgotPasswordPage = () => {
         user: store.user.user
     }))
 
-    const onFormSubmit = (e) => {
+    const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(sendEmailForResetPass(email));
     }

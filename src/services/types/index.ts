@@ -1,13 +1,14 @@
 import { ThunkAction } from 'redux-thunk';
 import { Action, ActionCreator } from 'redux';
-import { Dispatch } from 'redux';
+import { Dispatch  } from 'redux';
 
-import { store } from '../reducers';
+import { store } from '../store';
 
 import { TIngredientsActions } from '../actions/ingredients';
 import { TOrderActions } from '../actions/order';
 import { TModalActions } from '../actions/modal';
 import { TResetPasswordActions } from '../actions/reset-password';
+import { TWsOrdersActions } from '../actions/wsOrders';
 
 export type RootState = ReturnType<typeof store.getState>;
 
@@ -17,6 +18,7 @@ type TApplicationActions =
   & TOrderActions
   & TModalActions
   & TResetPasswordActions
+  & TWsOrdersActions
 ; 
 
 // Типизация thunk'ов
@@ -26,3 +28,7 @@ export type AppThunk<TReturn = void> = ActionCreator<
 
 // Типизация метода dispatch для проверки на валидность отправляемого экшена
 export type AppDispatch = Dispatch<TApplicationActions>; 
+
+export interface Middleware<
+  DispatchExt = {}, S = any, D extends Dispatch = Dispatch
+>

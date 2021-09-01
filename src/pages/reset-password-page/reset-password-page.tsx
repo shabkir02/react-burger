@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { FormEvent, useEffect } from 'react';
 import { Logo, Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,7 +22,7 @@ const ResetPasswordPage = () => {
         user: store.user.user
     }))
 
-    const onFormSubmit = (e) => {
+    const onFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
         dispatch(resetPassword(password, emailCode))
     }

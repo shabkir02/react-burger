@@ -2,8 +2,6 @@ import {
     SET_MODAL_INNER_INGREDIENT_DETAILS,
     SET_MODAL_INNER_ORDER_DETAILS,
     SET_MODAL_INNER_ORDER_INFO,
-    // SET_MODAL_OPEN,
-    // SET_MODAL_CLOSE,
     SET_CURRENT_INGREDIENT,
     SET_CURRENT_ORDER_INFO
 } from '../constants/modal';
@@ -15,7 +13,6 @@ type TModalState = {
     ingredientsConstructor: null | Array<TIngredientConstructor>,
     currentIngredient: null | TIngredient,
     currentOrderInfo: null | TOrderInfo,
-    // isModalOpen: boolean,
     modalInner: null | TModalInner
 }
 
@@ -23,11 +20,10 @@ const initialState: TModalState = {
     ingredientsConstructor: null,
     currentIngredient: null,
     currentOrderInfo: null,
-    // isModalOpen: false,
     modalInner: null
 }
 
-export const modalReducer = (state = initialState, action: TModalActions) => {
+export const modalReducer = (state = initialState, action: TModalActions): TModalState => {
     switch(action.type) {
         case SET_CURRENT_INGREDIENT:
             return {
@@ -63,16 +59,6 @@ export const modalReducer = (state = initialState, action: TModalActions) => {
                     type: 'orderInfo'
                 }
             }
-        // case SET_MODAL_OPEN:
-        //     return {
-        //         ...state,
-        //         isModalOpen: true
-        //     }
-        // case SET_MODAL_CLOSE:
-        //     return {
-        //         ...state,
-        //         isModalOpen: false
-        //     }
         default: {
             return state
         }

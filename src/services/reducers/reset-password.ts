@@ -35,7 +35,7 @@ const initialState: TResetPasswordState = {
     emailCode: ''
 }
 
-export const resetPasswordReducer = (state = initialState, action: TResetPasswordActions ) => {
+export const resetPasswordReducer = (state = initialState, action: TResetPasswordActions ): TResetPasswordState => {
     switch(action.type) {
         case SEND_EMAIL_REQUEST:
             return {

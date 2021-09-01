@@ -9,9 +9,18 @@ import { useHistory, useLocation } from 'react-router-dom';
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
 import { addBunToConstructor, addIngredientToConstructor } from '../../services/actions/ingredients';
 
+import { TIngredient, TIngredientConstructor } from '../../services/types/data';
+
 import s from './burger-constructor.module.sass';
 
-const BurgerConstructor = ({ handleOrderClick }) => {
+interface IBurgerConstructorProps {
+    handleOrderClick: (
+        finalIngredientsArg: ReadonlyArray<string>, 
+        location: any
+    ) => void
+}
+
+const BurgerConstructor = ({ handleOrderClick }: IBurgerConstructorProps) => {
 
     const history = useHistory();
     const location = useLocation()
@@ -24,14 +33,14 @@ const BurgerConstructor = ({ handleOrderClick }) => {
 
     const dispatch = useDispatch();
 
-    const makeOrder = () => {
+    const makeOrder = (): void => {
         if (!user) {
             history.push({ pathname: '/login' })
             return
         }
 
         if (constructorBun && constructorIngredients.length > 0) {
-            const finalIngredients = constructorIngredients.map(ingredient => ingredient._id)
+            const finalIngredients = constructorIngredients.map((ingredient: TIngredient) => ingredient._id)
             const finalIngredientsArg = [...finalIngredients, constructorBun._id, constructorBun._id]
 
             handleOrderClick(finalIngredientsArg, location)
@@ -51,7 +60,7 @@ const BurgerConstructor = ({ handleOrderClick }) => {
 
     const totalPrice = useMemo(() => {
         if (constructorBun || constructorIngredients.length > 0) {
-            const totalPrice = constructorIngredients.reduce((acc, curr) => {
+            const totalPrice = constructorIngredients.reduce((acc: number, curr: TIngredientConstructor) => {
                 return acc + curr.price
             }, 0)
     
@@ -80,7 +89,7 @@ const BurgerConstructor = ({ handleOrderClick }) => {
                     )}
                     {constructorIngredients && (
                         <div className={`${s.wrapper_inner} mb-4`}>
-                            {constructorIngredients.map((ingredient, index) => (
+                            {constructorIngredients.map((ingredient: TIngredientConstructor, index: number) => (
                                     <BurgerConstructorItem
                                         index={index}
                                         ingredient={ingredient}

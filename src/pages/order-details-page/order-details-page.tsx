@@ -8,7 +8,7 @@ import accept from '../../images/stroke.svg';
 
 const OrderDetailsPage = () => {
 
-    const { id } = useParams();
+    const { id } = useParams<{ id: string }>();
 
     return (
         <div className={s.order_wrapper}>

@@ -3,6 +3,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { useSelector } from 'react-redux';
 
 import s from './order-info.module.sass';
+import { TIngredient } from '../../services/types/data';
 
 const OrderInfo = () => {
 
@@ -27,7 +28,7 @@ const OrderInfo = () => {
 
     const orderPrice = useMemo(() => {
         if (currentOrderInfo) {
-            return currentOrderInfo.ingredientsArr.reduce((acc, curr) => {
+            return currentOrderInfo.ingredientsArr.reduce((acc: number, curr: TIngredient): number => {
                 return acc + curr.price
             }, 0)
         }
@@ -41,7 +42,7 @@ const OrderInfo = () => {
                     <p className="text text_type_main-default mb-15 blue" >{statusText}</p>
                     <p className="text text_type_main-medium mb-6" >Состав:</p>
                     <div className={`${s.order_info_wrapper} pr-6 mb-15`}>
-                        {currentOrderInfo.ingredientsArr.map((ingredient, index) => (
+                        {currentOrderInfo.ingredientsArr.map((ingredient: TIngredient, index: number) => (
                             <div key={index} className={`${s.order_info_item}`}>
                                 <div className={`${s.order_info_icon} mr-4`}>
                                     <img className={s.order_info_image} src={ingredient.image} alt={ingredient.name} />

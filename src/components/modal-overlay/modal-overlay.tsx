@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 
 import s from './modal-overlay.module.sass';
 
-const ModalOverlay = ({ closeModal }) => {
+interface IModalOverlayProps {
+    closeModal: () => void
+}
+
+const ModalOverlay = ({ closeModal }: IModalOverlayProps) => {
     return (
         <div 
             onClick={closeModal}

@@ -8,8 +8,16 @@ import BurgerIngredients from '../../components/burger-ingredients/burger-ingred
 import BurgerConstructor from '../../components/burger-constructor/burger-constructor';
 
 import s from './constructor-page.module.sass';
+import { TIngredient } from '../../services/types/data'
 
-const ConstructorPage = ({ handleIngredientClick, handleOrderClick }) => {
+interface IConstructorPageProps {
+    handleIngredientClick: (
+        item: TIngredient
+    ) => void;
+    handleOrderClick: () => void;
+}
+
+const ConstructorPage = ({ handleIngredientClick, handleOrderClick }: IConstructorPageProps) => {
 
     const { ingredients } = useSelector(store => ({
         ingredients: store.ingredients.ingredients,

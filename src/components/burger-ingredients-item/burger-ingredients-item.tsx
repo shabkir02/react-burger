@@ -6,8 +6,17 @@ import { Link, useLocation } from 'react-router-dom';
 
 import s from './burger-ingredients-item.module.sass';
 
+import { TIngredient } from '../../services/types/data';
 
-const BurgerIngredientsItem = ({ ingredient, count, onIngredientClick }) => {
+interface IBurgerIngredientsItemProps {
+    ingredient: TIngredient;
+    count: number;
+    onIngredientClick: (
+        ingredient: TIngredient
+    ) => void
+}
+
+const BurgerIngredientsItem = ({ ingredient, count, onIngredientClick }: IBurgerIngredientsItemProps) => {
 
     const location = useLocation();
 

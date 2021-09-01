@@ -6,10 +6,11 @@ import { setCurrentIngredient } from '../../services/actions/modal';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';
 
 import s from './ingredient-item-page.module.sass';
+import { TIngredient } from '../../services/types/data';
 
 const IngredientItemPage = () => {
 
-    const { id } = useParams();
+    const { id } = useParams<{id: string}>();
     const dispatch = useDispatch();
 
     const { ingredients, currentIngredient } = useSelector(store => ({
@@ -19,7 +20,7 @@ const IngredientItemPage = () => {
 
     useEffect(() => {
         if (ingredients) {
-            const ingredient = ingredients.find(item => item._id === id)
+            const ingredient = ingredients.find((item: TIngredient) => item._id === id)
             dispatch(setCurrentIngredient(ingredient));
         }
     }, [ingredients, id, dispatch])

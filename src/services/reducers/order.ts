@@ -29,7 +29,7 @@ const initialState: TOrderState = {
     orderInfo: null
 }
 
-export const orderReducer = (state = initialState, action: TOrderActions) => {
+export const orderReducer = (state = initialState, action: TOrderActions): TOrderState => {
     switch(action.type) {
         case GET_ORDER_REQUEST:
             return {

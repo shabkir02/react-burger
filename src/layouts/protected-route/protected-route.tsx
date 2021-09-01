@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, FC } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { getUserInfo } from '../../services/actions/user';
 import { useDispatch, useSelector } from 'react-redux';
 
-export function ProtectedRoute({ children, ...rest }) {
+export const ProtectedRoute: FC = ({ children, ...rest }) => {
     const dispatch = useDispatch();
     const user = useSelector(store => store.user.user)
 
-    const [isUserLoaded, setUserLoaded] = useState(false);
+    const [isUserLoaded, setUserLoaded] = useState<boolean>(false);
 
     const init = async () => {
         await dispatch(getUserInfo());

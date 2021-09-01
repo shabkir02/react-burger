@@ -6,8 +6,16 @@ import OrderItem from '../../components/order-item/order-item';
 import { WS_USER_ORDERS_CONNECTION_START } from '../../services/actions';
 
 import s from './orders-page.module.sass';
+import { TOrder, TIngredient } from '../../services/types/data';
 
-const OrdersPage = ({ handleOrderInfoClick }) => {
+interface IOrdersPageProps {
+    handleOrderInfoClick: (
+        order: TOrder, 
+        ingredientsArr: ReadonlyArray<TIngredient>
+    ) => void
+}
+
+const OrdersPage = ({ handleOrderInfoClick }: IOrdersPageProps) => {
 
     const dispatch = useDispatch();
     const { userOrders } = useSelector(store => ({
@@ -20,7 +28,7 @@ const OrdersPage = ({ handleOrderInfoClick }) => {
 
     const ordersContetnt = useMemo(() => {
         if (userOrders && userOrders.orders) {
-            return userOrders.orders.map(order => {
+            return userOrders.orders.map((order: TOrder) => {
                 if (order && order.ingredients) {
                     return (
                         <OrderItem 

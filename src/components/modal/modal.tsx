@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -8,9 +8,13 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 
 import s from './modal.module.sass';
 
-const modalRoot = document.getElementById('modal-root');
+const modalRoot: HTMLElement | null = document.getElementById('modal-root');
 
-const Modal = ({ closeModal, children }) => {
+interface IModalProps {
+    closeModal: () => void
+}
+
+const Modal: FC<IModalProps> = ({ closeModal, children }) => {
 
     const modalInner = useSelector(store => store.modal.modalInner)
 

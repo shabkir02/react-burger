@@ -8,48 +8,48 @@ import {
   ORDER_RESET
 } from '../constants/order';
 
-import { AppDispatch } from '../types';
+import { AppDispatch, AppThunk } from '../types';
 import { TOrder } from '../types/data';
 
 const _apiUrl = 'https://norma.nomoreparties.space/api';
 
-export interface IGetOrderRequest {
+export interface IGetOrderRequestAction {
   readonly type: typeof GET_ORDER_REQUEST;
 }
-export interface IGetOrderSuccess {
+export interface IGetOrderSuccessAction {
   readonly type: typeof GET_ORDER_SUCCESS;
   payload: TOrder
 }
-export interface IGetOrderFailed {
+export interface IGetOrderFailedAction {
   readonly type: typeof GET_ORDER_FAILED;
 }
-export interface IOrderReset {
+export interface IIOrderResetAction {
   readonly type: typeof ORDER_RESET;
 }
 
 export type TOrderActions = 
-  | IGetOrderRequest
-  | IGetOrderSuccess
-  | IGetOrderFailed
-  | IOrderReset
+  | IGetOrderRequestAction
+  | IGetOrderSuccessAction
+  | IGetOrderFailedAction
+  | IIOrderResetAction
 ;
 
-export const getOrderRequest = (): IGetOrderRequest => ({
+export const getOrderRequest = (): IGetOrderRequestAction => ({
   type: GET_ORDER_REQUEST
 })
-export const getOrderSuccess = (order: TOrder): IGetOrderSuccess => ({
+export const getOrderSuccess = (order: TOrder): IGetOrderSuccessAction => ({
   type: GET_ORDER_SUCCESS,
   payload: order
 })
-export const getOrderFailed = (): IGetOrderFailed => ({
+export const getOrderFailed = (): IGetOrderFailedAction => ({
   type: GET_ORDER_FAILED
 })
-export const orderReset = (): IOrderReset => ({
+export const orderReset = (): IIOrderResetAction => ({
   type: ORDER_RESET
 })
 
-export function makeOrder(ingredientsIdArr: ReadonlyArray<string>) {
-    return function(dispatch: any) {
+export const makeOrder: AppThunk = (ingredientsIdArr: ReadonlyArray<string>) => {
+    return function(dispatch: AppDispatch) {
         dispatch(getOrderRequest())
         fetch(`${_apiUrl}/orders`, {
             method: 'POST',
