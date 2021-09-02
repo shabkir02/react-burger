@@ -30,7 +30,7 @@ const OrderInfoPage = () => {
         const currentOrder = ordersArr.orders.find((order: TOrder) => order._id === params.id);
 
         const ingredientsArr = currentOrder.ingredients.map((ingredientId: string) => {
-            return ingredients.find((item: TIngredient) => item._id === ingredientId)
+            return ingredients?.find((item: TIngredient) => item._id === ingredientId)
         })
 
         dispatch(setCurrentOrderInfo({ order: currentOrder,  ingredientsArr}));

@@ -43,7 +43,7 @@ const BurgerIngredientsList = ({ title, type, onIngredientClick }: IBurgerIngred
 		return counter;
 	}, [constructorIngredients, constructorBun]);
 
-    const ingredientsArr = ingredients.map((ingredient: TIngredient): any => {
+    const ingredientsArr = ingredients?.map((ingredient: TIngredient): any => {
         if (ingredient.type === type) {
             return (
                 <BurgerIngredientsItem 

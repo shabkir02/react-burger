@@ -36,16 +36,22 @@ import {
 } from '../../services/actions/modal';
 import OrderInfoPage from '../../pages/order-info-page/order-info-page';
 
-interface ILocationState {
-  background?: object;
-}
+export interface IAppLocation extends Location {
+  background?: {
+      key: string,
+      pathname: string,
+      search: string,
+      hash: string
+      state: IAppLocation
+  }
+};
 
 const App = () => {
 
   const ModalSwitch = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const location = useLocation<ILocationState>();
+    const location = useLocation<IAppLocation>();
 
     let background = 
       history.action === "PUSH" && location.state && location.state.background;
@@ -114,9 +120,9 @@ const App = () => {
             {background && (
               <Route path="/:type/:id" >
                 <Modal closeModal={closeModal}>
-                  {modalInner.type === modalInnerDetails.ingredientDetails && <IngredientDetails/>}
-                  {modalInner.type === modalInnerDetails.orderDetails && order && <OrderDetails/>}
-                  {modalInner.type === modalInnerDetails.orderInfo && <OrderInfo/>}
+                  {modalInner?.type === modalInnerDetails.ingredientDetails && <IngredientDetails/>}
+                  {modalInner?.type === modalInnerDetails.orderDetails && order && <OrderDetails/>}
+                  {modalInner?.type === modalInnerDetails.orderInfo && <OrderInfo/>}
                 </Modal>
               </Route>
             )}

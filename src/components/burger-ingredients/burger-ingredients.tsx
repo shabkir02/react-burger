@@ -16,16 +16,18 @@ interface IBurgerIngredientsProps {
 const BurgerIngredients = ({ handleIngredientClick }: IBurgerIngredientsProps) => {
 
     const [currentTab, setCurrentTab] = useState<'bun' | 'sauce' | 'main'>('bun')
-    const boxRef = useRef<HTMLDivElement>();
+    const boxRef = useRef<HTMLDivElement>(null);
 
     const switchCurrentTab = (type: 'bun' | 'sauce' | 'main') => {
-        const offset = document.querySelector(`[data-scroll-id="${type}"]`).offsetTop;
-
-        boxRef.current.scroll({
-            left: 0,
-            top: offset - 247,
-            behavior: 'smooth'
-        })
+        const element = document.querySelector(`[data-scroll-id="${type}"]`)
+        if (element && element instanceof HTMLElement) {
+            const offset = element.offsetTop
+            boxRef.current?.scroll({
+                left: 0,
+                top: offset - 247,
+                behavior: 'smooth'
+            })
+        }
     }
 
     const switchCurrentTabOnScroll = (e: any): void => {
@@ -33,11 +35,11 @@ const BurgerIngredients = ({ handleIngredientClick }: IBurgerIngredientsProps) =
         const sauceContainer = document.querySelector(`[data-scroll-id="sauce"]`);
         const mainContainer = document.querySelector(`[data-scroll-id="main"]`);
 
-        if ((e.target.scrollTop + 248) > bunContainer.offsetTop && (e.target.scrollTop + 248) < sauceContainer.offsetTop && currentTab !== 'bun') {
+        if ((e.target.scrollTop + 248) > bunContainer?.offsetTop && (e.target.scrollTop + 248) < sauceContainer?.offsetTop && currentTab !== 'bun') {
             setCurrentTab('bun')
             return
         }
-        if ((e.target.scrollTop + 248) > sauceContainer.offsetTop && (e.target.scrollTop + 248) < mainContainer.offsetTop && currentTab !== 'sauce') {
+        if ((e.target.scrollTop + 248) > sauceContainer?.offsetTop && (e.target.scrollTop + 248) < mainContainer?.offsetTop && currentTab !== 'sauce') {
             setCurrentTab('sauce')
             return
         }
@@ -54,14 +56,17 @@ const BurgerIngredients = ({ handleIngredientClick }: IBurgerIngredientsProps) =
                 <Tab 
                     active={currentTab === 'bun'}
                     onClick={() => switchCurrentTab('bun')}
+                    value="Начинки"
                 >Булки</Tab>
                 <Tab 
                     active={currentTab === 'sauce'}
                     onClick={() => switchCurrentTab('sauce')}
+                    value="Начинки"
                 >Соусы</Tab>
                 <Tab 
                     active={currentTab === 'main'}
                     onClick={() => switchCurrentTab('main')}
+                    value="Начинки"
                 >Начинки</Tab>
             </div>
             <div 

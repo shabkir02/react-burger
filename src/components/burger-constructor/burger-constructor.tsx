@@ -113,7 +113,7 @@ const BurgerConstructor = ({ handleOrderClick }: IBurgerConstructorProps) => {
            <div className={`${s.constructor_footer}`}>
                 <div className={`${s.total_wrapper} mr-10`}>
                     <span className="text text_type_digits-medium">{totalPrice}</span>
-                    <CurrencyIcon />
+                    <CurrencyIcon type="primary" />
                 </div>
                 <div onClick={makeOrder}>
                     <Button type="primary" size="medium">

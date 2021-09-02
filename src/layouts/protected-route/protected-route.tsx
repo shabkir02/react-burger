@@ -3,7 +3,12 @@ import { Route, Redirect } from 'react-router-dom';
 import { getUserInfo } from '../../services/actions/user';
 import { useDispatch, useSelector } from '../../hooks/hooks';
 
-export const ProtectedRoute: FC = ({ children, ...rest }) => {
+interface IProtectedRouteProps {
+    path: string;
+    exact?: boolean
+}
+
+export const ProtectedRoute: FC<IProtectedRouteProps> = ({ children, ...rest }) => {
     const dispatch = useDispatch();
     const user = useSelector(store => store.user.user)
 

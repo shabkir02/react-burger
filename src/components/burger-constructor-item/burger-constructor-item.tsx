@@ -29,7 +29,7 @@ const BurgerConstructorItem = ({ ingredient, index }: IBurgerConstructorItemProp
         collect: monitor => ({
             isHover: monitor.isOver()
         }),
-        hover(item, monitor) {
+        hover(item: any, monitor) {
             if (!ref.current) {
                 return;
             }
@@ -43,16 +43,18 @@ const BurgerConstructorItem = ({ ingredient, index }: IBurgerConstructorItemProp
             const hoverBoundingRect = ref.current?.getBoundingClientRect();
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
             const clientOffset = monitor.getClientOffset();
-            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+            if (clientOffset) {
+                const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
-            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-                return;
+                if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+                    return;
+                }
+                if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+                    return;
+                }
+                dispatch(moveIngredientInConstructor({hoverIndex, dragIndex}))
+                item.index = hoverIndex;
             }
-            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-                return;
-            }
-            dispatch(moveIngredientInConstructor({hoverIndex, dragIndex}))
-            item.index = hoverIndex;
         },
     });
 
@@ -74,7 +76,7 @@ const BurgerConstructorItem = ({ ingredient, index }: IBurgerConstructorItemProp
             className={`${s.constructor_item} ${isDragging ? s.active : ''}`} 
         >
             <div className={s.drag_icon}>
-                <DragIcon />
+                <DragIcon type="secondary" />
             </div>
             <ConstructorElement 
                 text={ingredient.name}

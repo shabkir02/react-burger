@@ -21,7 +21,9 @@ const IngredientItemPage = () => {
     useEffect(() => {
         if (ingredients) {
             const ingredient = ingredients.find((item: TIngredient) => item._id === id)
-            dispatch(setCurrentIngredient(ingredient));
+            if (ingredient) {
+                dispatch(setCurrentIngredient(ingredient));
+            }
         }
     }, [ingredients, id, dispatch])
 

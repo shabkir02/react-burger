@@ -37,12 +37,14 @@ const ProfilePage = () => {
                 </div>
                 <div className="mb-6">
                     <EmailInput
+                        name="email"
                         value={email}
                         onChange={e => dispatch(setEmail(e.target.value))}
                     />
                 </div>
                 <div className="mb-6">
                     <PasswordInput 
+                        name="password"
                         value={password}
                         onChange={e => dispatch(setPassword(e.target.value))}
                     />

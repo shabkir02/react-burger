@@ -29,6 +29,11 @@ export type AppThunk<TReturn = void> = ActionCreator<
 // Типизация метода dispatch для проверки на валидность отправляемого экшена
 export type AppDispatch = Dispatch<TApplicationActions>; 
 
-export interface Middleware<
-  DispatchExt = {}, S = any, D extends Dispatch = Dispatch
->
+// export interface Middleware<
+//   DispatchExt = {}, S = any, D extends Dispatch = Dispatch
+// >
+
+export interface MiddlewareAPI<D extends Dispatch = Dispatch, S = any> {
+  dispatch: D
+  getState(): S
+}

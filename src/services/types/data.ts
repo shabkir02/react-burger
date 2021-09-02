@@ -14,7 +14,7 @@ export type TIngredient = {
 }
 
 export type TIngredientConstructor = TIngredient & {
-    drag_id: number;
+    drag_id: string;
 }
 
 export type TMovingIngredient = {
