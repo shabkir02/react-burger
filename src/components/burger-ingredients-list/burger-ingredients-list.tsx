@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../hooks/hooks';
 import PropTypes from 'prop-types';
 
 import BurgerIngredientsItem from '../burger-ingredients-item/burger-ingredients-item';

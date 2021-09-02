@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types'
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../hooks/hooks';
 import {  ConstructorElement, DragIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag, useDrop } from 'react-dnd';
 
@@ -18,7 +18,7 @@ interface IBurgerConstructorItemProps {
 const BurgerConstructorItem = ({ ingredient, index }: IBurgerConstructorItemProps) => {
 
     const dispatch = useDispatch();
-    const ref = useRef(null);
+    const ref = useRef<HTMLDivElement>(null);
 
     const deleteIngredient = (ingredient: TIngredientConstructor) => {
         dispatch(deleteIngredientFromConstructor(ingredient))

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import { Logo, EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Redirect, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks/hooks';
 
 import { setEmail, setName, setPassword, userRegister } from '../../services/actions/user';
 
@@ -19,7 +19,7 @@ const RegisterPage = () => {
         user: store.user.user
     }))
 
-    const onFormSubmit = (e) => {
+    const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(userRegister(name, email, password))
     }

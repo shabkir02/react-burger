@@ -1,6 +1,6 @@
 import React, { FormEvent } from 'react';
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks/hooks';
 
 import { setName, setEmail, setPassword, updateUserInfo } from '../../services/actions/user';
 

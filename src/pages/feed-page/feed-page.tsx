@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../hooks/hooks';
 
 import OrderItem from '../../components/order-item/order-item';
 
@@ -64,7 +64,7 @@ const FeedPage = ({ handleOrderInfoClick }: IFeedPageProps) => {
                             <div>
                                 <h4 className="text text_type_main-medium mb-6">Готовы:</h4>
                                 <div className={s.orders_status_column}>
-                                    {doneOrdersArr.map(order => (
+                                    {doneOrdersArr.map((order: TOrder) => (
                                         <p key={order._id} className="text text_type_digits-default mb-2 blue">{order.number}</p>
                                     ))}
                                 </div>
@@ -72,7 +72,7 @@ const FeedPage = ({ handleOrderInfoClick }: IFeedPageProps) => {
                             <div>
                                 <h4 className="text text_type_main-medium mb-6">В работе:</h4>
                                 <div className={s.orders_status_column}>
-                                    {pendingOrdersArr.map(order => (
+                                    {pendingOrdersArr.map((order: TOrder) => (
                                         <p key={order._id} className="text text_type_digits-default mb-2">{order.number}</p>
                                     ))}
                                 </div>

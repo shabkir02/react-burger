@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, UIEvent } from 'react';
 import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -18,7 +18,7 @@ const BurgerIngredients = ({ handleIngredientClick }: IBurgerIngredientsProps) =
     const [currentTab, setCurrentTab] = useState<'bun' | 'sauce' | 'main'>('bun')
     const boxRef = useRef<HTMLDivElement>();
 
-    const switchCurrentTab = (type) => {
+    const switchCurrentTab = (type: 'bun' | 'sauce' | 'main') => {
         const offset = document.querySelector(`[data-scroll-id="${type}"]`).offsetTop;
 
         boxRef.current.scroll({
@@ -28,7 +28,7 @@ const BurgerIngredients = ({ handleIngredientClick }: IBurgerIngredientsProps) =
         })
     }
 
-    const switchCurrentTabOnScroll = (e) => {
+    const switchCurrentTabOnScroll = (e: any): void => {
         const bunContainer = document.querySelector(`[data-scroll-id="bun"]`);
         const sauceContainer = document.querySelector(`[data-scroll-id="sauce"]`);
         const mainContainer = document.querySelector(`[data-scroll-id="main"]`);

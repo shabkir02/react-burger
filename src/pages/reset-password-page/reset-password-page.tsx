@@ -1,7 +1,7 @@
 import React, { FormEvent, useEffect } from 'react';
 import { Logo, Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks/hooks';
 import { useHistory, Redirect, useLocation } from 'react-router-dom';
 
 import { resetPassword, setEmailCode } from '../../services/actions/reset-password';

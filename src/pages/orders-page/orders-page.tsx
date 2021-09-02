@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks/hooks';
 
 import OrderItem from '../../components/order-item/order-item';
-import { WS_USER_ORDERS_CONNECTION_START } from '../../services/actions';
+import { wsUserOrdersConnectionStart } from '../../services/actions/wsOrders';
 
 import s from './orders-page.module.sass';
 import { TOrder, TIngredient } from '../../services/types/data';
@@ -23,7 +23,7 @@ const OrdersPage = ({ handleOrderInfoClick }: IOrdersPageProps) => {
     }))
   
     useEffect(() => {
-        dispatch({ type: WS_USER_ORDERS_CONNECTION_START });
+        dispatch(wsUserOrdersConnectionStart());
     }, [])
 
     const ordersContetnt = useMemo(() => {

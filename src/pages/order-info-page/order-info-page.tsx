@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useParams, useRouteMatch } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks/hooks';
 
 import OrderInfo from '../../components/order-info/order-info';
-import { WS_USER_ORDERS_CONNECTION_START } from '../../services/actions';
+import { wsUserOrdersConnectionStart } from '../../services/actions/wsOrders';
 import { setCurrentOrderInfo } from '../../services/actions/modal';
 
 import s from './order-info-page.module.sass';
@@ -22,7 +22,7 @@ const OrderInfoPage = () => {
 
     useEffect(() => {
         if (path === '/profile/orders/:id') {
-            dispatch({ type: WS_USER_ORDERS_CONNECTION_START })
+            dispatch(wsUserOrdersConnectionStart())
         }
     }, [])
 

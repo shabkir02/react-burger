@@ -20,7 +20,7 @@ import OrderDetails from '../order-details/order-details';
 import OrderInfo from '../order-info/order-info';
 import { ProtectedRoute } from '../../layouts/protected-route/protected-route';
 
-import { WS_ALL_ORDERS_CONNECTION_START } from '../../services/actions';
+import { wsAllOrdersConnectionStart } from '../../services/actions/wsOrders';
 
 import { makeOrder, orderReset} from '../../services/actions/order';
 import { getIngredients } from '../../services/actions/ingredients';
@@ -37,9 +37,7 @@ import {
 import OrderInfoPage from '../../pages/order-info-page/order-info-page';
 
 interface ILocationState {
-  state: {
-    background: object
-  }
+  background?: object;
 }
 
 const App = () => {
@@ -68,7 +66,7 @@ const App = () => {
       dispatch(setModalInnerIngredientsDetails())
     }
 
-    const handleOrderClick = (finalIngredients: ReadonlyArray<string>, propLocation: any): void => {
+    const handleOrderClick = (finalIngredients: ReadonlyArray<string>, propLocation: object): void => {
       dispatch(setModalInnerOrderDetails())
       history.push({ pathname: '/order-details/4321', state: { background: propLocation }  })
 
@@ -92,12 +90,12 @@ const App = () => {
         dispatch(getUserInfo());
       }
 
-      dispatch({ type: WS_ALL_ORDERS_CONNECTION_START });
+      dispatch(wsAllOrdersConnectionStart());
     }, [dispatch])
 
     useEffect(() => {
 
-      const closeModalByEscape = (e: KeyboardEvent ) => {
+      const closeModalByEscape = (e: KeyboardEvent ): void => {
           if (e.key === "Escape") {
               closeModal();
           }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../hooks/hooks';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import PropTypes from 'prop-types'
@@ -14,7 +14,10 @@ interface IConstructorPageProps {
     handleIngredientClick: (
         item: TIngredient
     ) => void;
-    handleOrderClick: () => void;
+    handleOrderClick: (
+        finalIngredients: ReadonlyArray<string>, 
+        propLocation: object
+    ) => void;
 }
 
 const ConstructorPage = ({ handleIngredientClick, handleOrderClick }: IConstructorPageProps) => {

@@ -1,7 +1,7 @@
 import React, { FormEvent } from 'react';
 import { Logo, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Redirect, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks/hooks';
 
 import { userLogin, setEmail, setPassword } from '../../services/actions/user';
 
@@ -18,7 +18,7 @@ const LoginPage = () => {
         user: store.user.user
     }))
 
-    const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const onFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
         dispatch(userLogin(email, password))
     }

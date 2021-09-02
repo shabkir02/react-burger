@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { CurrencyIcon, ConstructorElement, Button  } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../hooks/hooks';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -16,7 +16,7 @@ import s from './burger-constructor.module.sass';
 interface IBurgerConstructorProps {
     handleOrderClick: (
         finalIngredientsArg: ReadonlyArray<string>, 
-        location: any
+        location: object
     ) => void
 }
 
@@ -49,7 +49,7 @@ const BurgerConstructor = ({ handleOrderClick }: IBurgerConstructorProps) => {
 
     const [, dropContainer] = useDrop({
         accept: "constructor",
-        drop(item) {
+        drop(item: TIngredient) {
             if (item.type === 'bun') {
                 dispatch(addBunToConstructor(item))
                 return

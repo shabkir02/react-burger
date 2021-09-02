@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks/hooks';
 
 import { setCurrentIngredient } from '../../services/actions/modal';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';

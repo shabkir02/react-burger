@@ -1,7 +1,7 @@
 import React, { useEffect, useState, FC } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { getUserInfo } from '../../services/actions/user';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks/hooks';
 
 export const ProtectedRoute: FC = ({ children, ...rest }) => {
     const dispatch = useDispatch();

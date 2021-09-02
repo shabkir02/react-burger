@@ -1,7 +1,7 @@
 import React from "react";
 import { Logo, ListIcon, BurgerIcon, ProfileIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink, useRouteMatch, Link } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import { useSelector } from "../../hooks/hooks";
 
 import s from './app-header.module.sass';
 
