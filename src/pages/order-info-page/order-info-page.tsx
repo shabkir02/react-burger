@@ -7,7 +7,7 @@ import { wsUserOrdersConnectionStart } from '../../services/actions/wsOrders';
 import { setCurrentOrderInfo } from '../../services/actions/modal';
 
 import s from './order-info-page.module.sass';
-import { TIngredient, TOrder } from '../../services/types/data';
+import { TIngredient, TOrder, TWsOrders } from '../../services/types/data';
 
 const OrderInfoPage = () => {
     const params = useParams<{id: string}>();
@@ -26,14 +26,20 @@ const OrderInfoPage = () => {
         }
     }, [])
 
-    const dispatchCurrentOrder = (ordersArr: any) => {
+    const dispatchCurrentOrder = (ordersArr: any): void => {
         const currentOrder = ordersArr.orders.find((order: TOrder) => order._id === params.id);
 
-        const ingredientsArr = currentOrder.ingredients.map((ingredientId: string) => {
-            return ingredients?.find((item: TIngredient) => item._id === ingredientId)
-        })
+        if (currentOrder) {
+            const ingredientsArr = currentOrder.ingredients.map((ingredientId: string) => {
+                const ingredientItem = ingredients?.find((item: TIngredient) => item._id === ingredientId)
 
-        dispatch(setCurrentOrderInfo({ order: currentOrder,  ingredientsArr}));
+                if (ingredientItem) {
+                    return ingredientItem
+                }
+            })
+
+            dispatch(setCurrentOrderInfo({ order: currentOrder,  ingredientsArr}));
+        }
     }
 
     useEffect(() => {

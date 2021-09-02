@@ -60,3 +60,10 @@ export type TUser = {
     readonly email: string
     readonly name: string
 }
+
+export type TWsOrders = {
+    success: true,
+    orders: Array<TOrder>,
+    total: number;
+    totalToday: number;
+}

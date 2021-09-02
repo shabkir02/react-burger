@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../hooks/hooks';
 import { NavLink, useHistory } from 'react-router-dom';
 
 import { userLogout } from '../../services/actions/user';

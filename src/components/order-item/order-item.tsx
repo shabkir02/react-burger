@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { Link, useLocation, useRouteMatch } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../hooks/hooks';
 
 import s from './order-item.module.sass';
 import { TIngredient, TOrder } from '../../services/types/data';
@@ -10,7 +10,8 @@ import { TIngredient, TOrder } from '../../services/types/data';
 interface TOrderItem {
     onOrderClick: (
         orderInfo: TOrder,
-        ingredientsFull: Array<TIngredient>
+        // ingredientsFull: Array<TIngredient>
+        ingredientsFull: any
     ) => void;
     orderInfo: TOrder
 }
@@ -28,12 +29,12 @@ const OrderItem = ({ onOrderClick, orderInfo }: TOrderItem) => {
 
     const ingredientsFull = useMemo(() => {
         return ingredients.map((ingredientId: string) => {
-            return ingredientsStore.find((item: TIngredient) => item._id === ingredientId)
+            return ingredientsStore?.find((item: TIngredient) => item._id === ingredientId)
         })
     }, [ingredients, ingredientsStore])
 
     const orderPrice = useMemo(() => {
-        return ingredientsFull.reduce((acc: number, curr: TIngredient): number => {
+        return ingredientsFull.reduce((acc: any, curr: any): number => {
             return acc + curr.price
         }, 0)
     }, [ingredientsFull]);
@@ -89,7 +90,7 @@ const OrderItem = ({ onOrderClick, orderInfo }: TOrderItem) => {
                                     zIndex: 6 - index
                                 }}
                             >
-                                <img src={item.image} alt={item.name} />
+                                <img src={item?.image} alt={item?.name} />
                             </div>
                         ))}
                         {ingredientsImageArr[1].length > 0 && (
@@ -100,7 +101,7 @@ const OrderItem = ({ onOrderClick, orderInfo }: TOrderItem) => {
                                     zIndex: 1
                                 }}
                             >
-                                <img src={ingredientsImageArr[0][0].image} alt={ingredientsImageArr[0][0].name} />
+                                <img src={ingredientsImageArr[0][0]?.image} alt={ingredientsImageArr[0][0]?.name} />
                                 <div className={`${s.container_orders_item_ingredient_length} text text_type_main-default`}>
                                     +{ingredientsImageArr[1].length}
                                 </div>
@@ -108,8 +109,8 @@ const OrderItem = ({ onOrderClick, orderInfo }: TOrderItem) => {
                         )}
                     </div>
                     <div className={`${s.container_orders_item_total}`}>
-                        <span className="text text_type_digits-default mr-2">{orderPrice.toLocaleString('ru-RU')}</span>
-                        <CurrencyIcon/>
+                        <span className="text text_type_digits-default mr-2">{orderPrice}</span>
+                        <CurrencyIcon type="secondary" />
                     </div>
                 </div>
             </div>

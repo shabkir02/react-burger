@@ -11,6 +11,8 @@ import {
     WS_USER_ORDERS_CONNECTION_START
 } from '../constants/wsOrders';
 
+import { TWsOrders } from '../types/data';
+
 export interface IWsAllOrdersConnectionSuccessAction {
     readonly type: typeof WS_ALL_ORDERS_CONNECTION_SUCCESS;
 }
@@ -22,7 +24,7 @@ export interface IWsAllOrdersConnectionClosedAction {
 }
 export interface IWsAllOrdersGetMessageAction {
     readonly type: typeof WS_ALL_ORDERS_GET_MESSAGE;
-    payload: any
+    payload: TWsOrders
 }
 export interface IWsAllOrdersConnectionStartAction {
     readonly type: typeof WS_ALL_ORDERS_CONNECTION_START;
@@ -38,7 +40,7 @@ export interface IWsUserOrdersConnectionClosedAction {
 }
 export interface IWsUserOrdersGetMessageAction {
     readonly type: typeof WS_USER_ORDERS_GET_MESSAGE;
-    payload: any
+    payload: TWsOrders
 }
 export interface IWsUserOrdersConnectionStartAction {
     readonly type: typeof WS_USER_ORDERS_CONNECTION_START;
@@ -66,10 +68,14 @@ export const wsAllOrdersConnectionError = (): IWsAllOrdersConnectionErrorAction 
 export const wsAllOrdersConnectionClosed = (): IWsAllOrdersConnectionClosedAction => ({
     type: WS_ALL_ORDERS_CONNECTION_CLOSED
 })
-export const wsAllOrdersGetMessage = (orders: any): IWsAllOrdersGetMessageAction => ({
-    type: WS_ALL_ORDERS_GET_MESSAGE,
-    payload: orders
-})
+export const wsAllOrdersGetMessage = (orders: TWsOrders): IWsAllOrdersGetMessageAction => {
+    console.log('message');
+    
+    return {
+        type: WS_ALL_ORDERS_GET_MESSAGE,
+        payload: orders
+    }
+}
 export const wsAllOrdersConnectionStart = (): IWsAllOrdersConnectionStartAction => ({
     type: WS_ALL_ORDERS_CONNECTION_START
 })
@@ -82,7 +88,7 @@ export const wsUserOrdersConnectionError = (): IWsUserOrdersConnectionErrorActio
 export const wsUserOrdersConnectionClosed = (): IWsUserOrdersConnectionClosedAction => ({
     type: WS_USER_ORDERS_CONNECTION_CLOSED
 })
-export const wsUserOrdersGetMessage = (orders: any): IWsUserOrdersGetMessageAction => ({
+export const wsUserOrdersGetMessage = (orders: TWsOrders): IWsUserOrdersGetMessageAction => ({
     type: WS_USER_ORDERS_GET_MESSAGE,
     payload: orders
 })

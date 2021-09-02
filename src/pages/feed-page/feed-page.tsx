@@ -1,6 +1,6 @@
-import React, { useEffect, useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from '../../hooks/hooks';
+import { useSelector } from '../../hooks/hooks';
 
 import OrderItem from '../../components/order-item/order-item';
 
@@ -22,8 +22,8 @@ const FeedPage = ({ handleOrderInfoClick }: IFeedPageProps) => {
     }))
     // const dispatch = useDispatch();
 
-    const formOrdersStatusArr = (status: 'done' | 'created' | 'pending') => {
-        const filterArr = allOrders.orders.filter((order: TOrder) => order.status === status);
+    const formOrdersStatusArr = (status: 'done' | 'created' | 'pending'):  Array<TOrder> => {
+        const filterArr: Array<TOrder> = allOrders.orders.filter((order: TOrder) => order.status === status);
 
         if (filterArr.length > 10) {
             return filterArr.slice(0, 10)
@@ -64,7 +64,7 @@ const FeedPage = ({ handleOrderInfoClick }: IFeedPageProps) => {
                             <div>
                                 <h4 className="text text_type_main-medium mb-6">Готовы:</h4>
                                 <div className={s.orders_status_column}>
-                                    {doneOrdersArr.map((order: TOrder) => (
+                                    {doneOrdersArr?.map((order: TOrder) => (
                                         <p key={order._id} className="text text_type_digits-default mb-2 blue">{order.number}</p>
                                     ))}
                                 </div>
@@ -72,7 +72,7 @@ const FeedPage = ({ handleOrderInfoClick }: IFeedPageProps) => {
                             <div>
                                 <h4 className="text text_type_main-medium mb-6">В работе:</h4>
                                 <div className={s.orders_status_column}>
-                                    {pendingOrdersArr.map((order: TOrder) => (
+                                    {pendingOrdersArr?.map((order: TOrder) => (
                                         <p key={order._id} className="text text_type_digits-default mb-2">{order.number}</p>
                                     ))}
                                 </div>

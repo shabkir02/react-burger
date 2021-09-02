@@ -40,7 +40,7 @@ const BurgerConstructor = ({ handleOrderClick }: IBurgerConstructorProps) => {
         }
 
         if (constructorBun && constructorIngredients.length > 0) {
-            const finalIngredients = constructorIngredients.map((ingredient: TIngredient) => ingredient._id)
+            const finalIngredients = constructorIngredients.map((ingredient: TIngredient): string => ingredient._id)
             const finalIngredientsArg = [...finalIngredients, constructorBun._id, constructorBun._id]
 
             handleOrderClick(finalIngredientsArg, location)
@@ -58,9 +58,9 @@ const BurgerConstructor = ({ handleOrderClick }: IBurgerConstructorProps) => {
         }
     })
 
-    const totalPrice = useMemo(() => {
+    const totalPrice: number = useMemo(() => {
         if (constructorBun || constructorIngredients.length > 0) {
-            const totalPrice = constructorIngredients.reduce((acc: number, curr: TIngredientConstructor) => {
+            const totalPrice = constructorIngredients.reduce((acc: number, curr: TIngredientConstructor): number => {
                 return acc + curr.price
             }, 0)
     

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../hooks/hooks';
 
 import s from './order-info.module.sass';
 import { TIngredient } from '../../services/types/data';
@@ -26,11 +26,13 @@ const OrderInfo = () => {
         }
     }, [currentOrderInfo])
 
-    const orderPrice = useMemo(() => {
+    const orderPrice: number = useMemo(() => {
         if (currentOrderInfo) {
             return currentOrderInfo.ingredientsArr.reduce((acc: number, curr: TIngredient): number => {
                 return acc + curr.price
             }, 0)
+        } else {
+            return 0
         }
     }, [currentOrderInfo]);
 

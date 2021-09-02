@@ -50,7 +50,7 @@ const BurgerIngredientsItem = ({ ingredient, count, onIngredientClick }: IBurger
                 <img className="mb-1" src={image} alt={name} />
                 <div className={`${s.price_wrapper} mb-1`}>
                     <span className="text text_type_digits-default">{price}</span>
-                    <CurrencyIcon/>
+                    <CurrencyIcon type="primary" />
                 </div>
             </div>
             <h3 className={`${s.ingredient_name} text text_type_main-default`}>{name}</h3>

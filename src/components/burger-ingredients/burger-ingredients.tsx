@@ -1,4 +1,4 @@
-import React, { useState, useRef, UIEvent } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -18,7 +18,7 @@ const BurgerIngredients = ({ handleIngredientClick }: IBurgerIngredientsProps) =
     const [currentTab, setCurrentTab] = useState<'bun' | 'sauce' | 'main'>('bun')
     const boxRef = useRef<HTMLDivElement>(null);
 
-    const switchCurrentTab = (type: 'bun' | 'sauce' | 'main') => {
+    const switchCurrentTab = (type: 'bun' | 'sauce' | 'main'): void => {
         const element = document.querySelector(`[data-scroll-id="${type}"]`)
         if (element && element instanceof HTMLElement) {
             const offset = element.offsetTop
@@ -35,19 +35,29 @@ const BurgerIngredients = ({ handleIngredientClick }: IBurgerIngredientsProps) =
         const sauceContainer = document.querySelector(`[data-scroll-id="sauce"]`);
         const mainContainer = document.querySelector(`[data-scroll-id="main"]`);
 
-        if ((e.target.scrollTop + 248) > bunContainer?.offsetTop && (e.target.scrollTop + 248) < sauceContainer?.offsetTop && currentTab !== 'bun') {
-            setCurrentTab('bun')
+        if (bunContainer instanceof HTMLElement && sauceContainer instanceof HTMLElement) {
+            if ((e.target.scrollTop + 248) > bunContainer.offsetTop && (e.target.scrollTop + 248) < sauceContainer.offsetTop && currentTab !== 'bun') {
+                setCurrentTab('bun')
+            }
             return
         }
-        if ((e.target.scrollTop + 248) > sauceContainer?.offsetTop && (e.target.scrollTop + 248) < mainContainer?.offsetTop && currentTab !== 'sauce') {
-            setCurrentTab('sauce')
+        if (sauceContainer instanceof HTMLElement && mainContainer instanceof HTMLElement) {
+            if ((e.target.scrollTop + 248) > sauceContainer.offsetTop && (e.target.scrollTop + 248) < mainContainer.offsetTop && currentTab !== 'sauce') {
+                setCurrentTab('sauce')
+                return
+            }
             return
         }
-        if ((e.target.scrollTop + 248) > mainContainer.offsetTop && currentTab !== 'main') {
-            setCurrentTab('main')
+        if (sauceContainer instanceof HTMLElement && mainContainer instanceof HTMLElement) {
+            if ((e.target.scrollTop + 248) > mainContainer.offsetTop && currentTab !== 'main') {
+                setCurrentTab('main')
+                return
+            }
             return
         }
     }
+
+    console.log(currentTab)
 
     return (
         <section className={`${s.section_container} pt-10`}>

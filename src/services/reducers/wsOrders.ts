@@ -13,7 +13,7 @@ import { TWsOrdersActions } from '../actions/wsOrders';
 type TWsOrdersState = {
     wsAllOrdersConnect: boolean,
     allOrders: any,
-    wsUserOrdersConnect: false,
+    wsUserOrdersConnect: boolean,
     userOrders: any
 };
 

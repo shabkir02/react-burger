@@ -20,7 +20,7 @@ const BurgerConstructorItem = ({ ingredient, index }: IBurgerConstructorItemProp
     const dispatch = useDispatch();
     const ref = useRef<HTMLDivElement>(null);
 
-    const deleteIngredient = (ingredient: TIngredientConstructor) => {
+    const deleteIngredient = (ingredient: TIngredientConstructor): void => {
         dispatch(deleteIngredientFromConstructor(ingredient))
     }
 
