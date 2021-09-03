@@ -49,46 +49,40 @@ describe('ingredients reducer', () => {
         })
     })
 
-    it('should handle GET_INGREDIENTS_SUCCESS', () => {
+    it('should handle MOVE_INGREDIENT_IN_CONSTRUCTOR', () => {
         const action = { 
-            type: types.GET_INGREDIENTS_SUCCESS, 
-            payload: [0, 1, 2] 
+            type: types.MOVE_INGREDIENT_IN_CONSTRUCTOR, 
+            payload: { 
+                dragIndex: 0,
+                hoverIndex: 1
+            } 
         }
 
-        expect(reducer(initialState, action)).toEqual({
+        const initialStateIngredients = {
             ...initialState,
-            ingredientsFiled: false,
-            ingredientsRequest: false,
-            ingredients: action.payload
+            constructorIngredients: ['sauce', 'bun']
+        }
+
+        expect(reducer(initialStateIngredients, action)).toEqual({
+            ...initialState,
+            constructorIngredients: ['bun', 'sauce']
         })
     })
 
-    // it('should handle MOVE_INGREDIENT_IN_CONSTRUCTOR', () => {
-    //     const action = { 
-    //         type: types.MOVE_INGREDIENT_IN_CONSTRUCTOR, 
-    //         payload: { 
-    //             dragIndex: 1,
-    //             hoverIndex: 3
-    //         } 
-    //     }
+    it('should handle DELETE_INGREDIENT_FROM_CONSTRUCTOR', () => {
+        const action = { 
+            type: types.DELETE_INGREDIENT_FROM_CONSTRUCTOR, 
+            payload: {drag_id: 2}
+        }
 
-    //     expect(reducer(initialState, action)).toEqual({
-    //         ...initialState,
-    //         constructorIngredients: []
-    //     })
-    // })
+        const initialStateIngredients = {
+            ...initialState,
+            constructorIngredients: [{drag_id: 1}, {drag_id: 2}, {drag_id: 3}] 
+        }
 
-    // it('should handle GET_INGREDIENTS_SUCCESS', () => {
-    //     const action = { 
-    //         type: types.GET_INGREDIENTS_SUCCESS, 
-    //         payload: [0, 1, 2] 
-    //     }
-
-    //     expect(reducer(initialState, action)).toEqual({
-    //         ...initialState,
-    //         ingredientsFiled: false,
-    //         ingredientsRequest: false,
-    //         ingredients: action.payload
-    //     })
-    // })
+        expect(reducer(initialStateIngredients, action)).toEqual({
+            ...initialState,
+            constructorIngredients: [{drag_id: 1}, {drag_id: 3}] 
+        })
+    })
 }) 

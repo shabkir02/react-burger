@@ -36,7 +36,7 @@ import {
 } from '../../services/actions/modal';
 import OrderInfoPage from '../../pages/order-info-page/order-info-page';
 
-export interface IAppLocation extends Location {
+export interface IAppLocation {
   background?: {
       key: string,
       pathname: string,

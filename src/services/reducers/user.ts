@@ -11,11 +11,12 @@ import {
 } from '../constants/user';
 
 import { TUserActions } from '../actions/user';
+import { TUser } from '../types/data';
 
 type TUserState = {
     userReguest: boolean;
     userFailed: boolean;
-    user: null | any
+    user: null | TUser
 
     name: string;
     email: string;

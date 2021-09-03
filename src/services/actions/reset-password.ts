@@ -12,7 +12,7 @@ import {
 } from '../constants/reset-password';
 
 import { AppDispatch, AppThunk } from '../types';
-import { TMessageResetPassword } from '../types/data';
+import { TMessageResetEmail, TMessageResetPassword } from '../types/data';
 
 const _apiUrl = 'https://norma.nomoreparties.space/api';
 
@@ -21,7 +21,7 @@ export interface ISendEmailRequestAction {
 }
 export interface ISendEmailSuccessAction {
     readonly type: typeof SEND_EMAIL_SUCCESS;
-    payload: TMessageResetPassword
+    payload: TMessageResetEmail
 }
 export interface ISendEmailFailedAction {
     readonly type: typeof SEND_EMAIL_FAILED;
@@ -58,7 +58,7 @@ export type TResetPasswordActions =
 export const sendEmailRequest = (): ISendEmailRequestAction => ({
     type: SEND_EMAIL_REQUEST
 })
-export const sendEmailSuccess = (email: TMessageResetPassword): ISendEmailSuccessAction => ({
+export const sendEmailSuccess = (email: TMessageResetEmail): ISendEmailSuccessAction => ({
     type: SEND_EMAIL_SUCCESS,
     payload: email
 })

@@ -120,7 +120,7 @@ const OrderItem = ({ onOrderClick, orderInfo }: TOrderItem) => {
                     </div>
                     <div className={`${s.container_orders_item_total}`}>
                         <span className="text text_type_digits-default mr-2">{orderPrice}</span>
-                        <CurrencyIcon type="secondary" />
+                        <CurrencyIcon type="primary" />
                     </div>
                 </div>
             </div>

@@ -22,8 +22,12 @@ const FeedPage = ({ handleOrderInfoClick }: IFeedPageProps) => {
     }))
     // const dispatch = useDispatch();
 
-    const formOrdersStatusArr = (status: 'done' | 'created' | 'pending'):  Array<TOrder> => {
-        const filterArr: Array<TOrder> = allOrders.orders.filter((order: TOrder) => order.status === status);
+    const formOrdersStatusArr = (status: 'done' | 'created' | 'pending'):  Array<TOrder> | null => {
+        if (!allOrders) {
+            return null
+        }
+
+        const filterArr: Array<TOrder> = allOrders?.orders.filter((order: TOrder) => order.status === status);
 
         if (filterArr.length > 10) {
             return filterArr.slice(0, 10)
@@ -32,8 +36,8 @@ const FeedPage = ({ handleOrderInfoClick }: IFeedPageProps) => {
         }
     }
 
-    const pendingOrdersArr = allOrders ? formOrdersStatusArr('pending') : null
-    const doneOrdersArr = allOrders ? formOrdersStatusArr('done') : null
+    const pendingOrdersArr = formOrdersStatusArr('pending')
+    const doneOrdersArr = formOrdersStatusArr('done')
 
     const allOrdersContent = useMemo(() => {
         if (allOrders && ingredients) {

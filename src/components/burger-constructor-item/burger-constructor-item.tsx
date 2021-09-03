@@ -29,7 +29,7 @@ const BurgerConstructorItem = ({ ingredient, index }: IBurgerConstructorItemProp
         collect: monitor => ({
             isHover: monitor.isOver()
         }),
-        hover(item: any, monitor) {
+        hover(item: { index: number }, monitor) {
             if (!ref.current) {
                 return;
             }

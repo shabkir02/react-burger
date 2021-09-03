@@ -47,6 +47,16 @@ export type TMessageResetPassword = {
     readonly success: boolean;
 }
 
+export type TPasswordReset = {
+    readonly password: string
+    readonly token: string
+}
+
+export type TMessageResetEmail = {
+    readonly message: string;
+    readonly success: boolean;
+}
+
 export type TUserInfo = {
     readonly accessToken: string
     readonly refreshToken: string

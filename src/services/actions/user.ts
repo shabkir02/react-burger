@@ -14,7 +14,7 @@ import {
 } from '../constants/user';
 
 import { AppDispatch, AppThunk } from "../types";
-import { TUserInfo } from "../types/data";
+import { TUser } from "../types/data";
 
 const _apiUrl = 'https://norma.nomoreparties.space/api';
 
@@ -23,7 +23,7 @@ export interface ISetUserRequestAction {
 }
 export interface ISetUserSuccessAction {
     readonly type: typeof SET_USER_SUCCESS;
-    payload: null | TUserInfo
+    payload: null | TUser
 }
 export interface ISetUserFailedAction {
     readonly type: typeof SET_USER_FAILED;
@@ -69,7 +69,7 @@ export type TUserActions =
 export const setUserRequest = (): ISetUserRequestAction => ({
     type: SET_USER_REQUEST
 })
-export const setUserSuccess = (user: null |TUserInfo): ISetUserSuccessAction => ({
+export const setUserSuccess = (user: null | TUser): ISetUserSuccessAction => ({
     type: SET_USER_SUCCESS,
     payload: user
 })
@@ -127,7 +127,7 @@ function userInfoFetch() {
     })
 }
 
-function updateUserInfoFetch(userObj: any) {
+function updateUserInfoFetch(userObj: TUser & { password: string }) {
     return fetch(`${_apiUrl}/auth/user`, {
         method: 'PATCH',
         headers: {
@@ -176,7 +176,7 @@ export const getUserInfo: AppThunk = () => {
     }
 }
 
-export const updateUserInfo: AppThunk = (userObj: any) => {
+export const updateUserInfo: AppThunk = (userObj: TUser & { password: string }) => {
     return function(dispatch: AppDispatch) {
         dispatch(setUserRequest());
         updateUserInfoFetch(userObj).then(response => {

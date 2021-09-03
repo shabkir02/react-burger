@@ -10,14 +10,15 @@ import {
 } from '../constants/reset-password';
 
 import { TResetPasswordActions } from '../actions/reset-password';
+import { TMessageResetEmail, TMessageResetPassword } from '../types/data';
 
 type TResetPasswordState = {
-    sendEmailSuccess: null | any;
+    sendEmailSuccess: null | TMessageResetEmail;
     sendEmailRequest: boolean;
     sendEmailFailed: boolean;
 
     resetPasswordRequest: boolean;
-    resetPasswordSuccess: null | any;
+    resetPasswordSuccess: null | TMessageResetPassword;
     resetPasswordFailed: boolean;
     
     emailCode: string

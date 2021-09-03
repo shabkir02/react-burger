@@ -31,6 +31,8 @@ const BurgerConstructor = ({ handleOrderClick }: IBurgerConstructorProps) => {
         user: store.user.user
     }));
 
+    console.log(constructorIngredients)
+
     const dispatch = useDispatch();
 
     const makeOrder = (): void => {

@@ -50,8 +50,6 @@ const BurgerIngredients = ({ handleIngredientClick }: IBurgerIngredientsProps) =
         return
     }
 
-    console.log(currentTab)
-
     return (
         <section className={`${s.section_container} pt-10`}>
             <h1 className={`${s.title} text text_type_main-large mb-5`}>Соберите бургер</h1>
