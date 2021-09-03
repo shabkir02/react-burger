@@ -9,23 +9,23 @@ import {
     WS_USER_ORDERS_GET_MESSAGE
 } from '../constants/wsOrders';
 import { TWsOrdersActions } from '../actions/wsOrders';
+import { TWsOrders } from '../types/data';
 
 type TWsOrdersState = {
     wsAllOrdersConnect: boolean,
-    allOrders: any,
+    allOrders: TWsOrders | null,
     wsUserOrdersConnect: boolean,
-    userOrders: any
+    userOrders: TWsOrders | null
 };
 
-const initialState: TWsOrdersState = {
+export const initialState: TWsOrdersState = {
     wsAllOrdersConnect: false,
     allOrders: null,
-
     wsUserOrdersConnect: false,
     userOrders: null
 };
   
-export const wsReducer = (state = initialState, action: TWsOrdersActions): TWsOrdersState => {
+export default function wsReducer(state = initialState, action: TWsOrdersActions): TWsOrdersState {
     switch (action.type) {
         case WS_ALL_ORDERS_CONNECTION_SUCCESS:
             return {

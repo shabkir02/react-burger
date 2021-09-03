@@ -31,30 +31,23 @@ const BurgerIngredients = ({ handleIngredientClick }: IBurgerIngredientsProps) =
     }
 
     const switchCurrentTabOnScroll = (e: any): void => {
-        const bunContainer = document.querySelector(`[data-scroll-id="bun"]`);
-        const sauceContainer = document.querySelector(`[data-scroll-id="sauce"]`);
-        const mainContainer = document.querySelector(`[data-scroll-id="main"]`);
+        const bunContainer = document.querySelector<HTMLElement>(`[data-scroll-id="bun"]`);
+        const sauceContainer = document.querySelector<HTMLElement>(`[data-scroll-id="sauce"]`);
+        const mainContainer = document.querySelector<HTMLElement>(`[data-scroll-id="main"]`);
 
-        if (bunContainer instanceof HTMLElement && sauceContainer instanceof HTMLElement) {
-            if ((e.target.scrollTop + 248) > bunContainer.offsetTop && (e.target.scrollTop + 248) < sauceContainer.offsetTop && currentTab !== 'bun') {
-                setCurrentTab('bun')
-            }
+        if ((e.target.scrollTop + 248) > bunContainer!.offsetTop && (e.target.scrollTop + 248) < sauceContainer!.offsetTop && currentTab !== 'bun') {
+            setCurrentTab('bun')
             return
         }
-        if (sauceContainer instanceof HTMLElement && mainContainer instanceof HTMLElement) {
-            if ((e.target.scrollTop + 248) > sauceContainer.offsetTop && (e.target.scrollTop + 248) < mainContainer.offsetTop && currentTab !== 'sauce') {
-                setCurrentTab('sauce')
-                return
-            }
+        if ((e.target.scrollTop + 248) > sauceContainer!.offsetTop && (e.target.scrollTop + 248) < mainContainer!.offsetTop && currentTab !== 'sauce') {
+            setCurrentTab('sauce')
             return
         }
-        if (sauceContainer instanceof HTMLElement && mainContainer instanceof HTMLElement) {
-            if ((e.target.scrollTop + 248) > mainContainer.offsetTop && currentTab !== 'main') {
-                setCurrentTab('main')
-                return
-            }
+        if ((e.target.scrollTop + 248) > mainContainer!.offsetTop && currentTab !== 'main') {
+            setCurrentTab('main')
             return
         }
+        return
     }
 
     console.log(currentTab)

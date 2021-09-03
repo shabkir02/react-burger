@@ -21,7 +21,7 @@ type TIngredientState = {
     constructorBun: null | TIngredient
 }
 
-const initialState: TIngredientState = {
+export const initialState: TIngredientState = {
     ingredients: null,
     ingredientsRequest: false,
     ingredientsFiled: false,
@@ -30,7 +30,7 @@ const initialState: TIngredientState = {
     constructorBun: null
 }
 
-export const ingredientsReducer = (state = initialState, action: TIngredientsActions): TIngredientState => {
+export default function ingredientsReducer(state = initialState, action: TIngredientsActions): TIngredientState {
     switch(action.type) {
         case GET_INGREDIENTS_REQUEST:
             return {

@@ -68,14 +68,10 @@ export const wsAllOrdersConnectionError = (): IWsAllOrdersConnectionErrorAction 
 export const wsAllOrdersConnectionClosed = (): IWsAllOrdersConnectionClosedAction => ({
     type: WS_ALL_ORDERS_CONNECTION_CLOSED
 })
-export const wsAllOrdersGetMessage = (orders: TWsOrders): IWsAllOrdersGetMessageAction => {
-    console.log('message');
-    
-    return {
-        type: WS_ALL_ORDERS_GET_MESSAGE,
-        payload: orders
-    }
-}
+export const wsAllOrdersGetMessage = (orders: TWsOrders): IWsAllOrdersGetMessageAction => ({
+    type: WS_ALL_ORDERS_GET_MESSAGE,
+    payload: orders
+})
 export const wsAllOrdersConnectionStart = (): IWsAllOrdersConnectionStartAction => ({
     type: WS_ALL_ORDERS_CONNECTION_START
 })

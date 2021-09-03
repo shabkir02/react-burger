@@ -16,14 +16,14 @@ type TModalState = {
     modalInner: null | TModalInner
 }
 
-const initialState: TModalState = {
+export const initialState: TModalState = {
     ingredientsConstructor: null,
     currentIngredient: null,
     currentOrderInfo: null,
     modalInner: null
 }
 
-export const modalReducer = (state = initialState, action: TModalActions): TModalState => {
+export default function modalReducer(state = initialState, action: TModalActions): TModalState {
     switch(action.type) {
         case SET_CURRENT_INGREDIENT:
             return {

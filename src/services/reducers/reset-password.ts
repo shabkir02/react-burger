@@ -23,7 +23,7 @@ type TResetPasswordState = {
     emailCode: string
 }
 
-const initialState: TResetPasswordState = {
+export const initialState: TResetPasswordState = {
     sendEmailSuccess: null,
     sendEmailRequest: false,
     sendEmailFailed: false,
@@ -35,7 +35,7 @@ const initialState: TResetPasswordState = {
     emailCode: ''
 }
 
-export const resetPasswordReducer = (state = initialState, action: TResetPasswordActions ): TResetPasswordState => {
+export default function resetPasswordReducer(state = initialState, action: TResetPasswordActions ): TResetPasswordState {
     switch(action.type) {
         case SEND_EMAIL_REQUEST:
             return {

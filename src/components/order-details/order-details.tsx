@@ -10,11 +10,9 @@ const OrderDetails = () => {
 
     const order = useSelector(store => store.order.order);
 
-    const { number } = order;
-
     return (
         <div className={`pt-20 pb-20`}>
-            <p className={`${s.count} text text_type_digits-large mb-8`}>{number}</p>
+            <p className={`${s.count} text text_type_digits-large mb-8`}>{order?.number}</p>
             <h4 className={`${s.count_descr} text text_type_main-medium mb-15`}>идентификатор заказа</h4>
             <div className={`${s.image_wrapper} mb-15`}>
                 <img className={s.accept} src={accept} alt="accept" /> 

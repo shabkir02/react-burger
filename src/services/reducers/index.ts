@@ -2,13 +2,13 @@ import { combineReducers } from 'redux';
 import { applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
-import { ingredientsReducer } from './ingredients';
-import { modalReducer } from './modal';
-import { orderReducer } from './order';
-import { resetPasswordReducer } from './reset-password';
-import { userReducer } from './user';
+import ingredientsReducer from './ingredients';
+import modalReducer from './modal';
+import orderReducer from './order';
+import resetPasswordReducer from './reset-password';
+import userReducer from './user';
 import { createSocketMiddlware } from '../middleware/socketMiddleware';
-import { wsReducer } from './wsOrders';
+import wsReducer from './wsOrders';
 
 // import {
 //     wsAllOrdersConnectionSuccess, 

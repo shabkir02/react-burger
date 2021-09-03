@@ -6,30 +6,23 @@ import {
 } from '../constants/order';
 
 import { TOrderActions } from '../actions/order';
+import { TOrder } from '../types/data';
 
 type TOrderState = {
-    order: null | any;
+    order: null | TOrder;
     orderRequest: boolean;
     orderFiled: boolean;
-
-    allOrders: null | any;
-    allOrdersFailed: boolean;
-
-    orderInfo: null | any
+    // orderInfo: null | TOrder
 }
 
-const initialState: TOrderState = {
+export const initialState: TOrderState = {
     order: null,
     orderRequest: false,
     orderFiled: false,
-
-    allOrders: null,
-    allOrdersFailed: false,
-
-    orderInfo: null
+    // orderInfo: null
 }
 
-export const orderReducer = (state = initialState, action: TOrderActions): TOrderState => {
+export default function orderReducer(state = initialState, action: TOrderActions): TOrderState {
     switch(action.type) {
         case GET_ORDER_REQUEST:
             return {

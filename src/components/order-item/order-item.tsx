@@ -10,8 +10,8 @@ import { TIngredient, TOrder } from '../../services/types/data';
 interface TOrderItem {
     onOrderClick: (
         orderInfo: TOrder,
-        // ingredientsFull: Array<TIngredient>
-        ingredientsFull: any
+        ingredientsFull: Array<TIngredient>
+        // ingredientsFull: any
     ) => void;
     orderInfo: TOrder
 }
@@ -27,15 +27,21 @@ const OrderItem = ({ onOrderClick, orderInfo }: TOrderItem) => {
         ingredientsStore: store.ingredients.ingredients
     }))
 
-    const ingredientsFull = useMemo(() => {
-        return ingredients.map((ingredientId: string) => {
+    const ingredientsFull: Array<TIngredient> | [] = useMemo(() => {
+        const newIngredientsArr = ingredients.map((ingredientId: string) => {
             return ingredientsStore?.find((item: TIngredient) => item._id === ingredientId)
         })
+
+        return newIngredientsArr.filter(item => Boolean(item)) as TIngredient[] 
     }, [ingredients, ingredientsStore])
 
     const orderPrice = useMemo(() => {
-        return ingredientsFull.reduce((acc: any, curr: any): number => {
-            return acc + curr.price
+        return ingredientsFull.reduce((acc: number, curr: TIngredient): number => {
+            if (curr) {
+                return acc + curr.price
+            } else {
+                return acc + 0
+            }
         }, 0)
     }, [ingredientsFull]);
 
@@ -61,13 +67,17 @@ const OrderItem = ({ onOrderClick, orderInfo }: TOrderItem) => {
         }
     }, [orderInfo])
 
+    const onOrderCardClick = () => {
+        onOrderClick(orderInfo, ingredientsFull)
+    }
+
     return (
         <Link
             to={{
                 pathname: `${location.pathname}/${_id}`,
                 state: { background: location }
             }}
-            onClick={() => onOrderClick(orderInfo, ingredientsFull)}
+            onClick={onOrderCardClick}
             className={s.container_orders_item_wrapper}
         >
             <div className={`${s.container_orders_item} mb-6 p-6`}>

@@ -22,7 +22,7 @@ type TUserState = {
     password: string
 }
 
-const initialState : TUserState = {
+export const initialState : TUserState = {
     userReguest: false,
     userFailed: false,
     user: null,
@@ -32,7 +32,7 @@ const initialState : TUserState = {
     password: '',
 }
 
-export const userReducer = (state = initialState, action: TUserActions): TUserState => {
+export default function userReducer(state = initialState, action: TUserActions): TUserState {
     switch(action.type) {
         case SET_USER_REQUEST:
             return {

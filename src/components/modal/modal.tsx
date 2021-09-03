@@ -8,7 +8,7 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 
 import s from './modal.module.sass';
 
-const modalRoot: any = document.getElementById('modal-root');
+const modalRoot = document.getElementById('modal-root');
 
 interface IModalProps {
     closeModal: () => void
@@ -17,6 +17,10 @@ interface IModalProps {
 const Modal: FC<IModalProps> = ({ closeModal, children }) => {
 
     const modalInner = useSelector(store => store.modal.modalInner)
+
+    if (!modalRoot) {
+        return null
+    }
 
     return ReactDOM.createPortal(
         (
