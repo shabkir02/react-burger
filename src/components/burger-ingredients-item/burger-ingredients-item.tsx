@@ -40,6 +40,7 @@ const BurgerIngredientsItem = ({ ingredient, count, onIngredientClick }: IBurger
             onClick={() => onIngredientClick(ingredient)} 
             className={`${s.ingredient_item}`}
             ref={ingredientRef}
+            data-test="ingredient"
         >
             <div className={`${s.header_item} pl-4 pb-1 pr-4`}>
                 {count && (

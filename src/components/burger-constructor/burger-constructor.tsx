@@ -31,8 +31,6 @@ const BurgerConstructor = ({ handleOrderClick }: IBurgerConstructorProps) => {
         user: store.user.user
     }));
 
-    console.log(constructorIngredients)
-
     const dispatch = useDispatch();
 
     const makeOrder = (): void => {
@@ -77,6 +75,7 @@ const BurgerConstructor = ({ handleOrderClick }: IBurgerConstructorProps) => {
                <div 
                     className={`pt-4 pr-4`}
                     ref={dropContainer}
+                    data-test="constructor"
                 >
                     {constructorBun && (
                         <div className={`pl-8 mb-4`}>

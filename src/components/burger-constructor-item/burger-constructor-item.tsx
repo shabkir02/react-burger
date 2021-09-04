@@ -74,6 +74,7 @@ const BurgerConstructorItem = ({ ingredient, index }: IBurgerConstructorItemProp
         <div 
             ref={ref} 
             className={`${s.constructor_item} ${isDragging ? s.active : ''}`} 
+            data-test="constructor-ingredient"
         >
             <div className={s.drag_icon}>
                 <DragIcon type="secondary" />
