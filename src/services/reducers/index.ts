@@ -1,13 +1,14 @@
 import { combineReducers } from 'redux';
-import { applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
+// import { applyMiddleware, compose } from 'redux';
+// import thunk from 'redux-thunk';
+// import createSagaMiddleware from '@redux-saga/core';
 
 import ingredientsReducer from './ingredients';
 import modalReducer from './modal';
 import orderReducer from './order';
 import resetPasswordReducer from './reset-password';
 import userReducer from './user';
-import { createSocketMiddlware } from '../middleware/socketMiddleware';
+// import { createSocketMiddlware } from '../middleware/socketMiddleware';
 import wsReducer from './wsOrders';
 
 // import {
@@ -37,7 +38,7 @@ import {
 } from '../constants/wsOrders';
 
 /// Все заказы
-const wsAllOrdersActions = {
+export const wsAllOrdersActions = {
     wsInit: WS_ALL_ORDERS_CONNECTION_START,
     onOpen: WS_ALL_ORDERS_CONNECTION_SUCCESS,
     onClose: WS_ALL_ORDERS_CONNECTION_CLOSED,
@@ -46,7 +47,7 @@ const wsAllOrdersActions = {
 };
 
 /// Заказы юзера
-const wsUserOrdersActions = {
+export const wsUserOrdersActions = {
     wsInit: WS_USER_ORDERS_CONNECTION_START,
     onOpen: WS_USER_ORDERS_CONNECTION_SUCCESS,
     onClose: WS_USER_ORDERS_CONNECTION_CLOSED,
@@ -63,17 +64,20 @@ export const rootReducer = combineReducers({
     wsOrders: wsReducer
 })
 
-declare global {
-    interface Window {
-      __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-    }
-}
+// declare global {
+//     interface Window {
+//       __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+//     }
+// }
   
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export const enhancer = composeEnhancers(applyMiddleware(
-    thunk,
-    createSocketMiddlware(null, wsAllOrdersActions),
-    createSocketMiddlware('token', wsUserOrdersActions)
-));
+// const sagaMiddleware = createSagaMiddleware();
+
+// export const enhancer = composeEnhancers(applyMiddleware(
+//     thunk,
+//     sagaMiddleware,
+//     createSocketMiddlware(null, wsAllOrdersActions),
+//     createSocketMiddlware('token', wsUserOrdersActions)
+// ));
 
