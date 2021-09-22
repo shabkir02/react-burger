@@ -39,7 +39,10 @@ const Modal: FC<IModalProps> = ({ closeModal, children }) => {
                     </div>
                     {children}
                 </div>
-                <ModalOverlay closeModal={closeModal} />
+                <div 
+                    onClick={closeModal}
+                    className={s.modal_overlay}
+                ></div>
             </div>
         ),
         modalRoot

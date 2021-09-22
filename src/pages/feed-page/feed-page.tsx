@@ -16,12 +16,12 @@ interface IFeedPageProps {
 
 const FeedPage = ({ handleOrderInfoClick }: IFeedPageProps) => {
 
-    const { allOrders, ingredients } = useSelector(store => ({
+    const { allOrders, ingredients, wsAllOrdersConnect } = useSelector(store => ({
         allOrders: store.wsOrders.allOrders,
+        wsAllOrdersConnect: store.wsOrders.wsAllOrdersConnect,
         ingredients: store.ingredients.ingredients
     }))
-    // const dispatch = useDispatch();
-
+    
     const formOrdersStatusArr = (status: 'done' | 'created' | 'pending'):  Array<TOrder> | null => {
         if (!allOrders) {
             return null
@@ -58,7 +58,10 @@ const FeedPage = ({ handleOrderInfoClick }: IFeedPageProps) => {
     return (
         <div className={`${s.container} pt-10`} >
             <h2 className="text text_type_main-large mb-10">Лента заказов</h2>
-            {allOrders && ingredients && (
+            {!wsAllOrdersConnect && (
+                <p className="text text_type_main-large mb-10 dark_gray">Что-то пошло не так! :(</p>
+            )}
+            {allOrders && ingredients && wsAllOrdersConnect && (
                 <div className={s.container_wrapper}>
                     <div className={s.orders_wrapper}>
                         {allOrdersContent}
