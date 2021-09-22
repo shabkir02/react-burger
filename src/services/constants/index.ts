@@ -1,3 +1,4 @@
+export const _apiUrl: 'https://norma.nomoreparties.space/api' = 'https://norma.nomoreparties.space/api';
 
 export const SET_PASSWORD: "SET_PASSWORD" = "SET_PASSWORD";
 export const RESET_PASSWORD: "RESET_PASSWORD" = "RESET_PASSWORD";

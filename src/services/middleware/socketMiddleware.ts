@@ -21,9 +21,9 @@ export const createSocketMiddlware = (token: string | null, wsActions: WsActions
             
             if (type === wsInit) {
                 if (token) {
-                    socket = new WebSocket(`wss://norma.nomoreparties.space/orders?token=${getCookie('accessToken')}`);
+                    socket = new WebSocket(`wss://norma.nomoreparties.space/api/orders?token=${getCookie('accessToken')}`);
                 } else {
-                    socket = new WebSocket("wss://norma.nomoreparties.space/orders/all");
+                    socket = new WebSocket("wss://norma.nomoreparties.space/api/orders/all");
                 }
             }
             if (socket) {

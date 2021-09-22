@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../hooks/hooks';
 
@@ -23,7 +23,7 @@ import { ProtectedRoute } from '../../layouts/protected-route/protected-route';
 import { wsAllOrdersConnectionStart } from '../../services/actions/wsOrders';
 
 import { makeOrder, orderReset} from '../../services/actions/order';
-import { getIngredients } from '../../services/actions/ingredients';
+// import { getIngredients } from '../../services/actions/ingredients';
 import { getUserInfo } from '../../services/actions/user';
 import { TIngredient, TOrder } from '../../services/types/data';
 
@@ -35,6 +35,7 @@ import {
   setCurrentOrderInfo 
 } from '../../services/actions/modal';
 import OrderInfoPage from '../../pages/order-info-page/order-info-page';
+import { getIngredientsRequest } from '../../services/actions/ingredients';
 
 export interface IAppLocation {
   background?: {
@@ -90,7 +91,7 @@ const App = () => {
     }
 
     useEffect(() => {
-      dispatch(getIngredients())
+      dispatch(getIngredientsRequest())
 
       if (localStorage.getItem('refreshToken')) {
         dispatch(getUserInfo());

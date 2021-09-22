@@ -1,5 +1,4 @@
-import React, { useRef } from 'react';
-import PropTypes from 'prop-types'
+import { useRef } from 'react';
 import { useDispatch } from '../../hooks/hooks';
 import {  ConstructorElement, DragIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag, useDrop } from 'react-dnd';
@@ -87,25 +86,6 @@ const BurgerConstructorItem = ({ ingredient, index }: IBurgerConstructorItemProp
             />
         </div>
     )
-}
-
-BurgerConstructorItem.propTypes = {
-    ingredient: PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-       name: PropTypes.string.isRequired,
-       drag_id: PropTypes.string,
-       type: PropTypes.string.isRequired,
-       proteins: PropTypes.number,
-       fat: PropTypes.number,
-       carbohydrates: PropTypes.number,
-       calories: PropTypes.number,
-       price: PropTypes.number.isRequired,
-       image: PropTypes.string.isRequired,
-       image_mobile: PropTypes.string.isRequired,
-       image_large: PropTypes.string.isRequired,
-       __v: PropTypes.number
-    }).isRequired,
-    index: PropTypes.number.isRequired
 }
 
 export default BurgerConstructorItem;

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDispatch, useSelector } from '../../hooks/hooks';
 import { NavLink, useHistory } from 'react-router-dom';
 

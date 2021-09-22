@@ -1,6 +1,5 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from '../../hooks/hooks';
 
@@ -46,13 +45,5 @@ const Modal: FC<IModalProps> = ({ closeModal, children }) => {
         modalRoot
     )
 }
-
-// Modal.propTypes = {
-//     closeModal: PropTypes.func.isRequired,
-//     children: PropTypes.oneOfType([
-//         PropTypes.arrayOf(PropTypes.node),
-//         PropTypes.node
-//     ]).isRequired,
-// }
 
 export default Modal;

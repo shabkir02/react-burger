@@ -1,5 +1,4 @@
-import React, { useState, useRef } from 'react';
-import PropTypes from 'prop-types';
+import { useState, useRef } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import BurgerIngredientsList from '../burger-ingredients-list/burger-ingredients-list';
@@ -81,10 +80,6 @@ const BurgerIngredients = ({ handleIngredientClick }: IBurgerIngredientsProps) =
             </div>
         </section>
     )
-}
-
-BurgerIngredients.propTypes = {
-    handleIngredientClick: PropTypes.func.isRequired
 }
 
 export default BurgerIngredients;

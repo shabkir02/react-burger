@@ -8,7 +8,7 @@ import {
     MOVE_INGREDIENT_IN_CONSTRUCTOR,
     RESET_CONSTRUCTOR
 } from '../constants/ingredients';
-import { AppDispatch, AppThunk } from '../types';
+// import { AppDispatch, AppThunk } from '../types';
 
 import { TIngredient, TIngredientConstructor, TMovingIngredient } from '../types/data';
 
@@ -85,19 +85,19 @@ export const resetConstructor = (): IResetConstructorAction  => ({
     type: RESET_CONSTRUCTOR
 })
 
-export const getIngredients: AppThunk = () => {
-    return function(dispatch: AppDispatch) {
-        dispatch(getIngredientsRequest());
-        fetch(`${_apiUrl}/ingredients`).then(response => {
-            if (response.ok) {
-                return response.json()
-            } else {
-                dispatch(getIngredientsFailed())
-            }
-        }).then(response => {
-            dispatch(getIngredientsSuccess(response.data))
-        }).catch(err => {
-            console.log(err);
-        })
-    }
-}
+// export const getIngredients: AppThunk = () => {
+//     return function(dispatch: AppDispatch) {
+//         dispatch(getIngredientsRequest());
+//         fetch(`${_apiUrl}/ingredients`).then(response => {
+//             if (response.ok) {
+//                 return response.json()
+//             } else {
+//                 dispatch(getIngredientsFailed())
+//             }
+//         }).then(response => {
+//             dispatch(getIngredientsSuccess(response.data))
+//         }).catch(err => {
+//             console.log(err);
+//         })
+//     }
+// }

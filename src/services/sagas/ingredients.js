@@ -1,16 +1,27 @@
-import { call, takeEvery, apply, put, take, select, fork } from 'redux-saga/effects';
+import { call, takeEvery, put } from 'redux-saga/effects';
 
 import { GET_INGREDIENTS_REQUEST } from '../constants/ingredients';
+import { getIngredientsFailed, getIngredientsSuccess } from '../actions/ingredients';
+import { _apiUrl } from '../constants';
+
+const getIngredients = async () => {
+    return await fetch(`${_apiUrl}/ingredients`).then(response => {
+        if (response.ok) {
+            return response.json()
+        } else {
+            throw new Error();
+        }
+    })
+}
 
 export function* loadIngredients() {
-    const request = yield call(
-        fetch, 
-        `https://norma.nomoreparties.space/api/ingredients`
-    );
-
-    const data = yield apply(request, request.json);
-
-    console.log(data)
+    try {
+        const response = yield call(getIngredients);
+        console.log(response);
+        yield put(getIngredientsSuccess(response.data));
+    } catch (e) {
+        yield put(getIngredientsFailed());
+    }
 }
 
 export default function* ingredientsSaga() {

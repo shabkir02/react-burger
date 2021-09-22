@@ -1,5 +1,4 @@
-import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
+import { useMemo } from 'react';
 import { CurrencyIcon, ConstructorElement, Button  } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from '../../hooks/hooks';
 import { useDrop } from 'react-dnd';
@@ -124,10 +123,6 @@ const BurgerConstructor = ({ handleOrderClick }: IBurgerConstructorProps) => {
            </div>
         </section>
     )
-}
-
-BurgerConstructor.propTypes = {
-    handleOrderClick: PropTypes.func.isRequired
 }
 
 export default BurgerConstructor;

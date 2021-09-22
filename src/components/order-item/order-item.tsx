@@ -1,6 +1,5 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 import { Link, useLocation, useRouteMatch } from 'react-router-dom';
 import { useSelector } from '../../hooks/hooks';
 
@@ -126,10 +125,6 @@ const OrderItem = ({ onOrderClick, orderInfo }: TOrderItem) => {
             </div>
         </Link>
     )
-}
-
-OrderItem.propTypes = {
-    onOrderClick: PropTypes.func.isRequired
 }
 
 export default OrderItem;

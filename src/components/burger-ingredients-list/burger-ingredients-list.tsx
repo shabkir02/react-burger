@@ -1,6 +1,5 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { useSelector } from '../../hooks/hooks';
-import PropTypes from 'prop-types';
 
 import BurgerIngredientsItem from '../burger-ingredients-item/burger-ingredients-item';
 
@@ -64,12 +63,6 @@ const BurgerIngredientsList = ({ title, type, onIngredientClick }: IBurgerIngred
             </div>
         </div>
     )
-}
-
-BurgerIngredientsList.propTypes = {
-    title: PropTypes.oneOf(['Булки', 'Соусы', 'Начинки']).isRequired,
-    type: PropTypes.oneOf(['bun', 'sauce', 'main']).isRequired,
-    onIngredientClick: PropTypes.func.isRequired
 }
 
 export default BurgerIngredientsList;
