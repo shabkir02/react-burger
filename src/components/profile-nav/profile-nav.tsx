@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from '../../hooks/hooks';
 import { NavLink, useHistory } from 'react-router-dom';
 
-import { userLogout } from '../../services/actions/user';
+import { userLogoutRequest } from '../../services/actions/user';
 
 import s from './profile-nav.module.sass';
 
@@ -12,8 +12,8 @@ const ProfileNav = () => {
     const user = useSelector(store => store.user.user)
 
     const logoutOfProfile = () => {
-        const refreshToken = localStorage.getItem('refreshToken')
-        dispatch(userLogout(refreshToken))
+        // const refreshToken = localStorage.getItem('refreshToken')
+        dispatch(userLogoutRequest())
     }
 
     if (!user) {

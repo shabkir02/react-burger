@@ -3,7 +3,7 @@ import { Logo, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-dev
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../hooks/hooks';
 
-import { setEmail, setPassword, setUserRequest } from '../../services/actions/user';
+import { setEmail, setPassword, userLoginRequest } from '../../services/actions/user';
 
 import s from './login-page.module.sass';
 
@@ -20,7 +20,7 @@ const LoginPage = () => {
 
     const onFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        dispatch(setUserRequest())
+        dispatch(userLoginRequest())
     }
 
     if (user) {

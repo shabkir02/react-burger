@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from '../../hooks/hooks';
 import { useHistory, Redirect, useLocation } from 'react-router-dom';
 
 import { setEmail } from '../../services/actions/user';
-import { sendEmailForResetPass } from '../../services/actions/reset-password';
+import { sendEmailRequest } from '../../services/actions/reset-password';
 
 import s from './forgot-password-page.module.sass';
 
@@ -23,7 +23,7 @@ const ForgotPasswordPage = () => {
 
     const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(sendEmailForResetPass(email));
+        dispatch(sendEmailRequest());
     }
 
     useEffect(() => {

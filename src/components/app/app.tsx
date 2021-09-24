@@ -24,7 +24,7 @@ import { wsAllOrdersConnectionStart } from '../../services/actions/wsOrders';
 
 import { makeOrder, orderReset} from '../../services/actions/order';
 // import { getIngredients } from '../../services/actions/ingredients';
-import { getUserInfo } from '../../services/actions/user';
+import { getUserInfoRequest } from '../../services/actions/user';
 import { TIngredient, TOrder } from '../../services/types/data';
 
 import { 
@@ -94,7 +94,7 @@ const App = () => {
       dispatch(getIngredientsRequest())
 
       if (localStorage.getItem('refreshToken')) {
-        dispatch(getUserInfo());
+        dispatch(getUserInfoRequest());
       }
 
       dispatch(wsAllOrdersConnectionStart());

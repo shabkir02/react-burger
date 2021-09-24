@@ -3,7 +3,7 @@ import { Logo, EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/re
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../hooks/hooks';
 
-import { setEmail, setName, setPassword, userRegister } from '../../services/actions/user';
+import { setEmail, setName, setPassword, userRegisterRequest } from '../../services/actions/user';
 
 import s from './register-page.module.sass';
 
@@ -21,7 +21,7 @@ const RegisterPage = () => {
 
     const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(userRegister(name, email, password))
+        dispatch(userRegisterRequest())
     }
 
     if (user) {

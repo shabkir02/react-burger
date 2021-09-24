@@ -1,7 +1,7 @@
 import {
-    SET_USER_REQUEST,
-    SET_USER_SUCCESS,
-    SET_USER_FAILED,
+    GET_USER_INFO_REQUEST,
+    GET_USER_INFO_SUCCESS,
+    GET_USER_INFO_FAILED,
     SET_EMAIL,
     RESET_EMAIL,
     SET_PASSWORD,
@@ -35,19 +35,19 @@ export const initialState : TUserState = {
 
 export default function userReducer(state = initialState, action: TUserActions): TUserState {
     switch(action.type) {
-        case SET_USER_REQUEST:
+        case GET_USER_INFO_REQUEST:
             return {
                 ...state,
                 userReguest: true
             }
-        case SET_USER_SUCCESS:
+        case GET_USER_INFO_SUCCESS:
             return {
                 ...state,
                 userReguest: false,
                 userFailed: false,
                 user: action.payload
             }
-        case SET_USER_FAILED:
+        case GET_USER_INFO_FAILED:
             return {
                 ...state,
                 userReguest: false,

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../hooks/hooks';
 import { useHistory, Redirect, useLocation } from 'react-router-dom';
 
-import { resetPassword, setEmailCode } from '../../services/actions/reset-password';
+import { resetPasswordRequest, setEmailCode } from '../../services/actions/reset-password';
 import { setPassword } from '../../services/actions/user';
 
 import s from './reset-password-page.module.sass';
@@ -24,7 +24,7 @@ const ResetPasswordPage = () => {
 
     const onFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        dispatch(resetPassword(password, emailCode))
+        dispatch(resetPasswordRequest())
     }
 
     useEffect(() => {

@@ -3,15 +3,10 @@ import { call, takeEvery, put } from 'redux-saga/effects';
 import { GET_INGREDIENTS_REQUEST } from '../constants/ingredients';
 import { getIngredientsFailed, getIngredientsSuccess } from '../actions/ingredients';
 import { _apiUrl } from '../constants';
+import { checkResponse } from '../../utils/apiHelper';
 
-const getIngredients = async () => {
-    return await fetch(`${_apiUrl}/ingredients`).then(response => {
-        if (response.ok) {
-            return response.json()
-        } else {
-            console.log();
-        }
-    })
+const getIngredients = () => {
+    return fetch(`${_apiUrl}/ingredients`).then(checkResponse)
 }
 
 export function* loadIngredients() {

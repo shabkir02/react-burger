@@ -83,60 +83,60 @@ export const resetEmailCode = (): IResetEmailCodeAction => ({
     type: RESET_EMAILCODE
 })
 
-export const sendEmailForResetPass: AppThunk = (email: string) => {
-    return function(dispatch: AppDispatch) {
-        dispatch(sendEmailRequest());
-        fetch(`${_apiUrl}/password-reset`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-              "email": email
-            })
-        }).then(response => {
-            if (response.ok) {
-                return response.json()
-            } else {
-                dispatch(sendEmailFailed())
-            }
-        }).then(response => {
-            if (response.success) {
-                dispatch(sendEmailSuccess(response))
-                dispatch(resetEmail())
-            }
-        }).catch(err => {
-            console.log(err);
-        })
-    }
-}
+// export const sendEmailForResetPass: AppThunk = (email: string) => {
+//     return function(dispatch: AppDispatch) {
+//         dispatch(sendEmailRequest());
+//         fetch(`${_apiUrl}/password-reset`, {
+//             method: 'POST',
+//             headers: {
+//               'Content-Type': 'application/json;charset=utf-8'
+//             },
+//             body: JSON.stringify({
+//               "email": email
+//             })
+//         }).then(response => {
+//             if (response.ok) {
+//                 return response.json()
+//             } else {
+//                 dispatch(sendEmailFailed())
+//             }
+//         }).then(response => {
+//             if (response.success) {
+//                 dispatch(sendEmailSuccess(response))
+//                 dispatch(resetEmail())
+//             }
+//         }).catch(err => {
+//             console.log(err);
+//         })
+//     }
+// }
 
-export const  resetPassword: AppThunk = (newPassword: string, emailCode: string) => {
-    return function(dispatch: AppDispatch) {
-        dispatch(resetPasswordRequest())
-        fetch(`${_apiUrl}/password-reset/reset`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-                "password": newPassword,
-                "token": emailCode
-            })
-        }).then(response => {
-            if (response.ok) {
-                return response.json()
-            } else {
-                dispatch(resetPasswordFailed())
-            }
-        }).then(response => {
-            if (response.success) {
-                dispatch(resetPasswordSuccess(response))
-                dispatch(resetEmailCode())
-                dispatch(resetPasswordAction())
-            }
-        }).catch(err => {
-            console.log(err);
-        })
-    }
-}
+// export const  resetPassword: AppThunk = (newPassword: string, emailCode: string) => {
+//     return function(dispatch: AppDispatch) {
+//         dispatch(resetPasswordRequest())
+//         fetch(`${_apiUrl}/password-reset/reset`, {
+//             method: 'POST',
+//             headers: {
+//               'Content-Type': 'application/json;charset=utf-8'
+//             },
+//             body: JSON.stringify({
+//                 "password": newPassword,
+//                 "token": emailCode
+//             })
+//         }).then(response => {
+//             if (response.ok) {
+//                 return response.json()
+//             } else {
+//                 dispatch(resetPasswordFailed())
+//             }
+//         }).then(response => {
+//             if (response.success) {
+//                 dispatch(resetPasswordSuccess(response))
+//                 dispatch(resetEmailCode())
+//                 dispatch(resetPasswordAction())
+//             }
+//         }).catch(err => {
+//             console.log(err);
+//         })
+//     }
+// }

@@ -1,6 +1,6 @@
-import React, { useEffect, useState, FC } from 'react';
+import { useEffect, useState, FC } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { getUserInfo } from '../../services/actions/user';
+import { getUserInfoRequest } from '../../services/actions/user';
 import { useDispatch, useSelector } from '../../hooks/hooks';
 
 interface IProtectedRouteProps {
@@ -15,7 +15,7 @@ export const ProtectedRoute: FC<IProtectedRouteProps> = ({ children, ...rest }) 
     const [isUserLoaded, setUserLoaded] = useState<boolean>(false);
 
     const init = async () => {
-        await dispatch(getUserInfo());
+        await dispatch(getUserInfoRequest());
         setUserLoaded(true);
     };
 
