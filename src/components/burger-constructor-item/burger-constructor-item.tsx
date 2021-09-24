@@ -72,7 +72,7 @@ const BurgerConstructorItem = ({ ingredient, index }: IBurgerConstructorItemProp
     return (
         <div 
             ref={ref} 
-            className={`${s.constructor_item} ${isDragging ? s.active : ''}`} 
+            className={`${s.constructor_item} ${isDragging ? s.active : ''} show_item`} 
             data-test="constructor-ingredient"
         >
             <div className={s.drag_icon}>

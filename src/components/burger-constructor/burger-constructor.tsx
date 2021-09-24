@@ -77,7 +77,7 @@ const BurgerConstructor = ({ handleOrderClick }: IBurgerConstructorProps) => {
                     data-test="constructor"
                 >
                     {constructorBun && (
-                        <div className={`pl-8 mb-4`}>
+                        <div className={`pl-8 mb-4 show_item`}>
                             <ConstructorElement 
                                     type="top"
                                     isLocked={true}
@@ -99,7 +99,7 @@ const BurgerConstructor = ({ handleOrderClick }: IBurgerConstructorProps) => {
                         </div>
                     )}
                     {constructorBun && (
-                        <div className={`pl-8 pr-4`}>
+                        <div className={`pl-8 pr-4 show_item`}>
                             <ConstructorElement 
                                     type="bottom"
                                     isLocked={true}
