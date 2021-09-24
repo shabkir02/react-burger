@@ -252,46 +252,46 @@ export const userRegister: AppThunk = (name: string, email: string, password: st
     }
 }
 
-export const userLogin: AppThunk = (email: string, password: string) => {
-    return function(dispatch: any) {
-        dispatch(setUserRequest());
-        fetch(`${_apiUrl}/auth/login`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-                "email": email,
-                "password": password
-            })
-        }).then(response => {
-            if (response.ok) {
-                return response.json()
-            } else {
-                dispatch(setUserFailed())
-            }
-        }).then(response => {
-            if (response.success) {
-                dispatch(setUserSuccess(response.user))
-                dispatch(resetEmail())
-                dispatch(resetPassword())
+// export const userLogin: AppThunk = (email: string, password: string) => {
+//     return function(dispatch: any) {
+//         dispatch(setUserRequest());
+//         fetch(`${_apiUrl}/auth/login`, {
+//             method: 'POST',
+//             headers: {
+//               'Content-Type': 'application/json;charset=utf-8'
+//             },
+//             body: JSON.stringify({
+//                 "email": email,
+//                 "password": password
+//             })
+//         }).then(response => {
+//             if (response.ok) {
+//                 return response.json()
+//             } else {
+//                 dispatch(setUserFailed())
+//             }
+//         }).then(response => {
+//             if (response.success) {
+//                 dispatch(setUserSuccess(response.user))
+//                 dispatch(resetEmail())
+//                 dispatch(resetPassword())
 
-                dispatch(setName(response.user.name))
-                dispatch(setEmail(response.user.email))
+//                 dispatch(setName(response.user.name))
+//                 dispatch(setEmail(response.user.email))
 
-                const accessToken = response.accessToken.split('Bearer ')[1];
-                const refreshToken = response.refreshToken;
+//                 const accessToken = response.accessToken.split('Bearer ')[1];
+//                 const refreshToken = response.refreshToken;
 
-                setCookie('accessToken', accessToken);
-                localStorage.setItem('refreshToken', refreshToken)
-            } else {
-                dispatch(setUserFailed())
-            }
-        }).catch(err => {
-            console.log(err);
-        })
-    }
-}
+//                 setCookie('accessToken', accessToken);
+//                 localStorage.setItem('refreshToken', refreshToken)
+//             } else {
+//                 dispatch(setUserFailed())
+//             }
+//         }).catch(err => {
+//             console.log(err);
+//         })
+//     }
+// }
 
 export const userLogout: AppThunk = (token: string) => {
     return function(dispatch: AppThunk) {

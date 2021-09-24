@@ -9,7 +9,7 @@ const getIngredients = async () => {
         if (response.ok) {
             return response.json()
         } else {
-            throw new Error();
+            console.log();
         }
     })
 }
@@ -17,7 +17,6 @@ const getIngredients = async () => {
 export function* loadIngredients() {
     try {
         const response = yield call(getIngredients);
-        console.log(response);
         yield put(getIngredientsSuccess(response.data));
     } catch (e) {
         yield put(getIngredientsFailed());
