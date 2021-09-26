@@ -4,11 +4,11 @@ import { useSelector } from '../../hooks/hooks';
 import BurgerIngredientsItem from '../burger-ingredients-item/burger-ingredients-item';
 
 import s from './burger-ingredients-list.module.sass';
-import { TIngredient } from '../../services/types/data';
+import { TIngredient, TIngredientsCategoryTitle, TIngredientsCategoryType } from '../../services/types/data';
 
 interface IBurgerIngredientsListProps {
-    title: 'Булки' | 'Соусы' | 'Начинки';
-    type: 'bun' | 'sauce' | 'main';
+    title: TIngredientsCategoryTitle;
+    type: TIngredientsCategoryType;
     onIngredientClick: (
         item: TIngredient
     ) => void

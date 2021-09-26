@@ -77,3 +77,6 @@ export type TWsOrders = {
     total: number;
     totalToday: number;
 }
+
+export type TIngredientsCategoryTitle = "Булки" | "Соусы" | "Начинки";
+export type TIngredientsCategoryType = "bun" | "sauce" | "main";

@@ -6,7 +6,7 @@ import BurgerIngredientsList from '../burger-ingredients-list/burger-ingredients
 import Loader from '../loader/loader';
 
 import s from './burger-ingredients.module.sass';
-import { TIngredient } from '../../services/types/data';
+import { TIngredient, TIngredientsCategoryTitle, TIngredientsCategoryType } from '../../services/types/data';
 
 interface IBurgerIngredientsProps {
     handleIngredientClick: (
@@ -16,13 +16,13 @@ interface IBurgerIngredientsProps {
 
 const BurgerIngredients = ({ handleIngredientClick }: IBurgerIngredientsProps) => {
 
-    const [currentTab, setCurrentTab] = useState<'bun' | 'sauce' | 'main'>('bun');
+    const [currentTab, setCurrentTab] = useState<TIngredientsCategoryType>('bun');
     const boxRef = useRef<HTMLDivElement>(null);
     const { ingredients } = useSelector(store => ({
         ingredients: store.ingredients.ingredients,
     }));
 
-    const switchCurrentTab = (type: 'bun' | 'sauce' | 'main'): void => {
+    const switchCurrentTab = (type: TIngredientsCategoryType): void => {
         const element = document.querySelector(`[data-scroll-id="${type}"]`)
         if (element && element instanceof HTMLElement) {
             const offset = element.offsetTop
@@ -54,6 +54,12 @@ const BurgerIngredients = ({ handleIngredientClick }: IBurgerIngredientsProps) =
         return
     }
 
+    const ingredientCategoryList: Array<{title: TIngredientsCategoryTitle; type: TIngredientsCategoryType}> = [
+        {title: 'Булки', type: 'bun'},
+        {title: 'Соусы', type: 'sauce'},
+        {title: 'Начинки', type: 'main'},
+    ]
+
     return (
         <section className={`${s.section_container} pt-10`}>
             <h1 className={`${s.title} text text_type_main-large mb-5`}>Соберите бургер</h1>
@@ -83,9 +89,13 @@ const BurgerIngredients = ({ handleIngredientClick }: IBurgerIngredientsProps) =
                                 ref={boxRef} 
                                 className={`${s.ingredients_items_wrapper} pl-4 pb-10`}
                             >
-                                <BurgerIngredientsList onIngredientClick={handleIngredientClick} title='Булки' type="bun" />
-                                <BurgerIngredientsList onIngredientClick={handleIngredientClick} title='Соусы' type="sauce" />
-                                <BurgerIngredientsList onIngredientClick={handleIngredientClick} title='Начинки' type="main" />
+                                {ingredientCategoryList.map((category) => (
+                                    <BurgerIngredientsList 
+                                        onIngredientClick={handleIngredientClick} 
+                                        title={category.title} 
+                                        type={category.type}
+                                    />
+                                ))}
                             </div>
                         </>
                     )}
