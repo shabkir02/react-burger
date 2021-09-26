@@ -1,7 +1,9 @@
 import { useState, useRef } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector } from '../../services/types/hooks';
 
 import BurgerIngredientsList from '../burger-ingredients-list/burger-ingredients-list';
+import Loader from '../loader/loader';
 
 import s from './burger-ingredients.module.sass';
 import { TIngredient } from '../../services/types/data';
@@ -14,8 +16,11 @@ interface IBurgerIngredientsProps {
 
 const BurgerIngredients = ({ handleIngredientClick }: IBurgerIngredientsProps) => {
 
-    const [currentTab, setCurrentTab] = useState<'bun' | 'sauce' | 'main'>('bun')
+    const [currentTab, setCurrentTab] = useState<'bun' | 'sauce' | 'main'>('bun');
     const boxRef = useRef<HTMLDivElement>(null);
+    const { ingredients } = useSelector(store => ({
+        ingredients: store.ingredients.ingredients,
+    }));
 
     const switchCurrentTab = (type: 'bun' | 'sauce' | 'main'): void => {
         const element = document.querySelector(`[data-scroll-id="${type}"]`)
@@ -52,32 +57,39 @@ const BurgerIngredients = ({ handleIngredientClick }: IBurgerIngredientsProps) =
     return (
         <section className={`${s.section_container} pt-10`}>
             <h1 className={`${s.title} text text_type_main-large mb-5`}>Соберите бургер</h1>
-            <div className={`${s.tab_wrapper}`}>
-                <Tab 
-                    active={currentTab === 'bun'}
-                    onClick={() => switchCurrentTab('bun')}
-                    value="Начинки"
-                >Булки</Tab>
-                <Tab 
-                    active={currentTab === 'sauce'}
-                    onClick={() => switchCurrentTab('sauce')}
-                    value="Начинки"
-                >Соусы</Tab>
-                <Tab 
-                    active={currentTab === 'main'}
-                    onClick={() => switchCurrentTab('main')}
-                    value="Начинки"
-                >Начинки</Tab>
-            </div>
-            <div 
-                onScroll={switchCurrentTabOnScroll}
-                ref={boxRef} 
-                className={`${s.ingredients_wrapper} pl-4 pb-10`}
-            >
-                <BurgerIngredientsList onIngredientClick={handleIngredientClick} title='Булки' type="bun" />
-                <BurgerIngredientsList onIngredientClick={handleIngredientClick} title='Соусы' type="sauce" />
-                <BurgerIngredientsList onIngredientClick={handleIngredientClick} title='Начинки' type="main" />
-            </div>
+                <div className={s.ingredients_wrapper}>
+                    {!ingredients && <Loader />}
+                    {ingredients && (
+                        <>
+                            <div className={`${s.tab_wrapper}`}>
+                                <Tab 
+                                    active={currentTab === 'bun'}
+                                    onClick={() => switchCurrentTab('bun')}
+                                    value="Начинки"
+                                >Булки</Tab>
+                                <Tab 
+                                    active={currentTab === 'sauce'}
+                                    onClick={() => switchCurrentTab('sauce')}
+                                    value="Начинки"
+                                >Соусы</Tab>
+                                <Tab 
+                                    active={currentTab === 'main'}
+                                    onClick={() => switchCurrentTab('main')}
+                                    value="Начинки"
+                                >Начинки</Tab>
+                            </div>
+                            <div 
+                                onScroll={switchCurrentTabOnScroll}
+                                ref={boxRef} 
+                                className={`${s.ingredients_items_wrapper} pl-4 pb-10`}
+                            >
+                                <BurgerIngredientsList onIngredientClick={handleIngredientClick} title='Булки' type="bun" />
+                                <BurgerIngredientsList onIngredientClick={handleIngredientClick} title='Соусы' type="sauce" />
+                                <BurgerIngredientsList onIngredientClick={handleIngredientClick} title='Начинки' type="main" />
+                            </div>
+                        </>
+                    )}
+                </div>
         </section>
     )
 }
