@@ -1,4 +1,5 @@
 import { call, select, takeEvery, put } from "redux-saga/effects";
+import { SagaIterator } from "@redux-saga/types";
 
 import { setCookie, deleteCookie, getCookie } from "../../utils/cookies";
 import { getUserInfoRequest, resetEmail, getUserInfoFailed, resetPassword, setEmail, setName, getUserInfoSuccess, updateUserTokenRequest, resetName } from "../actions/user";
@@ -6,7 +7,7 @@ import { _apiUrl } from "../constants";
 import { GET_USER_INFO_REQUEST, UPDATE_USER_INFO_REQUEST, UPDATE_USER_TOKEN_REQUEST, USER_LOGIN_REQUEST, USER_LOGOUT_REQUEST, USER_REGISTER_REQUEST } from "../constants/user";
 import { checkResponse } from "../../utils/apiHelper";
 
-export function userLoginFetch(email, password) {
+export function userLoginFetch(email: string, password: string) {
     return fetch(`${_apiUrl}/auth/login`, {
         method: 'POST',
         headers: {
@@ -53,7 +54,7 @@ export function updateAccessTokenFetch() {
     }).then(checkResponse)
 }
 
-export function updateUserInfoFetch(email, name, password) {
+export function updateUserInfoFetch(email: string, name: string, password: string) {
     return fetch(`${_apiUrl}/auth/user`, {
         method: 'PATCH',
         headers: {
@@ -68,7 +69,7 @@ export function updateUserInfoFetch(email, name, password) {
     }).then(checkResponse)
 }
 
-export function userRegisterFetch(name, email, password) {
+export function userRegisterFetch(name: string, email: string, password: string) {
     return fetch(`${_apiUrl}/auth/register`, {
         method: 'POST',
         headers: {
@@ -82,7 +83,7 @@ export function userRegisterFetch(name, email, password) {
     }).then(checkResponse)
 }
 
-export function* userLogin() {
+export function* userLogin(): SagaIterator {
     try {
         const { email, password } = yield select((store) => ({
             email: store.user.email,
@@ -112,7 +113,7 @@ export function* userLogin() {
     }
 }
 
-export function* userLogout() {
+export function* userLogout(): SagaIterator {
     try {
         const response = yield call(userLogoutFetch);
 
@@ -129,7 +130,7 @@ export function* userLogout() {
     }
 }
 
-export function* getUserInfo() {
+export function* getUserInfo(): SagaIterator {
     try {
         const response = yield call(getUserInfoFetch);
 
@@ -138,7 +139,7 @@ export function* getUserInfo() {
             yield put(setName(response.user.name))
             yield put(setEmail(response.user.email))
         }
-    } catch(error) {
+    } catch(error: any) {
         yield put(getUserInfoFailed())
         if (error?.message === 'jwt expired') {
             yield put(updateUserTokenRequest())
@@ -146,7 +147,7 @@ export function* getUserInfo() {
     }
 }
 
-export function* updateAccessToken() {
+export function* updateAccessToken(): SagaIterator {
     try {
         const data = yield call(updateAccessTokenFetch)
 
@@ -159,12 +160,12 @@ export function* updateAccessToken() {
 
             yield put(getUserInfoRequest())
         }
-    } catch(error) {
+    } catch(error: any) {
         console.log(error);
     }
 }
 
-export function* updateUserInfo() {
+export function* updateUserInfo(): SagaIterator {
     try {
         const { email, name, password } = yield select(store => ({
             email: store.user.email,
@@ -179,16 +180,16 @@ export function* updateUserInfo() {
             yield put(setName(response.user.name))
             yield put(setEmail(response.user.email))
         }
-    } catch(error) {
+    } catch(error: any) {
         // Апдейт нужно доделать, пока не работает
         yield put(getUserInfoFailed())
-        if (error.message === 'jwt expired') {
+        if (error?.message === 'jwt expired') {
             yield put(updateUserTokenRequest())
         }
     }
 }
 
-export function* userRegister() {
+export function* userRegister(): SagaIterator {
     try {
         const { email, name, password } = yield select(store => ({
             email: store.user.email,

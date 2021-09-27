@@ -1,5 +1,7 @@
 import { useSelector } from '../../hooks/hooks';
 
+import Loader from '../loader/loader';
+
 import s from './order-details.module.sass';
 
 import background from '../../images/order-detail.svg';
@@ -7,7 +9,14 @@ import accept from '../../images/stroke.svg';
 
 const OrderDetails = () => {
 
-    const order = useSelector(store => store.order.order);
+    const { order, orderRequest } = useSelector(store => ({
+        order: store.order.order,
+        orderRequest: store.order.orderRequest
+    }));
+
+    if (orderRequest) {
+        return <Loader />
+    }
 
     return (
         <div className={`pt-20 pb-20`}>

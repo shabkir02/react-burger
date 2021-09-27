@@ -13,7 +13,6 @@ interface IConstructorPageProps {
         item: TIngredient
     ) => void;
     handleOrderClick: (
-        finalIngredients: ReadonlyArray<string>, 
         propLocation: object
     ) => void;
 }

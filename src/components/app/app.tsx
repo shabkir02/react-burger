@@ -22,7 +22,7 @@ import { ProtectedRoute } from '../../layouts/protected-route/protected-route';
 
 import { wsAllOrdersConnectionStart } from '../../services/actions/wsOrders';
 
-import { makeOrder, orderReset} from '../../services/actions/order';
+import { getOrderRequest, orderReset} from '../../services/actions/order';
 // import { getIngredients } from '../../services/actions/ingredients';
 import { getUserInfoRequest } from '../../services/actions/user';
 import { TIngredient, TOrder } from '../../services/types/data';
@@ -73,11 +73,11 @@ const App = () => {
       dispatch(setModalInnerIngredientsDetails())
     }
 
-    const handleOrderClick = (finalIngredients: ReadonlyArray<string>, propLocation: object): void => {
+    const handleOrderClick = (propLocation: object): void => {
       dispatch(setModalInnerOrderDetails())
       history.push({ pathname: '/order-details/4321', state: { background: propLocation }  })
 
-      dispatch(makeOrder(finalIngredients))
+      dispatch(getOrderRequest())
     }
 
     const handleOrderInfoClick = (order: TOrder, ingredientsArr: ReadonlyArray<TIngredient>): void => {
@@ -122,7 +122,7 @@ const App = () => {
               <Route path="/:type/:id" >
                 <Modal closeModal={closeModal}>
                   {modalInner?.type === modalInnerDetails.ingredientDetails && <IngredientDetails/>}
-                  {modalInner?.type === modalInnerDetails.orderDetails && order && <OrderDetails/>}
+                  {modalInner?.type === modalInnerDetails.orderDetails && <OrderDetails/>}
                   {modalInner?.type === modalInnerDetails.orderInfo && <OrderInfo/>}
                 </Modal>
               </Route>

@@ -48,29 +48,29 @@ export const orderReset = (): IIOrderResetAction => ({
   type: ORDER_RESET
 })
 
-export const makeOrder: AppThunk = (ingredientsIdArr: ReadonlyArray<string>) => {
-    return function(dispatch: AppDispatch) {
-        dispatch(getOrderRequest())
-        fetch(`${_apiUrl}/orders`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json;charset=utf-8',
-              'Authorization': 'Bearer ' + getCookie('accessToken')
-            },
-            body: JSON.stringify({
-              "ingredients": ingredientsIdArr
-            })
-        }).then(response => {
-          if (response.ok) {
-            return response.json()
-          } else {
-            dispatch(getOrderFailed())
-          }
-        }).then(response => {
-          dispatch(getOrderSuccess(response.order))
-          dispatch(resetConstructor())
-          }).catch(err => {
-            console.log(err);
-          })
-    }
-}
+// export const makeOrder: AppThunk = (ingredientsIdArr: ReadonlyArray<string>) => {
+//     return function(dispatch: AppDispatch) {
+//         dispatch(getOrderRequest())
+//         fetch(`${_apiUrl}/orders`, {
+//             method: 'POST',
+//             headers: {
+//               'Content-Type': 'application/json;charset=utf-8',
+//               'Authorization': 'Bearer ' + getCookie('accessToken')
+//             },
+//             body: JSON.stringify({
+//               "ingredients": ingredientsIdArr
+//             })
+//         }).then(response => {
+//           if (response.ok) {
+//             return response.json()
+//           } else {
+//             dispatch(getOrderFailed())
+//           }
+//         }).then(response => {
+//           dispatch(getOrderSuccess(response.order))
+//           dispatch(resetConstructor())
+//           }).catch(err => {
+//             console.log(err);
+//           })
+//     }
+// }

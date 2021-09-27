@@ -54,7 +54,7 @@ const BurgerIngredients = ({ handleIngredientClick }: IBurgerIngredientsProps) =
         return
     }
 
-    const ingredientCategoryList: Array<{title: TIngredientsCategoryTitle; type: TIngredientsCategoryType}> = [
+    const ingredientCategoryList: Array<{title: TIngredientsCategoryTitle; type: TIngredientsCategoryType;}> = [
         {title: 'Булки', type: 'bun'},
         {title: 'Соусы', type: 'sauce'},
         {title: 'Начинки', type: 'main'},
@@ -91,6 +91,7 @@ const BurgerIngredients = ({ handleIngredientClick }: IBurgerIngredientsProps) =
                             >
                                 {ingredientCategoryList.map((category) => (
                                     <BurgerIngredientsList 
+                                        key={category.type}
                                         onIngredientClick={handleIngredientClick} 
                                         title={category.title} 
                                         type={category.type}

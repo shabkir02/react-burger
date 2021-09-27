@@ -1,4 +1,5 @@
 import { call, takeEvery, put, select } from 'redux-saga/effects';
+import { SagaIterator } from "@redux-saga/types";
 import { checkResponse } from '../../utils/apiHelper';
 import { resetEmailCode, resetPasswordFailed, resetPasswordSuccess, sendEmailFailed, sendEmailSuccess } from '../actions/reset-password';
 import { resetEmail, resetPassword } from '../actions/user';
@@ -6,7 +7,7 @@ import { resetEmail, resetPassword } from '../actions/user';
 import { _apiUrl } from '../constants';
 import { RESET_PASSWORD_REQUEST, SEND_EMAIL_REQUEST } from '../constants/reset-password';
 
-const sendEmailFetch = (email) => {
+const sendEmailFetch = (email: string) => {
     return fetch(`${_apiUrl}/password-reset`, {
         method: 'POST',
         headers: {
@@ -18,7 +19,7 @@ const sendEmailFetch = (email) => {
     }).then(checkResponse)
 }
 
-const resetUserPasswordFetch = (newPassword, emailCode) => {
+const resetUserPasswordFetch = (newPassword: string, emailCode: string) => {
     return fetch(`${_apiUrl}/password-reset/reset`, {
         method: 'POST',
         headers: {
@@ -31,7 +32,7 @@ const resetUserPasswordFetch = (newPassword, emailCode) => {
     }).then(checkResponse)
 }
 
-export function* sendEmail() {
+export function* sendEmail(): SagaIterator {
     try {
         const email = yield select(store => store.user.email)
         const response = yield call(sendEmailFetch, email);
@@ -45,7 +46,7 @@ export function* sendEmail() {
     }
 }
 
-export function* resetUserPassword() {
+export function* resetUserPassword(): SagaIterator {
     try {
         const { emailCode, password } = yield select(store => ({
             password: store.user.password,

@@ -14,7 +14,6 @@ import s from './burger-constructor.module.sass';
 
 interface IBurgerConstructorProps {
     handleOrderClick: (
-        finalIngredientsArg: ReadonlyArray<string>, 
         location: object
     ) => void
 }
@@ -39,10 +38,7 @@ const BurgerConstructor = ({ handleOrderClick }: IBurgerConstructorProps) => {
         }
 
         if (constructorBun && constructorIngredients.length > 0) {
-            const finalIngredients = constructorIngredients.map((ingredient: TIngredient): string => ingredient._id)
-            const finalIngredientsArg = [...finalIngredients, constructorBun._id, constructorBun._id]
-
-            handleOrderClick(finalIngredientsArg, location)
+            handleOrderClick(location)
         }
     }
 
