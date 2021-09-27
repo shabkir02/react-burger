@@ -57,8 +57,7 @@ const App = () => {
     let background = 
       history.action === "PUSH" && location.state && location.state.background;
 
-    const { order, modalInner } = useSelector(store => ({
-      order: store.order.order,
+    const { modalInner } = useSelector(store => ({
       modalInner: store.modal.modalInner
     }));
 
