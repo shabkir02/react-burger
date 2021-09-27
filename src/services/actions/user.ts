@@ -1,11 +1,20 @@
-import { setCookie, getCookie, deleteCookie } from "../../utils/cookies";
-
+// import { setCookie, getCookie, deleteCookie } from "../../utils/cookies";
 import {
-    USER_LOGIN_REQUEST,
-    USER_LOGOUT_REQUEST,
-    UPDATE_USER_TOKEN_REQUEST,
-    UPDATE_USER_INFO_REQUEST,
     USER_REGISTER_REQUEST,
+    USER_REGISTER_SUCCESS,
+    USER_REGISTER_FAILED,
+
+    USER_LOGOUT_REQUEST,
+    USER_LOGOUT_SUCCESS,
+    USER_LOGOUT_FAILED,
+
+    USER_LOGIN_REQUEST,
+    USER_LOGIN_SUCCESS,
+    USER_LOGIN_FAILED,
+
+    UPDATE_USER_INFO_REQUEST,
+    UPDATE_USER_INFO_FAILED,
+    UPDATE_USER_INFO_SUCCESS,
 
     GET_USER_INFO_REQUEST,
     GET_USER_INFO_SUCCESS,
@@ -20,27 +29,50 @@ import {
     USER_INFO,
 } from '../constants/user';
 
-import { AppDispatch, AppThunk } from "../types";
+// import { AppDispatch, AppThunk } from "../types";
 import { TUser } from "../types/data";
 
-const _apiUrl = 'https://norma.nomoreparties.space/api';
-
-export interface IUserLoginRequest {
+export interface IUserLoginRequestAction {
     readonly type: typeof USER_LOGIN_REQUEST
 }
-export interface IUserLogoutRequest {
+export interface IUserLoginSuccessAction {
+    readonly type: typeof USER_LOGIN_SUCCESS
+}
+export interface IUserLoginFailedAction {
+    readonly type: typeof USER_LOGIN_FAILED
+}
+
+export interface IUserLogoutRequestAction {
     readonly type: typeof USER_LOGOUT_REQUEST
 }
-export interface IUpdateUserTokenReguest {
-    readonly type: typeof UPDATE_USER_TOKEN_REQUEST
+export interface IUserLogoutSuccessAction {
+    readonly type: typeof USER_LOGOUT_SUCCESS
 }
-export interface IUserRegisterRequest {
-    readonly type: typeof USER_REGISTER_REQUEST
+export interface IUserLogoutFailedAction {
+    readonly type: typeof USER_LOGOUT_FAILED
 }
-export interface IUpdateUserInfoRequest {
+
+export interface IUpdateUserInfoRequestAction {
     readonly type: typeof UPDATE_USER_INFO_REQUEST
 }
-export interface IGetUserInfoRequest {
+export interface IUpdateUserInfoSuccessAction {
+    readonly type: typeof UPDATE_USER_INFO_SUCCESS
+}
+export interface IUpdateUserInfoFailedAction {
+    readonly type: typeof UPDATE_USER_INFO_FAILED
+}
+
+export interface IUserRegisterRequestAction {
+    readonly type: typeof USER_REGISTER_REQUEST
+}
+export interface IUserRegisterSuccessAction {
+    readonly type: typeof USER_REGISTER_SUCCESS
+}
+export interface IUserRegisterFailedAction {
+    readonly type: typeof USER_REGISTER_FAILED
+}
+
+export interface IGetUserInfoRequestAction {
     readonly type: typeof GET_USER_INFO_REQUEST
 }
 export interface IGetUserInfoSuccessAction {
@@ -76,8 +108,6 @@ export interface IUserInfoAction {
 }
 
 export type TUserActions = 
-    | IGetUserInfoSuccessAction
-    | IGetUserInfoFailedAction
     | ISetEmailAction
     | IResetEmailAction
     | ISetPasswordAction
@@ -86,30 +116,58 @@ export type TUserActions =
     | IResetNameAction
     | IUserInfoAction
 
-    | IUserLoginRequest
-    | IUserLogoutRequest
-    | IUpdateUserTokenReguest
-    | IGetUserInfoRequest
-    | IUpdateUserInfoRequest
-    | IUserRegisterRequest
+    | IUserLoginRequestAction
+    | IUserLoginFailedAction
+    | IUserLoginSuccessAction    
+
+    | IUpdateUserInfoRequestAction
+    | IUpdateUserInfoSuccessAction
+    | IUpdateUserInfoFailedAction
+
+    | IUserLogoutRequestAction
+    | IUserLogoutSuccessAction
+    | IUserLogoutFailedAction
+
+    | IGetUserInfoRequestAction
+    | IGetUserInfoSuccessAction
+    | IGetUserInfoFailedAction
+
+    | IUserRegisterRequestAction
+    | IUserRegisterFailedAction
+    | IUserRegisterSuccessAction
 ;
 
-export const userLoginRequest = (): IUserLoginRequest => ({
+export const userLoginRequest = (): IUserLoginRequestAction => ({
     type: USER_LOGIN_REQUEST
 })
-export const userLogoutRequest = (): IUserLogoutRequest => ({
-    type: USER_LOGOUT_REQUEST
+export const userLoginSuccess = (): IUserLoginSuccessAction => ({
+    type: USER_LOGIN_SUCCESS
 })
-export const updateUserTokenRequest = (): IUpdateUserTokenReguest => ({
-    type: UPDATE_USER_TOKEN_REQUEST
+export const userLoginFailed = (): IUserLoginFailedAction => ({
+    type: USER_LOGIN_FAILED
 })
-export const updateUserInfoRequest = (): IUpdateUserInfoRequest => ({
+
+export const updateUserInfoRequest = (): IUpdateUserInfoRequestAction => ({
     type: UPDATE_USER_INFO_REQUEST
 })
-export const userRegisterRequest = (): IUserRegisterRequest => ({
-    type: USER_REGISTER_REQUEST
+export const updateUserInfoSuccess = (): IUpdateUserInfoSuccessAction => ({
+    type: UPDATE_USER_INFO_SUCCESS
 })
-export const getUserInfoRequest = (): IGetUserInfoRequest => ({
+export const updateUserInfoFailed = (): IUpdateUserInfoFailedAction => ({
+    type: UPDATE_USER_INFO_FAILED
+})
+
+export const userLogoutRequest = (): IUserLogoutRequestAction => ({
+    type: USER_LOGOUT_REQUEST
+})
+export const userLogoutSuccess = (): IUserLogoutSuccessAction => ({
+    type: USER_LOGOUT_SUCCESS
+})
+export const userLogoutFailed = (): IUserLogoutFailedAction => ({
+    type: USER_LOGOUT_FAILED
+})
+
+export const getUserInfoRequest = (): IGetUserInfoRequestAction => ({
     type: GET_USER_INFO_REQUEST
 })
 export const getUserInfoSuccess = (user: null | TUser): IGetUserInfoSuccessAction => ({
@@ -119,6 +177,17 @@ export const getUserInfoSuccess = (user: null | TUser): IGetUserInfoSuccessActio
 export const getUserInfoFailed = (): IGetUserInfoFailedAction => ({
     type: GET_USER_INFO_FAILED
 })
+
+export const userRegisterRequest = (): IUserRegisterRequestAction => ({
+    type: USER_REGISTER_REQUEST
+})
+export const userRegisterSuccess = (): IUserRegisterSuccessAction => ({
+    type: USER_REGISTER_SUCCESS
+})
+export const userRegisterFailed = (): IUserRegisterFailedAction => ({
+    type: USER_REGISTER_FAILED
+})
+
 export const setEmail = (email: string): ISetEmailAction => ({
     type: SET_EMAIL,
     payload: email

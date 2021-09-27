@@ -2,9 +2,9 @@ import { call, select, takeEvery, put } from "redux-saga/effects";
 import { SagaIterator } from "@redux-saga/types";
 
 import { setCookie, deleteCookie, getCookie } from "../../utils/cookies";
-import { getUserInfoRequest, resetEmail, getUserInfoFailed, resetPassword, setEmail, setName, getUserInfoSuccess, updateUserTokenRequest, resetName } from "../actions/user";
+import { getUserInfoRequest, resetEmail, updateUserInfoRequest, getUserInfoFailed, resetPassword, setEmail, setName, getUserInfoSuccess, resetName, updateUserInfoFailed } from "../actions/user";
 import { _apiUrl } from "../constants";
-import { GET_USER_INFO_REQUEST, UPDATE_USER_INFO_REQUEST, UPDATE_USER_TOKEN_REQUEST, USER_LOGIN_REQUEST, USER_LOGOUT_REQUEST, USER_REGISTER_REQUEST } from "../constants/user";
+import { GET_USER_INFO_REQUEST, UPDATE_USER_INFO_REQUEST, USER_LOGIN_REQUEST, USER_LOGOUT_REQUEST, USER_REGISTER_REQUEST } from "../constants/user";
 import { checkResponse } from "../../utils/apiHelper";
 
 export function userLoginFetch(email: string, password: string) {
@@ -51,7 +51,11 @@ export function updateAccessTokenFetch() {
         body: JSON.stringify({
             token: localStorage.getItem('refreshToken')
         })
-    }).then(checkResponse)
+    }).then((response) => {
+        return response.json();
+    }).catch(error => {
+        console.log(error);
+    })
 }
 
 export function updateUserInfoFetch(email: string, name: string, password: string) {
@@ -140,28 +144,23 @@ export function* getUserInfo(): SagaIterator {
             yield put(setEmail(response.user.email))
         }
     } catch(error: any) {
-        yield put(getUserInfoFailed())
         if (error?.message === 'jwt expired') {
-            yield put(updateUserTokenRequest())
+            const data = yield call(updateAccessTokenFetch);
+            
+            if (data.success) {
+                const accessToken = data.accessToken.split('Bearer ')[1];
+                const refreshToken = data.refreshToken;
+                
+                setCookie('accessToken', accessToken);
+                localStorage.setItem('refreshToken', refreshToken)
+                
+                yield put(getUserInfoRequest())
+            } else {
+                yield put(getUserInfoFailed())
+            }
+            return
         }
-    }
-}
-
-export function* updateAccessToken(): SagaIterator {
-    try {
-        const data = yield call(updateAccessTokenFetch)
-
-        if (data.success) {
-            const accessToken = data.accessToken.split('Bearer ')[1];
-            const refreshToken = data.refreshToken;
-
-            setCookie('accessToken', accessToken);
-            localStorage.setItem('refreshToken', refreshToken)
-
-            yield put(getUserInfoRequest())
-        }
-    } catch(error: any) {
-        console.log(error);
+        yield put(getUserInfoFailed())
     }
 }
 
@@ -181,11 +180,21 @@ export function* updateUserInfo(): SagaIterator {
             yield put(setEmail(response.user.email))
         }
     } catch(error: any) {
-        // Апдейт нужно доделать, пока не работает
-        yield put(getUserInfoFailed())
         if (error?.message === 'jwt expired') {
-            yield put(updateUserTokenRequest())
+            const data = yield call(updateAccessTokenFetch);
+            
+            if (data.success) {
+                const accessToken = data.accessToken.split('Bearer ')[1];
+                const refreshToken = data.refreshToken;
+                
+                setCookie('accessToken', accessToken);
+                localStorage.setItem('refreshToken', refreshToken)
+                
+                yield put(updateUserInfoRequest())
+            }
+            return
         }
+        yield put(updateUserInfoFailed())
     }
 }
 
@@ -219,7 +228,7 @@ export function* userRegister(): SagaIterator {
 export default function* userSaga() {
     yield takeEvery(USER_LOGIN_REQUEST, userLogin)
     yield takeEvery(USER_LOGOUT_REQUEST, userLogout)
-    yield takeEvery(UPDATE_USER_TOKEN_REQUEST, updateAccessToken)
+    // yield takeEvery(UPDATE_USER_TOKEN_REQUEST, updateAccessToken)
     yield takeEvery(GET_USER_INFO_REQUEST, getUserInfo)
     yield takeEvery(UPDATE_USER_INFO_REQUEST, updateUserInfo)
     yield takeEvery(USER_REGISTER_REQUEST, userRegister)
