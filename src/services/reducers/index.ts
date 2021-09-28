@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
+import { connectRouter } from 'connected-react-router'
+import { History } from 'history'
 // import { applyMiddleware, compose } from 'redux';
 // import thunk from 'redux-thunk';
 // import createSagaMiddleware from '@redux-saga/core';
@@ -55,7 +57,8 @@ export const wsUserOrdersActions = {
     onMessage: WS_USER_ORDERS_GET_MESSAGE
 };
 
-export const rootReducer = combineReducers({
+export const createRootReducer = (history: History) => combineReducers({
+    router: connectRouter(history),
     modal: modalReducer,
     order: orderReducer,
     ingredients: ingredientsReducer,

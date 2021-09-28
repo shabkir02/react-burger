@@ -16,9 +16,9 @@ const ProfileNav = () => {
         dispatch(userLogoutRequest())
     }
 
-    if (!user) {
-        history.replace({ pathname: '/login' });
-    }
+    // if (!user) {
+    //     history.replace({ pathname: '/login' });
+    // }
 
     return (
         <div className={`${s.container_nav} pt-30`}>

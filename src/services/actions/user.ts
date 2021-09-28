@@ -25,8 +25,7 @@ import {
     SET_PASSWORD,
     RESET_PASSWORD,
     SET_NAME,
-    RESET_NAME,
-    USER_INFO,
+    RESET_NAME
 } from '../constants/user';
 
 // import { AppDispatch, AppThunk } from "../types";
@@ -82,6 +81,7 @@ export interface IGetUserInfoSuccessAction {
 export interface IGetUserInfoFailedAction {
     readonly type: typeof GET_USER_INFO_FAILED;
 }
+
 export interface ISetEmailAction {
     readonly type: typeof SET_EMAIL;
     payload: string
@@ -103,9 +103,6 @@ export interface ISetNameAction {
 export interface IResetNameAction {
     readonly type: typeof RESET_NAME;
 }
-export interface IUserInfoAction {
-    readonly type: typeof USER_INFO;
-}
 
 export type TUserActions = 
     | ISetEmailAction
@@ -114,7 +111,6 @@ export type TUserActions =
     | IResetPasswordAction
     | ISetNameAction
     | IResetNameAction
-    | IUserInfoAction
 
     | IUserLoginRequestAction
     | IUserLoginFailedAction
@@ -208,9 +204,6 @@ export const setName = (name: string): ISetNameAction => ({
 })
 export const resetName = (): IResetNameAction => ({
     type: RESET_NAME
-})
-export const userInfo = (): IUserInfoAction => ({
-    type: USER_INFO
 })
 
 // function updateAccessToken() {

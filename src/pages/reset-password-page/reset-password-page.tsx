@@ -1,8 +1,8 @@
-import React, { FormEvent, useEffect } from 'react';
+import { FormEvent } from 'react';
 import { Logo, Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../hooks/hooks';
-import { useHistory, Redirect, useLocation } from 'react-router-dom';
+import { Redirect, useLocation } from 'react-router-dom';
 
 import { resetPasswordRequest, setEmailCode } from '../../services/actions/reset-password';
 import { setPassword } from '../../services/actions/user';
@@ -12,13 +12,11 @@ import s from './reset-password-page.module.sass';
 const ResetPasswordPage = () => {
 
     const dispatch = useDispatch();
-    const history = useHistory()
     const location = useLocation();
 
-    const { password, emailCode, resetPasswordSuccess, user } = useSelector(store => ({
+    const { password, emailCode, user } = useSelector(store => ({
         password: store.user.password,
         emailCode: store.resetPassword.emailCode,
-        resetPasswordSuccess: store.resetPassword.resetPasswordSuccess,
         user: store.user.user
     }))
 
@@ -26,12 +24,6 @@ const ResetPasswordPage = () => {
         e.preventDefault();
         dispatch(resetPasswordRequest())
     }
-
-    useEffect(() => {
-        if (resetPasswordSuccess && resetPasswordSuccess.success) {
-            history.replace({ pathname: '/login' })
-        }
-    }, [history, resetPasswordSuccess])
 
     if (user) {
         return <Redirect to="/" />

@@ -1,8 +1,9 @@
 import { call, select, takeEvery, put } from "redux-saga/effects";
 import { SagaIterator } from "@redux-saga/types";
+import { replace } from 'connected-react-router'
 
+import * as userActions from '../actions/user';
 import { setCookie, deleteCookie, getCookie } from "../../utils/cookies";
-import { getUserInfoRequest, resetEmail, updateUserInfoRequest, getUserInfoFailed, resetPassword, setEmail, setName, getUserInfoSuccess, resetName, updateUserInfoFailed } from "../actions/user";
 import { _apiUrl } from "../constants";
 import { GET_USER_INFO_REQUEST, UPDATE_USER_INFO_REQUEST, USER_LOGIN_REQUEST, USER_LOGOUT_REQUEST, USER_REGISTER_REQUEST } from "../constants/user";
 import { checkResponse } from "../../utils/apiHelper";
@@ -96,41 +97,33 @@ export function* userLogin(): SagaIterator {
 
         const response = yield call(userLoginFetch, email, password);
 
-        if (response.success) {
-            yield put(getUserInfoSuccess(response.user))
-            yield put(resetEmail())
-            yield put(resetPassword())
+        yield put(userActions.getUserInfoSuccess(response.user))
+        yield put(userActions.resetEmail())
+        yield put(userActions.resetPassword())
 
-            yield put(setName(response.user.name))
-            yield put(setEmail(response.user.email))
+        yield put(userActions.setName(response.user.name))
+        yield put(userActions.setEmail(response.user.email))
 
-            const accessToken = response.accessToken.split('Bearer ')[1];
-            const refreshToken = response.refreshToken;
+        const accessToken = response.accessToken.split('Bearer ')[1];
+        const refreshToken = response.refreshToken;
 
-            setCookie('accessToken', accessToken);
-            localStorage.setItem('refreshToken', refreshToken)
-        } else {
-            yield put(getUserInfoFailed())
-        }
+        setCookie('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
     } catch(error) {
-        yield put(getUserInfoFailed())
+        yield put(userActions.userLoginFailed())
     }
 }
 
 export function* userLogout(): SagaIterator {
     try {
         const response = yield call(userLogoutFetch);
-
-        if (response.success) {
-            localStorage.removeItem('refreshToken')
-            deleteCookie('accessToken')
-            console.log(true);
-            yield put(getUserInfoSuccess(null))
-        } else {
-            yield put(getUserInfoFailed())
-        }
+        
+        localStorage.removeItem('refreshToken')
+        deleteCookie('accessToken')
+        yield put(userActions.getUserInfoSuccess(null))
+        yield put(replace('/login'))
     } catch(error) {
-        yield put(getUserInfoFailed())
+        yield put(userActions.userLogoutFailed())
     }
 }
 
@@ -138,29 +131,27 @@ export function* getUserInfo(): SagaIterator {
     try {
         const response = yield call(getUserInfoFetch);
 
-        if (response.success) {
-            yield put(getUserInfoSuccess(response.user))
-            yield put(setName(response.user.name))
-            yield put(setEmail(response.user.email))
-        }
+        yield put(userActions.getUserInfoSuccess(response.user))
+        yield put(userActions.setName(response.user.name))
+        yield put(userActions.setEmail(response.user.email))
     } catch(error: any) {
         if (error?.message === 'jwt expired') {
             const data = yield call(updateAccessTokenFetch);
             
-            if (data.success) {
+            if (data?.success) {
                 const accessToken = data.accessToken.split('Bearer ')[1];
                 const refreshToken = data.refreshToken;
                 
                 setCookie('accessToken', accessToken);
                 localStorage.setItem('refreshToken', refreshToken)
                 
-                yield put(getUserInfoRequest())
+                yield put(userActions.getUserInfoRequest())
             } else {
-                yield put(getUserInfoFailed())
+                yield put(userActions.getUserInfoFailed())
             }
             return
         }
-        yield put(getUserInfoFailed())
+        yield put(userActions.getUserInfoFailed())
     }
 }
 
@@ -174,27 +165,27 @@ export function* updateUserInfo(): SagaIterator {
 
         const response = yield call(updateUserInfoFetch, email, name, password)
 
-        if (response.success) {
-            yield put(getUserInfoSuccess(response.user))
-            yield put(setName(response.user.name))
-            yield put(setEmail(response.user.email))
-        }
+        yield put(userActions.getUserInfoSuccess(response.user))
+        yield put(userActions.setName(response.user.name))
+        yield put(userActions.setEmail(response.user.email))
     } catch(error: any) {
         if (error?.message === 'jwt expired') {
             const data = yield call(updateAccessTokenFetch);
             
-            if (data.success) {
+            if (data?.success) {
                 const accessToken = data.accessToken.split('Bearer ')[1];
                 const refreshToken = data.refreshToken;
                 
                 setCookie('accessToken', accessToken);
                 localStorage.setItem('refreshToken', refreshToken)
                 
-                yield put(updateUserInfoRequest())
+                yield put(userActions.updateUserInfoRequest())
+            } else {
+                yield put(userActions.updateUserInfoFailed())
             }
             return
         }
-        yield put(updateUserInfoFailed())
+        yield put(userActions.updateUserInfoFailed())
     }
 }
 
@@ -208,28 +199,25 @@ export function* userRegister(): SagaIterator {
 
         const response = yield call(userRegisterFetch, email, name, password)
 
-        if (response.success) {
-            yield put(getUserInfoSuccess(response.user))
-            yield put(resetEmail())
-            yield put(resetPassword())
-            yield put(resetName())
+        yield put(userActions.getUserInfoSuccess(response.user))
+        yield put(userActions.resetEmail())
+        yield put(userActions.resetPassword())
+        yield put(userActions.resetName())
 
-            const accessToken = response.accessToken.split('Bearer ')[1];
-            const refreshToken = response.refreshToken;
+        const accessToken = response.accessToken.split('Bearer ')[1];
+        const refreshToken = response.refreshToken;
 
-            setCookie('accessToken', accessToken);
-            localStorage.setItem('refreshToken', refreshToken)
-        }
+        setCookie('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken)
     } catch(error) {
-        yield put(getUserInfoFailed())
+        yield put(userActions.userRegisterFailed())
     }
 }
 
 export default function* userSaga() {
-    yield takeEvery(USER_LOGIN_REQUEST, userLogin)
-    yield takeEvery(USER_LOGOUT_REQUEST, userLogout)
-    // yield takeEvery(UPDATE_USER_TOKEN_REQUEST, updateAccessToken)
-    yield takeEvery(GET_USER_INFO_REQUEST, getUserInfo)
-    yield takeEvery(UPDATE_USER_INFO_REQUEST, updateUserInfo)
-    yield takeEvery(USER_REGISTER_REQUEST, userRegister)
+    yield takeEvery(USER_LOGIN_REQUEST, userLogin);
+    yield takeEvery(USER_LOGOUT_REQUEST, userLogout);
+    yield takeEvery(GET_USER_INFO_REQUEST, getUserInfo);
+    yield takeEvery(UPDATE_USER_INFO_REQUEST, updateUserInfo);
+    yield takeEvery(USER_REGISTER_REQUEST, userRegister);
 }
