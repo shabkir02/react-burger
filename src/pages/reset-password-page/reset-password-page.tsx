@@ -1,8 +1,8 @@
-import { FormEvent } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { Logo, Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../hooks/hooks';
-import { Redirect, useLocation } from 'react-router-dom';
+import { Redirect, useLocation, useHistory } from 'react-router-dom';
 
 import { resetPasswordRequest, setEmailCode } from '../../services/actions/reset-password';
 import { setPassword } from '../../services/actions/user';
@@ -13,12 +13,20 @@ const ResetPasswordPage = () => {
 
     const dispatch = useDispatch();
     const location = useLocation();
+    const history = useHistory()
 
-    const { password, emailCode, user } = useSelector(store => ({
+    const { password, emailCode, user, resetPasswordSuccess } = useSelector(store => ({
         password: store.user.password,
         emailCode: store.resetPassword.emailCode,
-        user: store.user.user
+        user: store.user.user,
+        resetPasswordSuccess: store.resetPassword.resetPasswordSuccess
     }))
+
+    useEffect(() => {
+        if (resetPasswordSuccess && resetPasswordSuccess.success) {
+            history.replace({ pathname: '/login' })
+        }
+    }, [history, resetPasswordSuccess])
 
     const onFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault();

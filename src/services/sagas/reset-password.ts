@@ -1,6 +1,5 @@
 import { call, takeEvery, put, select } from 'redux-saga/effects';
 import { SagaIterator } from "@redux-saga/types";
-import { replace } from 'connected-react-router';
 
 import { checkResponse } from '../../utils/apiHelper';
 import { resetEmailCode, resetPasswordFailed, resetPasswordSuccess, sendEmailFailed, sendEmailSuccess } from '../actions/reset-password';
@@ -39,7 +38,6 @@ export function* sendEmail(): SagaIterator {
         const email = yield select(store => store.user.email)
         const response = yield call(sendEmailFetch, email);
         
-        yield put(replace('/reset-password', 'fromForgotPassword'))
         yield put(sendEmailSuccess(response))
         yield put(resetEmail())
     } catch(error) {
@@ -59,7 +57,6 @@ export function* resetUserPassword(): SagaIterator {
         yield put(resetPasswordSuccess(response))
         yield put(resetEmailCode())
         yield put(resetPassword())
-        yield put(replace('/login'))
     } catch(error) {
         yield put(resetPasswordFailed())
     }
