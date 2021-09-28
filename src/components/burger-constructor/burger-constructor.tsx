@@ -73,7 +73,7 @@ const BurgerConstructor = ({ handleOrderClick }: IBurgerConstructorProps) => {
                     data-test="constructor"
                 >
                     {!constructorBun && constructorIngredients.length === 0 && (
-                        <p className={`${s.no_ingredients} text text_type_main-default`}>Перетащите сюда ингредиенты</p>
+                        <p className={`${s.no_ingredients} text text_type_main-default`}>Перетащите сюда булочку и ингредиенты</p>
                     )}
                     {constructorBun && (
                         <div className={`pl-8 mb-4 show_item`}>
