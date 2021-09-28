@@ -67,11 +67,14 @@ const BurgerConstructor = ({ handleOrderClick }: IBurgerConstructorProps) => {
 
     return (
         <section className={`${s.section_container} pt-25`}>
-               <div 
+                <div 
                     className={`pt-4 pr-4`}
                     ref={dropContainer}
                     data-test="constructor"
                 >
+                    {!constructorBun && constructorIngredients.length === 0 && (
+                        <p className={`${s.no_ingredients} text text_type_main-default`}>Перетащите сюда ингредиенты</p>
+                    )}
                     {constructorBun && (
                         <div className={`pl-8 mb-4 show_item`}>
                             <ConstructorElement 
@@ -83,7 +86,7 @@ const BurgerConstructor = ({ handleOrderClick }: IBurgerConstructorProps) => {
                             />
                         </div>
                     )}
-                    {constructorIngredients && (
+                    {constructorIngredients.length > 0 && (
                         <div className={`${s.wrapper_inner} mb-4`}>
                             {constructorIngredients.map((ingredient: TIngredientConstructor, index: number) => (
                                     <BurgerConstructorItem
