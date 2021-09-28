@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, useHistory, useLocation } from 'react-router-dom';
-import { ConnectedRouter } from 'connected-react-router'
 import { useDispatch, useSelector } from '../../hooks/hooks';
 
 import WithAppHeader from '../../layouts/with-app-header/with-app-header';
