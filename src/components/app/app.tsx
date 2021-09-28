@@ -24,7 +24,6 @@ import { ProtectedRoute } from '../../layouts/protected-route/protected-route';
 import { wsAllOrdersConnectionStart } from '../../services/actions/wsOrders';
 
 import { getOrderRequest, orderReset} from '../../services/actions/order';
-// import { getIngredients } from '../../services/actions/ingredients';
 import { getUserInfoRequest } from '../../services/actions/user';
 import { TIngredient, TOrder } from '../../services/types/data';
 
