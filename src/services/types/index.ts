@@ -1,7 +1,7 @@
 import { ThunkAction } from 'redux-thunk';
 import { Action, ActionCreator } from 'redux';
 import { Dispatch  } from 'redux';
-import { createRootReducer } from '../reducers';
+import { rootReducer } from '../reducers';
 
 import { TIngredientsActions } from '../actions/ingredients';
 import { TOrderActions } from '../actions/order';
@@ -11,7 +11,7 @@ import { TWsOrdersActions } from '../actions/wsOrders';
 import { TUserActions } from '../actions/user';
 
 // export type RootState = ReturnType<typeof store.getState>;
-export type RootState = ReturnType<ReturnType<typeof createRootReducer>>
+export type RootState = ReturnType<typeof rootReducer>
 
 // Типизация всех экшенов 
 export type TApplicationActions = 

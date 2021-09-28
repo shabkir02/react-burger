@@ -1,6 +1,5 @@
 import { call, select, takeEvery, put } from "redux-saga/effects";
 import { SagaIterator } from "@redux-saga/types";
-import { replace } from 'connected-react-router'
 
 import * as userActions from '../actions/user';
 import { setCookie, deleteCookie, getCookie } from "../../utils/cookies";
@@ -120,8 +119,7 @@ export function* userLogout(): SagaIterator {
         
         localStorage.removeItem('refreshToken')
         deleteCookie('accessToken')
-        yield put(userActions.getUserInfoSuccess(null))
-        yield put(replace('/login'))
+        yield put(userActions.getUserInfoSuccess(null));
     } catch(error) {
         yield put(userActions.userLogoutFailed())
     }

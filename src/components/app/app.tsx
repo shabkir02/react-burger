@@ -36,7 +36,6 @@ import {
 } from '../../services/actions/modal';
 import OrderInfoPage from '../../pages/order-info-page/order-info-page';
 import { getIngredientsRequest } from '../../services/actions/ingredients';
-import { history } from '../../services/store';
 
 export interface IAppLocation {
   background?: {
@@ -213,9 +212,9 @@ const App = () => {
   }
 
   return (
-    <ConnectedRouter history={history}>
+    <Router>
       <ModalSwitch />
-    </ConnectedRouter>
+    </Router>
   )
 }
 

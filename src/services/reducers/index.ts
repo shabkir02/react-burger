@@ -1,6 +1,4 @@
 import { combineReducers } from 'redux';
-import { connectRouter } from 'connected-react-router'
-import { History } from 'history'
 
 import ingredientsReducer from './ingredients';
 import modalReducer from './modal';
@@ -53,8 +51,7 @@ export const wsUserOrdersActions = {
     onMessage: WS_USER_ORDERS_GET_MESSAGE
 };
 
-export const createRootReducer = (history: History) => combineReducers({
-    router: connectRouter(history),
+export const rootReducer = combineReducers({
     modal: modalReducer,
     order: orderReducer,
     ingredients: ingredientsReducer,

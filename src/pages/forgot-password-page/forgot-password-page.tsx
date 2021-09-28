@@ -1,8 +1,9 @@
+import { useEffect } from 'react';
 import { FormEvent } from 'react';
 import { Logo, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../hooks/hooks';
-import { Redirect, useLocation } from 'react-router-dom';
+import { Redirect, useLocation, useHistory } from 'react-router-dom';
 
 import { setEmail } from '../../services/actions/user';
 import { sendEmailRequest } from '../../services/actions/reset-password';
@@ -13,16 +14,24 @@ const ForgotPasswordPage = () => {
 
     const dispatch = useDispatch();
     const location = useLocation();
+    const history = useHistory();
 
-    const { email, user } = useSelector(store => ({
+    const { email, user, sendEmailSuccess } = useSelector(store => ({
         email: store.user.email,
-        user: store.user.user
+        user: store.user.user,
+        sendEmailSuccess: store.resetPassword.sendEmailSuccess
     }))
 
     const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(sendEmailRequest());
     }
+
+    useEffect(() => {
+        if (sendEmailSuccess && sendEmailSuccess.success) {
+            history.replace({ pathname: '/reset-password', state: 'fromForgotPassword' });
+        }
+    }, [sendEmailSuccess, history, dispatch])
 
     if (user) {
         return <Redirect to="/" />
