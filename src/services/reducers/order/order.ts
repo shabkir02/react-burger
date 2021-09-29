@@ -3,10 +3,10 @@ import {
     GET_ORDER_SUCCESS,
     GET_ORDER_FAILED,
     ORDER_RESET
-} from '../constants/order';
+} from '../../constants/order';
 
-import { TOrderActions } from '../actions/order';
-import { TOrder } from '../types/data';
+import { TOrderActions } from '../../actions/order/order';
+import { TOrder } from '../../types/data';
 
 type TOrderState = {
     order: null | TOrder;

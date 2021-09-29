@@ -1,5 +1,5 @@
 import reducer, { initialState } from './user';
-import * as types from '../constants/user'
+import * as types from '../../constants/user'
 
 describe('user reducer', () => {
     it('should return the initial state', () => {

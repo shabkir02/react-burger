@@ -1,5 +1,5 @@
 import reducer, { initialState } from './ingredients';
-import * as types from '../constants/ingredients'
+import * as types from '../../constants/ingredients'
 
 describe('ingredients reducer', () => {
     it('should return the initial state', () => {

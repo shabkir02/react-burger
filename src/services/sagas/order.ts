@@ -6,8 +6,8 @@ import { GET_ORDER_REQUEST } from "../constants/order";
 import { TIngredient } from "../types/data";
 import { getCookie, setCookie } from "../../utils/cookies";
 import { _apiUrl } from "../constants";
-import { getOrderFailed, getOrderRequest, getOrderSuccess } from "../actions/order";
-import { resetConstructor } from "../actions/ingredients";
+import { getOrderFailed, getOrderRequest, getOrderSuccess } from "../actions/order/order";
+import { resetConstructor } from "../actions/ingredients/ingredients";
 import { updateAccessTokenFetch } from "./user";
 
 export function makeOrderFetch(ingredientsIdArr: Array<string>) {

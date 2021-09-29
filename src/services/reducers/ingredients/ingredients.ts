@@ -1,5 +1,5 @@
-import { TIngredient, TIngredientConstructor } from '../types/data';
-import { TIngredientsActions } from '../actions/ingredients';
+import { TIngredient, TIngredientConstructor } from '../../types/data';
+import { TIngredientsActions } from '../../actions/ingredients/ingredients';
 
 import {
     GET_INGREDIENTS_REQUEST,
@@ -10,7 +10,7 @@ import {
     ADD_BUN_TO_CONSTRUCTOR,
     MOVE_INGREDIENT_IN_CONSTRUCTOR,
     RESET_CONSTRUCTOR
-} from '../constants/ingredients';
+} from '../../constants/ingredients';
 
 type TIngredientState = {
     ingredients: null | ReadonlyArray<TIngredient>;

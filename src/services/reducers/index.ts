@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import ingredientsReducer from './ingredients';
-import modalReducer from './modal';
-import orderReducer from './order';
-import resetPasswordReducer from './reset-password';
-import userReducer from './user';
-import wsReducer from './wsOrders';
+import ingredientsReducer from './ingredients/ingredients';
+import modalReducer from './modal/modal';
+import orderReducer from './order/order';
+import resetPasswordReducer from './reset-password/reset-password';
+import userReducer from './user/user';
+import wsReducer from './wsOrders/wsOrders';
 
 // import {
 //     wsAllOrdersConnectionSuccess, 

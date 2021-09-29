@@ -2,7 +2,7 @@ import { call, takeEvery, put } from 'redux-saga/effects';
 import { SagaIterator } from "@redux-saga/types";
 
 import { GET_INGREDIENTS_REQUEST } from '../constants/ingredients';
-import { getIngredientsFailed, getIngredientsSuccess } from '../actions/ingredients';
+import { getIngredientsFailed, getIngredientsSuccess } from '../actions/ingredients/ingredients';
 import { _apiUrl } from '../constants';
 import { checkResponse } from '../../utils/apiHelper';
 

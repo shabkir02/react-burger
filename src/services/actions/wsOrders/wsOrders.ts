@@ -9,9 +9,9 @@ import {
     WS_USER_ORDERS_CONNECTION_CLOSED,
     WS_USER_ORDERS_GET_MESSAGE,
     WS_USER_ORDERS_CONNECTION_START
-} from '../constants/wsOrders';
+} from '../../constants/wsOrders';
 
-import { TWsOrders } from '../types/data';
+import { TWsOrders } from '../../types/data';
 
 export interface IWsAllOrdersConnectionSuccessAction {
     readonly type: typeof WS_ALL_ORDERS_CONNECTION_SUCCESS;

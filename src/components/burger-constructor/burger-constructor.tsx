@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
-import { addBunToConstructor, addIngredientToConstructor } from '../../services/actions/ingredients';
+import { addBunToConstructor, addIngredientToConstructor } from '../../services/actions/ingredients/ingredients';
 
 import { TIngredient, TIngredientConstructor } from '../../services/types/data';
 

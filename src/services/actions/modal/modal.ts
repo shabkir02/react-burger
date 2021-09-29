@@ -4,9 +4,9 @@ import {
     SET_CURRENT_INGREDIENT,
     SET_MODAL_INNER_ORDER_INFO,
     SET_CURRENT_ORDER_INFO
-} from '../constants/modal';
+} from '../../constants/modal';
 
-import { TIngredient, TOrderInfo } from '../types/data';
+import { TIngredient, TOrderInfo } from '../../types/data';
 
 export interface ISetModalInnerIngredientsDetailsAction {
     readonly type: typeof SET_MODAL_INNER_INGREDIENT_DETAILS;

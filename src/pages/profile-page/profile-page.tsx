@@ -2,7 +2,7 @@ import { FormEvent } from 'react';
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from '../../hooks/hooks';
 
-import { setName, setEmail, setPassword, updateUserInfoRequest } from '../../services/actions/user';
+import { setName, setEmail, setPassword, updateUserInfoRequest } from '../../services/actions/user/user';
 
 import s from './profile-page.module.sass';
 

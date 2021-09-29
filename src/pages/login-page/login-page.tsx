@@ -3,7 +3,7 @@ import { Logo, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-dev
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../hooks/hooks';
 
-import { setEmail, setPassword, userLoginRequest } from '../../services/actions/user';
+import { setEmail, setPassword, userLoginRequest } from '../../services/actions/user/user';
 
 import s from './login-page.module.sass';
 

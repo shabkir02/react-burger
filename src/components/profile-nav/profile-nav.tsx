@@ -1,24 +1,17 @@
-import { useDispatch, useSelector } from '../../hooks/hooks';
-import { NavLink, useHistory } from 'react-router-dom';
+import { useDispatch } from '../../hooks/hooks';
+import { NavLink } from 'react-router-dom';
 
-import { userLogoutRequest } from '../../services/actions/user';
+import { userLogoutRequest } from '../../services/actions/user/user';
 
 import s from './profile-nav.module.sass';
 
 const ProfileNav = () => {
 
     const dispatch = useDispatch();
-    const history = useHistory()
-    const user = useSelector(store => store.user.user)
 
     const logoutOfProfile = () => {
-        // const refreshToken = localStorage.getItem('refreshToken')
         dispatch(userLogoutRequest())
     }
-
-    // if (!user) {
-    //     history.replace({ pathname: '/login' });
-    // }
 
     return (
         <div className={`${s.container_nav} pt-30`}>

@@ -1,15 +1,15 @@
-import { getCookie } from '../../utils/cookies';
-import { resetConstructor } from '../actions/ingredients'
+import { getCookie } from '../../../utils/cookies';
+import { resetConstructor } from '../ingredients/ingredients'
 
 import {
   GET_ORDER_REQUEST,
   GET_ORDER_SUCCESS,
   GET_ORDER_FAILED,
   ORDER_RESET
-} from '../constants/order';
+} from '../../constants/order';
 
-import { AppDispatch, AppThunk } from '../types';
-import { TOrder } from '../types/data';
+import { AppDispatch, AppThunk } from '../../types';
+import { TOrder } from '../../types/data';
 
 const _apiUrl = 'https://norma.nomoreparties.space/api';
 

@@ -9,9 +9,9 @@ import {
     WS_USER_ORDERS_GET_MESSAGE,
     WS_ALL_ORDERS_CONNECTION_START,
     WS_USER_ORDERS_CONNECTION_START
-} from '../constants/wsOrders';
-import { TWsOrdersActions } from '../actions/wsOrders';
-import { TWsOrders } from '../types/data';
+} from '../../constants/wsOrders';
+import { TWsOrdersActions } from '../../actions/wsOrders/wsOrders';
+import { TWsOrders } from '../../types/data';
 
 type TWsOrdersState = {
     wsAllOrdersConnect: boolean,

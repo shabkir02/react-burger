@@ -2,7 +2,6 @@
   "name": "react-burger",
   "version": "0.1.0",
   "private": false,
-  "homepage": "https://shabkir02.github.io/react-burger",
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.0",
     "@testing-library/jest-dom": "^5.11.4",

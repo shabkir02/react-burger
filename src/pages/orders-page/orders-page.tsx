@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from '../../hooks/hooks';
 
 import OrderItem from '../../components/order-item/order-item';
-import { wsUserOrdersConnectionStart } from '../../services/actions/wsOrders';
+import { wsUserOrdersConnectionStart } from '../../services/actions/wsOrders/wsOrders';
 
 import s from './orders-page.module.sass';
 import { TOrder, TIngredient } from '../../services/types/data';

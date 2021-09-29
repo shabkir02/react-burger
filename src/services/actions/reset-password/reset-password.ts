@@ -1,4 +1,4 @@
-import { resetPassword as resetPasswordAction, resetEmail } from './user';
+import { resetPassword as resetPasswordAction, resetEmail } from '../user/user';
 
 import {
     SEND_EMAIL_REQUEST,
@@ -9,10 +9,10 @@ import {
     RESET_PASSWORD_FAILED ,
     SET_EMAILCODE,
     RESET_EMAILCODE
-} from '../constants/reset-password';
+} from '../../constants/reset-password';
 
-import { AppDispatch, AppThunk } from '../types';
-import { TMessageResetEmail, TMessageResetPassword } from '../types/data';
+import { AppDispatch, AppThunk } from '../../types';
+import { TMessageResetEmail, TMessageResetPassword } from '../../types/data';
 
 const _apiUrl = 'https://norma.nomoreparties.space/api';
 

@@ -7,10 +7,10 @@ import {
     RESET_PASSWORD_FAILED,
     SET_EMAILCODE,
     RESET_EMAILCODE
-} from '../constants/reset-password';
+} from '../../constants/reset-password';
 
-import { TResetPasswordActions } from '../actions/reset-password';
-import { TMessageResetEmail, TMessageResetPassword } from '../types/data';
+import { TResetPasswordActions } from '../../actions/reset-password/reset-password';
+import { TMessageResetEmail, TMessageResetPassword } from '../../types/data';
 
 type TResetPasswordState = {
     sendEmailSuccess: null | TMessageResetEmail;

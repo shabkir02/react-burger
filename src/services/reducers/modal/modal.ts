@@ -4,10 +4,10 @@ import {
     SET_MODAL_INNER_ORDER_INFO,
     SET_CURRENT_INGREDIENT,
     SET_CURRENT_ORDER_INFO
-} from '../constants/modal';
+} from '../../constants/modal';
 
-import { TIngredientConstructor, TIngredient, TModalInner, TOrderInfo } from '../types/data'
-import { TModalActions } from '../actions/modal';
+import { TIngredientConstructor, TIngredient, TModalInner, TOrderInfo } from '../../types/data'
+import { TModalActions } from '../../actions/modal/modal';
 
 type TModalState = {
     ingredientsConstructor: null | Array<TIngredientConstructor>,

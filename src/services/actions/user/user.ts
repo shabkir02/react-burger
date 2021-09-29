@@ -26,10 +26,10 @@ import {
     RESET_PASSWORD,
     SET_NAME,
     RESET_NAME
-} from '../constants/user';
+} from '../../constants/user';
 
 // import { AppDispatch, AppThunk } from "../types";
-import { TUser } from "../types/data";
+import { TUser } from "../../types/data";
 
 export interface IUserLoginRequestAction {
     readonly type: typeof USER_LOGIN_REQUEST

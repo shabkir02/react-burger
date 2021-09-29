@@ -1,5 +1,5 @@
 import reducer, { initialState } from './order';
-import * as types from '../constants/order'
+import * as types from '../../constants/order'
 
 describe('order reducer', () => {
     it('should return the initial state', () => {

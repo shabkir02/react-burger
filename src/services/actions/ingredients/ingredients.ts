@@ -7,10 +7,10 @@ import {
     ADD_BUN_TO_CONSTRUCTOR,
     MOVE_INGREDIENT_IN_CONSTRUCTOR,
     RESET_CONSTRUCTOR
-} from '../constants/ingredients';
+} from '../../constants/ingredients';
 // import { AppDispatch, AppThunk } from '../types';
 
-import { TIngredient, TIngredientConstructor, TMovingIngredient } from '../types/data';
+import { TIngredient, TIngredientConstructor, TMovingIngredient } from '../../types/data';
 
 const _apiUrl = 'https://norma.nomoreparties.space/api';
 

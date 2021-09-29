@@ -3,8 +3,8 @@ import { useParams, useRouteMatch } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../hooks/hooks';
 
 import OrderInfo from '../../components/order-info/order-info';
-import { wsUserOrdersConnectionStart } from '../../services/actions/wsOrders';
-import { setCurrentOrderInfo } from '../../services/actions/modal';
+import { wsUserOrdersConnectionStart } from '../../services/actions/wsOrders/wsOrders';
+import { setCurrentOrderInfo } from '../../services/actions/modal/modal';
 
 import s from './order-info-page.module.sass';
 import { TIngredient, TOrder, TWsOrders } from '../../services/types/data';

@@ -1,5 +1,5 @@
 import reducer, { initialState } from './reset-password'
-import * as types from '../constants/reset-password'
+import * as types from '../../constants/reset-password'
 
 describe('reset-password reducer', () => {
     it('should return the initial state', () => {

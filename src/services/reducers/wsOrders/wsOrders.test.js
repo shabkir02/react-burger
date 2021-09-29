@@ -1,5 +1,5 @@
 import reducer, { initialState } from './wsOrders';
-import * as types from '../constants/wsOrders';
+import * as types from '../../constants/wsOrders';
 
 describe('wsOrder reducer', () => {
     it('should return the initial state', () => {

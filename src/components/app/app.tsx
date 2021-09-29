@@ -20,10 +20,10 @@ import OrderDetails from '../order-details/order-details';
 import OrderInfo from '../order-info/order-info';
 import { ProtectedRoute } from '../../layouts/protected-route/protected-route';
 
-import { wsAllOrdersConnectionStart } from '../../services/actions/wsOrders';
+import { wsAllOrdersConnectionStart } from '../../services/actions/wsOrders/wsOrders';
 
-import { getOrderRequest, orderReset} from '../../services/actions/order';
-import { getUserInfoRequest } from '../../services/actions/user';
+import { getOrderRequest, orderReset} from '../../services/actions/order/order';
+import { getUserInfoRequest } from '../../services/actions/user/user';
 import { TIngredient, TOrder } from '../../services/types/data';
 
 import { 
@@ -32,9 +32,9 @@ import {
   setModalInnerOrderDetails, 
   setModalInnerOrderInfo, 
   setCurrentOrderInfo 
-} from '../../services/actions/modal';
+} from '../../services/actions/modal/modal';
 import OrderInfoPage from '../../pages/order-info-page/order-info-page';
-import { getIngredientsRequest } from '../../services/actions/ingredients';
+import { getIngredientsRequest } from '../../services/actions/ingredients/ingredients';
 
 export interface IAppLocation {
   background?: {

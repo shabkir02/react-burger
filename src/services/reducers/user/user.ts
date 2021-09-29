@@ -8,10 +8,10 @@ import {
     RESET_PASSWORD,
     SET_NAME,
     RESET_NAME,
-} from '../constants/user';
+} from '../../constants/user';
 
-import { TUserActions } from '../actions/user';
-import { TUser } from '../types/data';
+import { TUserActions } from '../../actions/user/user';
+import { TUser } from '../../types/data';
 
 type TUserState = {
     userReguest: boolean;

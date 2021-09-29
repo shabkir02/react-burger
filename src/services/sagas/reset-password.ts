@@ -2,8 +2,8 @@ import { call, takeEvery, put, select } from 'redux-saga/effects';
 import { SagaIterator } from "@redux-saga/types";
 
 import { checkResponse } from '../../utils/apiHelper';
-import { resetEmailCode, resetPasswordFailed, resetPasswordSuccess, sendEmailFailed, sendEmailSuccess } from '../actions/reset-password';
-import { resetEmail, resetPassword } from '../actions/user';
+import { resetEmailCode, resetPasswordFailed, resetPasswordSuccess, sendEmailFailed, sendEmailSuccess } from '../actions/reset-password/reset-password';
+import { resetEmail, resetPassword } from '../actions/user/user';
 
 import { _apiUrl } from '../constants';
 import { RESET_PASSWORD_REQUEST, SEND_EMAIL_REQUEST } from '../constants/reset-password';

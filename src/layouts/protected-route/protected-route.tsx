@@ -1,6 +1,6 @@
 import { useEffect, useState, FC } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { getUserInfoRequest } from '../../services/actions/user';
+import { getUserInfoRequest } from '../../services/actions/user/user';
 import { useDispatch, useSelector } from '../../hooks/hooks';
 
 interface IProtectedRouteProps {

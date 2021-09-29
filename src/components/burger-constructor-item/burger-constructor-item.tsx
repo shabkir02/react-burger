@@ -3,7 +3,7 @@ import { useDispatch } from '../../hooks/hooks';
 import {  ConstructorElement, DragIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag, useDrop } from 'react-dnd';
 
-import { deleteIngredientFromConstructor, moveIngredientInConstructor } from '../../services/actions/ingredients';
+import { deleteIngredientFromConstructor, moveIngredientInConstructor } from '../../services/actions/ingredients/ingredients';
 
 import s from './burger-constructor-item.module.sass';
 

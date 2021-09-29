@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../hooks/hooks';
 import { Redirect, useLocation, useHistory } from 'react-router-dom';
 
-import { setEmail } from '../../services/actions/user';
-import { sendEmailRequest } from '../../services/actions/reset-password';
+import { setEmail } from '../../services/actions/user/user';
+import { sendEmailRequest } from '../../services/actions/reset-password/reset-password'; 
 
 import s from './forgot-password-page.module.sass';
 

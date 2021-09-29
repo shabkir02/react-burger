@@ -1,5 +1,5 @@
 import reducer, { initialState } from './modal';
-import * as types from '../constants/modal'
+import * as types from '../../constants/modal'
 
 describe('modal reducer', () => {
     it('should return the initial state', () => {

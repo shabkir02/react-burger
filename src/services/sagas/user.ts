@@ -1,7 +1,7 @@
 import { call, select, takeEvery, put } from "redux-saga/effects";
 import { SagaIterator } from "@redux-saga/types";
 
-import * as userActions from '../actions/user';
+import * as userActions from '../actions/user/user';
 import { setCookie, deleteCookie, getCookie } from "../../utils/cookies";
 import { _apiUrl } from "../constants";
 import { GET_USER_INFO_REQUEST, UPDATE_USER_INFO_REQUEST, USER_LOGIN_REQUEST, USER_LOGOUT_REQUEST, USER_REGISTER_REQUEST } from "../constants/user";
