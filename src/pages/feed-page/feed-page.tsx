@@ -86,9 +86,9 @@ const FeedPage = ({ handleOrderInfoClick }: IFeedPageProps) => {
                             </div>
                         </div>
                         <h3 className="text text_type_main-medium">Выполнено за все время:</h3>
-                        <p className="text text_type_digits-large mb-15 text_shadow">{allOrders.total.toLocaleString('ru-RU')}</p>
+                        <p className={`${s.order_done_text} text text_type_digits-medium text_shadow`}>{allOrders.total.toLocaleString('ru-RU')}</p>
                         <h3 className="text text_type_main-medium">Выполнено за сегодня:</h3>
-                        <p className="text text_type_digits-large text_shadow">{allOrders.totalToday.toLocaleString('ru-RU')}</p>
+                        <p className={`${s.order_done_text} text text_type_digits-medium text_shadow`}>{allOrders.totalToday.toLocaleString('ru-RU')}</p>
                     </div>
                 </div>
             )}

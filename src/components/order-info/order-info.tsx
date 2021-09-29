@@ -41,9 +41,9 @@ const OrderInfo = () => {
             {currentOrderInfo && (
                 <>
                     <h4 className="text text_type_main-medium mb-4" >{currentOrderInfo.order.name}</h4>
-                    <p className="text text_type_main-default mb-15 blue" >{statusText}</p>
+                    <p className="text text_type_main-default mb-4 blue" >{statusText}</p>
                     <p className="text text_type_main-medium mb-6" >Состав:</p>
-                    <div className={`${s.order_info_wrapper} pr-6 mb-15`}>
+                    <div className={`${s.order_info_wrapper} pr-6 mb-10`}>
                         {currentOrderInfo.ingredientsArr.map((ingredient: TIngredient, index: number) => (
                             <div key={index} className={`${s.order_info_item}`}>
                                 <div className={`${s.order_info_icon} mr-4`}>

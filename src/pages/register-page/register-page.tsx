@@ -33,12 +33,12 @@ const RegisterPage = () => {
     }
 
     return (
-        <div className={`${s.form_container} pt-30`} >
+        <div className={`${s.form_container} pt-15`} >
             <div className={s.form_wrapper}>
                 <div className="mb-20">
                     <Logo/>
                 </div>
-                <form onSubmit={onFormSubmit} className={`${s.form} mb-20`}>
+                <form onSubmit={onFormSubmit} className={`${s.form} mb-10`}>
                     <h3 className="text text_type_main-medium mb-6">Регистрация</h3>
                     <div className="mb-6">
                         <Input 

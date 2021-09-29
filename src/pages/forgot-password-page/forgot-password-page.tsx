@@ -42,7 +42,7 @@ const ForgotPasswordPage = () => {
     }
 
     return (
-        <div className={`${s.form_container} pt-30`} >
+        <div className={`${s.form_container} pt-15`} >
             <div className={s.form_wrapper}>
                 <div className="mb-20">
                     <Logo/>
