@@ -113,7 +113,7 @@ const App = () => {
       }
       
     }, [])
-
+    
     return (
           <>
             {background && (
