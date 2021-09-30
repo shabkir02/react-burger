@@ -18,6 +18,7 @@ import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
 import OrderInfo from '../order-info/order-info';
+import AppHeader from '../app-header/app-header';
 import { ProtectedRoute } from '../../layouts/protected-route/protected-route';
 
 import { wsAllOrdersConnectionStart } from '../../services/actions/wsOrders/wsOrders';
@@ -125,86 +126,64 @@ const App = () => {
                 </Modal>
               </Route>
             )}
+
+            <AppHeader />
+
             <Switch location={background || location} >
               <Route path="/" exact >
-                <WithAppHeader>
-                  <ConstructorPage
-                    handleIngredientClick={handleIngredientClick}
-                    handleOrderClick={handleOrderClick}
-                  />
-                </WithAppHeader>
+                <ConstructorPage
+                  handleIngredientClick={handleIngredientClick}
+                  handleOrderClick={handleOrderClick}
+                />
               </Route>
 
               <Route path="/ingredients/:id" >
-                <WithAppHeader>
-                  <IngredientItemPage />
-                </WithAppHeader>
+                <IngredientItemPage />
               </Route>
 
               <Route path="/feed/:id" >
-                <WithAppHeader>
-                  <OrderInfoPage />
-                </WithAppHeader>
+                <OrderInfoPage />
               </Route>
 
               <Route path="/order-details/:id" >
-                <WithAppHeader>
-                  <OrderDetailsPage/>
-                </WithAppHeader>
+                <OrderDetailsPage/>
               </Route>
 
               <ProtectedRoute path="/profile/orders/:id">
-                <WithAppHeader>
-                  <OrderInfoPage />
-                </WithAppHeader>
+                <OrderInfoPage />
               </ProtectedRoute>
 
               <Route path="/login" >
-                <WithAppHeader>
-                  <LoginPage/>
-                </WithAppHeader>
+                <LoginPage/>
               </Route>
 
               <Route path="/register" >
-                <WithAppHeader>
-                  <RegisterPage/>
-                </WithAppHeader>
+                <RegisterPage/>
               </Route>
 
               <Route path="/feed" exact >
-                <WithAppHeader>
-                  <FeedPage handleOrderInfoClick={handleOrderInfoClick} />
-                </WithAppHeader>
+                <FeedPage handleOrderInfoClick={handleOrderInfoClick} />
               </Route>
 
               <ProtectedRoute path="/profile" exact>
-                <WithAppHeader>
-                  <WithProfileNav>
-                    <ProfilePage/>
-                  </WithProfileNav>
-                </WithAppHeader>
+                <WithProfileNav>
+                  <ProfilePage/>
+                </WithProfileNav>
               </ProtectedRoute>
 
               <ProtectedRoute path="/profile/orders">
-                <WithAppHeader>
-                  <WithProfileNav>
-                    <OrdersPage handleOrderInfoClick={handleOrderInfoClick} />
-                  </WithProfileNav>
-                </WithAppHeader>
+                <WithProfileNav>
+                  <OrdersPage handleOrderInfoClick={handleOrderInfoClick} />
+                </WithProfileNav>
               </ProtectedRoute>
 
               <Route path="/forgot-password" >
-                <WithAppHeader>
-                  <ForgotPasswordPage/>
-                </WithAppHeader>
+                <ForgotPasswordPage/>
               </Route>
 
               <Route path="/reset-password" >
-                <WithAppHeader>
-                  <ResetPasswordPage/>
-                </WithAppHeader>
+                <ResetPasswordPage/>
               </Route>
-
             </Switch>
           </>
     );

@@ -96,18 +96,18 @@ export function* userLogin(): SagaIterator {
 
         const response = yield call(userLoginFetch, email, password);
 
+        const accessToken = response.accessToken.split('Bearer ')[1];
+        const refreshToken = response.refreshToken;
+
+        setCookie('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
+
         yield put(userActions.getUserInfoSuccess(response.user))
         yield put(userActions.resetEmail())
         yield put(userActions.resetPassword())
 
         yield put(userActions.setName(response.user.name))
         yield put(userActions.setEmail(response.user.email))
-
-        const accessToken = response.accessToken.split('Bearer ')[1];
-        const refreshToken = response.refreshToken;
-
-        setCookie('accessToken', accessToken);
-        localStorage.setItem('refreshToken', refreshToken);
     } catch(error) {
         yield put(userActions.userLoginFailed())
     }

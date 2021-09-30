@@ -1,13 +1,13 @@
 
 import { Logo, ListIcon, BurgerIcon, ProfileIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavLink, useRouteMatch, Link } from 'react-router-dom';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import { useSelector } from "../../hooks/hooks";
 
 import s from './app-header.module.sass';
 
 const AppHeader = () => {
 
-    const { path } = useRouteMatch();
+    const { pathname } = useLocation();
 
     const user = useSelector(store => store.user.user)
 
@@ -23,7 +23,7 @@ const AppHeader = () => {
                             activeClassName={s.active}
                         >
                             <div className="mr-2">
-                                <BurgerIcon type={path === '/' ? 'primary' : 'secondary'}/>
+                                <BurgerIcon type={pathname === '/' ? 'primary' : 'secondary'}/>
                             </div>
                             <span className="text text_type_main-default">Конструктор</span>
                         </NavLink>
@@ -34,7 +34,7 @@ const AppHeader = () => {
                             activeClassName={s.active}
                         >
                             <div className="mr-2">
-                                <ListIcon type={path === '/feed' ? 'primary' : 'secondary'}/>
+                                <ListIcon type={pathname === '/feed' ? 'primary' : 'secondary'}/>
                             </div>
                             <span className="text text_type_main-default">Лента заказа</span>
                         </NavLink>
@@ -49,7 +49,7 @@ const AppHeader = () => {
                             activeClassName={s.active}
                         >
                             <div className="mr-2">
-                                <ProfileIcon  type={path === '/login' ? 'primary' : 'secondary'}/>
+                                <ProfileIcon  type={pathname === '/login' ? 'primary' : 'secondary'}/>
                             </div>
                             <span className="text text_type_main-default">Войти</span>
                         </NavLink>
@@ -61,7 +61,7 @@ const AppHeader = () => {
                             activeClassName={s.active}
                         >
                             <div className="mr-2">
-                                <ProfileIcon type={(path === '/profile' || path === '/profile/orders') ? 'primary' : 'secondary'}/>
+                                <ProfileIcon type={(pathname === '/profile' || pathname === '/profile/orders') ? 'primary' : 'secondary'}/>
                             </div>
                             <span className="text text_type_main-default">Личный кабинет</span>
                         </NavLink>
