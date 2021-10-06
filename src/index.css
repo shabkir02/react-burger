@@ -16,6 +16,9 @@
 .show_item {
     animation: showItem .2s;
 }
+.error_message {
+    color: red;
+}
 
 @keyframes showItem {
     0% {

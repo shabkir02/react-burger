@@ -1,4 +1,3 @@
-import { resetPassword as resetPasswordAction, resetEmail } from '../user/user';
 
 import {
     SEND_EMAIL_REQUEST,

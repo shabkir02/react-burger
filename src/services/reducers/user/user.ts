@@ -3,11 +3,9 @@ import {
     GET_USER_INFO_SUCCESS,
     GET_USER_INFO_FAILED,
     SET_EMAIL,
-    RESET_EMAIL,
     SET_PASSWORD,
-    RESET_PASSWORD,
     SET_NAME,
-    RESET_NAME,
+    RESET_INPUTS,
 } from '../../constants/user';
 
 import { TUserActions } from '../../actions/user/user';
@@ -59,30 +57,22 @@ export default function userReducer(state = initialState, action: TUserActions):
                 ...state,
                 email: action.payload
             }
-        case RESET_EMAIL:
-            return {
-                ...state,
-                email: ''
-            }
         case SET_PASSWORD:
             return {
                 ...state,
                 password: action.payload
-            }
-        case RESET_PASSWORD:
-            return {
-                ...state,
-                password: ''
             }
         case SET_NAME: 
             return {
                 ...state,
                 name: action.payload
             }
-        case RESET_NAME:
+        case RESET_INPUTS:
             return {
                 ...state,
-                name: ''
+                name: '',
+                password: '',
+                email: '',
             }
         default: 
             return state

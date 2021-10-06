@@ -44,11 +44,11 @@ const ForgotPasswordPage = () => {
     return (
         <div className={`${s.form_container} pt-15`} >
             <div className={s.form_wrapper}>
-                <div className="mb-20">
+                <div className="mb-15">
                     <Logo/>
                 </div>
                 <form 
-                    className={`${s.form} mb-20`}
+                    className={`${s.form} mb-15`}
                     onSubmit={onFormSubmit}
                 >
                     <h3 className="text text_type_main-medium mb-6">Восстановление пароля</h3>

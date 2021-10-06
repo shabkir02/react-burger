@@ -30,10 +30,10 @@ const LoginPage = () => {
     return (
         <div className={`${s.form_container} pt-15`} >
             <div className={s.form_wrapper}>
-                <div className="mb-20">
+                <div className="mb-15">
                     <Logo/>
                 </div>
-                <form onSubmit={onFormSubmit} className={`${s.form} mb-20`}>
+                <form onSubmit={onFormSubmit} className={`${s.form} mb-15`}>
                     <h3 className="text text_type_main-medium mb-6">Вход</h3>
                     <div className="mb-6">
                         <EmailInput 
@@ -49,6 +49,7 @@ const LoginPage = () => {
                             onChange={e => dispatch(setPassword(e.target.value))}
                         />
                     </div>
+                    <span className="error_message text text_type_main-default mb-3">ieoinsfoi fomesomfo</span>
                     <Button>Войти</Button>
                 </form>
                 <p className={`${s.form_descr} text text_type_main-default mb-4`}>

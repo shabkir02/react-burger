@@ -21,11 +21,9 @@ import {
     GET_USER_INFO_FAILED,
 
     SET_EMAIL,
-    RESET_EMAIL,
     SET_PASSWORD,
-    RESET_PASSWORD,
     SET_NAME,
-    RESET_NAME
+    RESET_INPUTS
 } from '../../constants/user';
 
 // import { AppDispatch, AppThunk } from "../types";
@@ -86,31 +84,23 @@ export interface ISetEmailAction {
     readonly type: typeof SET_EMAIL;
     payload: string
 }
-export interface IResetEmailAction {
-    readonly type: typeof RESET_EMAIL;
-}
 export interface ISetPasswordAction {
     readonly type: typeof SET_PASSWORD;
     payload: string
-}
-export interface IResetPasswordAction {
-    readonly type: typeof RESET_PASSWORD;
 }
 export interface ISetNameAction {
     readonly type: typeof SET_NAME;
     payload: string
 }
-export interface IResetNameAction {
-    readonly type: typeof RESET_NAME;
+export interface IResetInputs {
+    readonly type: typeof RESET_INPUTS;
 }
 
 export type TUserActions = 
     | ISetEmailAction
-    | IResetEmailAction
     | ISetPasswordAction
-    | IResetPasswordAction
     | ISetNameAction
-    | IResetNameAction
+    | IResetInputs
 
     | IUserLoginRequestAction
     | IUserLoginFailedAction
@@ -188,22 +178,16 @@ export const setEmail = (email: string): ISetEmailAction => ({
     type: SET_EMAIL,
     payload: email
 })
-export const resetEmail = (): IResetEmailAction => ({
-    type: RESET_EMAIL
-})
 export const setPassword = (password: string): ISetPasswordAction => ({
     type: SET_PASSWORD,
     payload: password
-})
-export const resetPassword = (): IResetPasswordAction => ({
-    type: RESET_PASSWORD
 })
 export const setName = (name: string): ISetNameAction => ({
     type: SET_NAME,
     payload: name
 })
-export const resetName = (): IResetNameAction => ({
-    type: RESET_NAME
+export const resetInputs = (): IResetInputs => ({
+    type: RESET_INPUTS
 })
 
 // function updateAccessToken() {

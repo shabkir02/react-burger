@@ -96,8 +96,4 @@ const FeedPage = ({ handleOrderInfoClick }: IFeedPageProps) => {
     )
 }
 
-FeedPage.propTypes = {
-    handleOrderInfoClick: PropTypes.func.isRequired
-}
-
 export default FeedPage;

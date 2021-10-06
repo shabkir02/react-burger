@@ -35,7 +35,7 @@ const RegisterPage = () => {
     return (
         <div className={`${s.form_container} pt-15`} >
             <div className={s.form_wrapper}>
-                <div className="mb-20">
+                <div className="mb-15">
                     <Logo/>
                 </div>
                 <form onSubmit={onFormSubmit} className={`${s.form} mb-10`}>

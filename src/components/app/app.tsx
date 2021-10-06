@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, useHistory, useLocation, HashRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../hooks/hooks';
 
-import WithAppHeader from '../../layouts/with-app-header/with-app-header';
 import WithProfileNav from '../../layouts/with-profile-nav/with-profile-nav';
 import ConstructorPage from '../../pages/constructor-page/constructor-page';
 import LoginPage from '../../pages/login-page/login-page';
