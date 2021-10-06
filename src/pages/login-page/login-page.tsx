@@ -49,7 +49,7 @@ const LoginPage = () => {
                             onChange={e => dispatch(setPassword(e.target.value))}
                         />
                     </div>
-                    <span className="error_message text text_type_main-default mb-3">ieoinsfoi fomesomfo</span>
+                    {/* <span className="error_message text text_type_main-default mb-3">ieoinsfoi fomesomfo</span> */}
                     <Button>Войти</Button>
                 </form>
                 <p className={`${s.form_descr} text text_type_main-default mb-4`}>
